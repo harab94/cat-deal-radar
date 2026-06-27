@@ -25,6 +25,7 @@ def normalizer() -> BrandNormalizer:
         ("Solid Gold", "金素"),
         ("solid-gold", "金素"),
         ("halo", "Halo"),
+        ("自然光环", "Halo"),
         ("金色交响乐", "金色交响乐"),
         ("小李子", "小李子"),
         ("OP 三文鱼冻干", "OP"),

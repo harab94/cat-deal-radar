@@ -43,10 +43,12 @@ def test_rule_detector_uses_category_keywords_for_cat_litter() -> None:
 def test_rule_detector_treats_kaiche_as_expired_in_douban_group() -> None:
     detector = _detector()
 
-    detected = detector.detect(title="开车 百利原始鸡 335 元")
+    detected = detector.detect(title="开车 自然光环全能系列10磅 263r")
 
     assert detected.is_deal is False
-    assert detected.brand == "百利"
+    assert detected.brand == "Halo"
+    assert detected.category == "cat_food"
+    assert detected.price == 263
     assert "expired deal signal" in detected.reasons
 
 
