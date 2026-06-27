@@ -9,9 +9,10 @@ import yaml
 
 from app.brand_normalization import BrandNormalizer
 
-DEAL_SIGNALS = ("团购", "闲车", "好价", "补货", "凑单")
+DEAL_SIGNALS = ("团购", "闲车", "闲置", "好价", "补货", "凑单")
 EXPIRED_SIGNALS = ("开车", "已开车", "车走了")
-PRICE_PATTERN = re.compile(r"(?:¥|￥)?\s*(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB)?")
+PRICE_PATTERN = re.compile(r"(?:¥|￥)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB|r|R)")
+WEIGHT_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:kg|KG|公斤|克|g|G|斤|磅)")
 
 
 @dataclass(frozen=True)
@@ -88,11 +89,13 @@ class RuleBasedDealDetector:
 
 
 def extract_lowest_price(text: str) -> float | None:
-    prices = [
-        float(match.group(1))
-        for match in PRICE_PATTERN.finditer(text)
-        if _looks_like_price(float(match.group(1)))
-    ]
+    text_without_weights = WEIGHT_PATTERN.sub(" ", text)
+    prices = []
+    for match in PRICE_PATTERN.finditer(text_without_weights):
+        raw_price = match.group(1) or match.group(2)
+        price = float(raw_price)
+        if _looks_like_price(price):
+            prices.append(price)
     return min(prices) if prices else None
 
 

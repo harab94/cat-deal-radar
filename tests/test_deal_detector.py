@@ -50,8 +50,34 @@ def test_rule_detector_treats_kaiche_as_expired_in_douban_group() -> None:
     assert "expired deal signal" in detected.reasons
 
 
+def test_rule_detector_identifies_real_xianzhi_orijen_title() -> None:
+    detector = _detector()
+
+    detected = detector.detect(title="【闲置】渴望鱼🐟5.4kg效期27.01，330元")
+
+    assert detected.is_deal is True
+    assert detected.brand == "渴望"
+    assert detected.category == "cat_food"
+    assert detected.price == 330
+
+
+def test_rule_detector_keeps_xianzhi_post_without_price_unnotified() -> None:
+    detector = _detector()
+
+    detected = detector.detect(title="【闲置】官旗出爱肯拿农场牧场猫粮")
+
+    assert detected.is_deal is False
+    assert detected.brand == "爱肯拿"
+    assert detected.category == "cat_food"
+    assert detected.price is None
+
+
 def test_extract_lowest_price_ignores_large_non_price_numbers() -> None:
-    assert extract_lowest_price("2026 年 百利 335 元，凑单后 329") == 329
+    assert extract_lowest_price("2026 年 百利 335 元，凑单后 329元") == 329
+
+
+def test_extract_lowest_price_ignores_weight_numbers() -> None:
+    assert extract_lowest_price("自然光环全能系列10磅 263r") == 263
 
 
 def test_analyze_comments_scores_availability_signals() -> None:

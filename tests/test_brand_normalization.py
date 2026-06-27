@@ -17,6 +17,8 @@ def normalizer() -> BrandNormalizer:
     [
         ("Acana", "爱肯拿"),
         ("ACANA", "爱肯拿"),
+        ("Orijen", "渴望"),
+        ("渴望", "渴望"),
         ("Instinct", "百利"),
         ("百利原始鸡", "百利"),
         ("Farmina", "法米娜"),
@@ -66,6 +68,7 @@ def test_unknown_brand_returns_none(normalizer: BrandNormalizer) -> None:
 def test_canonical_names_include_all_seed_brands(normalizer: BrandNormalizer) -> None:
     assert {
         "爱肯拿",
+        "渴望",
         "百利",
         "法米娜",
         "金素",
