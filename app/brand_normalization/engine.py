@@ -28,6 +28,10 @@ class BrandNormalizer:
             raw_config = yaml.safe_load(file) or {}
 
         brand_aliases = raw_config.get("brand_aliases", {})
+        return cls.from_mapping(brand_aliases)
+
+    @classmethod
+    def from_mapping(cls, brand_aliases: dict[str, Any]) -> BrandNormalizer:
         if not isinstance(brand_aliases, dict):
             msg = "brands.yaml must contain a mapping named brand_aliases."
             raise ValueError(msg)

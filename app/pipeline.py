@@ -6,9 +6,10 @@ from datetime import UTC, datetime
 
 import structlog
 
+from app.configuration import load_rule_based_detector
 from app.crawler import DoubanCrawler, DoubanGroupConfig
 from app.database import Deal, Post, Repository
-from app.deal_detector import RuleBasedDealDetector, analyze_comments
+from app.deal_detector import analyze_comments
 from app.deal_detector.keyword_rules import extract_lowest_price
 from app.feedback import build_feedback_links
 from app.notification import EmailConfig, NotificationService, SmtpEmailSender
@@ -51,10 +52,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             cookie_configured=bool(os.environ.get(settings.douban_cookie_env)),
         )
         return PipelineResult(posts_seen=0, deals_created=0, notifications_sent=0)
-    detector = RuleBasedDealDetector.from_config_files(
-        brands_path=settings.brands_path,
-        categories_path=settings.categories_path,
-    )
+    detector = load_rule_based_detector(settings)
     scorer = RecommendationScorer.from_yaml(settings.preferences_path)
     duplicate_handler = DuplicateHandler()
     sender = _email_sender_from_env(settings)

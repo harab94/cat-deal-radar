@@ -27,6 +27,7 @@
 - Replace the temporary `FEEDBACK_BASE_URL` placeholder with a real endpoint.
 - Implement a lightweight public feedback receiver.
 - Wire feedback links so clicks call the receiver and store feedback in SQLite or another durable store.
+- Verify GitHub Actions can load detection config from Feishu Base secrets.
 
 ## Product Follow-Up
 

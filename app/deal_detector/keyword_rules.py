@@ -32,9 +32,13 @@ class RuleBasedDealDetector:
         *,
         brand_normalizer: BrandNormalizer,
         category_config: dict[str, Any],
+        deal_signals: tuple[str, ...] = DEAL_SIGNALS,
+        expired_signals: tuple[str, ...] = EXPIRED_SIGNALS,
     ) -> None:
         self._brand_normalizer = brand_normalizer
         self._category_config = category_config
+        self._deal_signals = deal_signals
+        self._expired_signals = expired_signals
 
     @classmethod
     def from_config_files(
@@ -55,13 +59,20 @@ class RuleBasedDealDetector:
         brand = self._brand_normalizer.find_in_text(title_text)
         category = self._category_for_text(title_text, brand)
         price = extract_lowest_price(title_text)
-        reasons = _reasons(title_text, brand, category, price)
+        reasons = _reasons(
+            title_text,
+            brand,
+            category,
+            price,
+            deal_signals=self._deal_signals,
+            expired_signals=self._expired_signals,
+        )
         is_deal = bool(
             brand
             and category
             and price is not None
-            and _has_deal_signal(title_text)
-            and not _has_expired_signal(title_text)
+            and _has_any_signal(title_text, self._deal_signals)
+            and not _has_any_signal(title_text, self._expired_signals)
         )
 
         return DetectedDeal(
@@ -103,24 +114,19 @@ def _looks_like_price(value: float) -> bool:
     return 1 <= value <= 5000
 
 
-def _has_deal_signal(text: str) -> bool:
-    return any(signal in text for signal in DEAL_SIGNALS)
-
-
-def _has_expired_signal(text: str) -> bool:
-    return any(signal in text for signal in EXPIRED_SIGNALS)
-
-
 def _reasons(
     text: str,
     brand: str | None,
     category: str | None,
     price: float | None,
+    *,
+    deal_signals: tuple[str, ...] = DEAL_SIGNALS,
+    expired_signals: tuple[str, ...] = EXPIRED_SIGNALS,
 ) -> list[str]:
     reasons: list[str] = []
-    if _has_deal_signal(text):
+    if _has_any_signal(text, deal_signals):
         reasons.append("deal signal keyword")
-    if _has_expired_signal(text):
+    if _has_any_signal(text, expired_signals):
         reasons.append("expired deal signal")
     if brand:
         reasons.append("known brand")
@@ -135,3 +141,7 @@ def _confidence(reasons: list[str], is_deal: bool) -> int:
     if not is_deal:
         return min(len(reasons) * 20, 60)
     return min(60 + len(reasons) * 10, 95)
+
+
+def _has_any_signal(text: str, signals: tuple[str, ...]) -> bool:
+    return any(signal in text for signal in signals)

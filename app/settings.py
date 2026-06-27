@@ -24,6 +24,12 @@ class Settings:
     email_sender_env: str = "GMAIL_SENDER"
     email_recipient_env: str = "DEAL_NOTIFICATION_RECIPIENT"
     email_use_tls: bool = True
+    feishu_app_id_env: str = "FEISHU_APP_ID"
+    feishu_app_secret_env: str = "FEISHU_APP_SECRET"
+    feishu_base_token_env: str = "FEISHU_BASE_TOKEN"
+    feishu_brands_table_id_env: str = "FEISHU_BRANDS_TABLE_ID"
+    feishu_categories_table_id_env: str = "FEISHU_CATEGORIES_TABLE_ID"
+    feishu_detection_rules_table_id_env: str = "FEISHU_DETECTION_RULES_TABLE_ID"
 
 
 def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
@@ -70,6 +76,39 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
             )
         ),
         email_use_tls=_nested_bool(raw_settings, "email", "use_tls", default=True),
+        feishu_app_id_env=str(
+            _nested(raw_settings, "feishu", "app_id_env", default="FEISHU_APP_ID")
+        ),
+        feishu_app_secret_env=str(
+            _nested(raw_settings, "feishu", "app_secret_env", default="FEISHU_APP_SECRET")
+        ),
+        feishu_base_token_env=str(
+            _nested(raw_settings, "feishu", "base_token_env", default="FEISHU_BASE_TOKEN")
+        ),
+        feishu_brands_table_id_env=str(
+            _nested(
+                raw_settings,
+                "feishu",
+                "brands_table_id_env",
+                default="FEISHU_BRANDS_TABLE_ID",
+            )
+        ),
+        feishu_categories_table_id_env=str(
+            _nested(
+                raw_settings,
+                "feishu",
+                "categories_table_id_env",
+                default="FEISHU_CATEGORIES_TABLE_ID",
+            )
+        ),
+        feishu_detection_rules_table_id_env=str(
+            _nested(
+                raw_settings,
+                "feishu",
+                "detection_rules_table_id_env",
+                default="FEISHU_DETECTION_RULES_TABLE_ID",
+            )
+        ),
     )
 
 

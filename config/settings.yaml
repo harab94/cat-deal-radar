@@ -29,3 +29,11 @@ email:
 
 feedback:
   base_url_env: FEEDBACK_BASE_URL
+
+feishu:
+  app_id_env: FEISHU_APP_ID
+  app_secret_env: FEISHU_APP_SECRET
+  base_token_env: FEISHU_BASE_TOKEN
+  brands_table_id_env: FEISHU_BRANDS_TABLE_ID
+  categories_table_id_env: FEISHU_CATEGORIES_TABLE_ID
+  detection_rules_table_id_env: FEISHU_DETECTION_RULES_TABLE_ID
