@@ -31,7 +31,11 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     try:
         posts = DoubanCrawler(_douban_config(settings), repository).run_once()
     except RuntimeError as error:
-        logger.warning("douban_crawl_failed", error=str(error))
+        logger.warning(
+            "douban_crawl_failed",
+            error=str(error),
+            cookie_configured=bool(os.environ.get(settings.douban_cookie_env)),
+        )
         return PipelineResult(posts_seen=0, deals_created=0, notifications_sent=0)
     detector = RuleBasedDealDetector.from_config_files(
         brands_path=settings.brands_path,

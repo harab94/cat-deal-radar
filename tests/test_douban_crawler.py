@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from io import BytesIO
 from pathlib import Path
+from urllib.error import HTTPError
 
 import pytest
 
-from app.crawler.douban import DoubanCrawler, DoubanGroupConfig
+from app.crawler.douban import DoubanCrawler, DoubanGroupConfig, fetch_html
 from app.crawler.parser import parse_douban_group_posts
 from app.database import Repository
 
@@ -81,3 +83,24 @@ def test_crawler_saves_new_posts_and_skips_duplicates(
     assert len(first_run) == 2
     assert second_run == []
     assert [post.douban_post_id for post in repository.list_posts()] == ["987654321", "123456789"]
+
+
+def test_fetch_html_includes_http_error_detail(monkeypatch: pytest.MonkeyPatch) -> None:
+    def fail_urlopen(*args, **kwargs):
+        raise HTTPError(
+            url="https://www.douban.com/group/haixiuzu/",
+            code=403,
+            msg="Forbidden",
+            hdrs=None,
+            fp=BytesIO("登录后可见".encode()),
+        )
+
+    monkeypatch.setattr("app.crawler.douban.urlopen", fail_urlopen)
+
+    with pytest.raises(RuntimeError, match="status=403"):
+        fetch_html(
+            "https://www.douban.com/group/haixiuzu/",
+            cookie="bid=test",
+            user_agent="test-agent",
+            timeout_seconds=1,
+        )

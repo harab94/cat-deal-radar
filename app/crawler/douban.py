@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import UTC, datetime
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 import structlog
@@ -67,7 +67,12 @@ def fetch_html(
     user_agent: str,
     timeout_seconds: int,
 ) -> str:
-    headers = {"User-Agent": user_agent}
+    headers = {
+        "User-Agent": user_agent,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+        "Referer": "https://www.douban.com/",
+    }
     if cookie:
         headers["Cookie"] = cookie
 
@@ -76,6 +81,17 @@ def fetch_html(
         with urlopen(request, timeout=timeout_seconds) as response:
             charset = response.headers.get_content_charset() or "utf-8"
             return response.read().decode(charset, errors="replace")
-    except URLError as error:
-        msg = f"Failed to fetch Douban page: {url}"
+    except HTTPError as error:
+        detail = _http_error_detail(error)
+        msg = f"Failed to fetch Douban page: {url} ({detail})"
         raise RuntimeError(msg) from error
+    except URLError as error:
+        msg = f"Failed to fetch Douban page: {url} ({error.reason})"
+        raise RuntimeError(msg) from error
+
+
+def _http_error_detail(error: HTTPError) -> str:
+    body = error.read(300).decode("utf-8", errors="replace").replace("\n", " ")
+    if body:
+        return f"status={error.code} reason={error.reason} body={body[:200]}"
+    return f"status={error.code} reason={error.reason}"
