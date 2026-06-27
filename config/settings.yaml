@@ -14,7 +14,7 @@ config:
   preferences_path: config/preferences.yaml
 
 douban:
-  group_url: https://www.douban.com/group/haixiuzu/discussion?start=0
+  group_url: https://www.douban.com/group/656297/?tab=42899
   tab_name: 闲车禁拼多多
   cookie_env: DOUBAN_COOKIE
 

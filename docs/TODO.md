@@ -8,6 +8,7 @@
 - If `douban_crawl_failed` appears, debug Douban access separately:
   - Verify `DOUBAN_COOKIE` is fresh and copied from a logged-in browser session.
   - Confirm `douban.group_url` points to the actual `爱猫生活 / 闲车禁拼多多` page.
+  - Current target URL: `https://www.douban.com/group/656297/?tab=42899`
   - Check whether Douban blocks GitHub Actions runners.
   - Consider running the crawler locally or from a trusted machine if GitHub runner access is blocked.
 
