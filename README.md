@@ -109,9 +109,11 @@ Feedback links are generated from `FEEDBACK_BASE_URL` and include:
 - `action=bought` for `BOUGHT_FROM_THIS`
 - `action=stock` for `ALREADY_HAVE_STOCK`
 
-The first feedback layer stores each action in SQLite. `ALREADY_HAVE_STOCK`
-means the user likes the recommendation but does not need to buy right now, so
-preference learning should not treat it as negative feedback.
+The production feedback endpoint lives in `feedback-worker/`. It shows a small
+confirmation page and writes each click to the Feishu Base `Feedback` table.
+`ALREADY_HAVE_STOCK` means the user likes the recommendation but does not need
+to buy right now, so preference learning should not treat it as negative
+feedback.
 
 ## Preference Learning
 
