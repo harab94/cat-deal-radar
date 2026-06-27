@@ -74,6 +74,20 @@ def test_rule_detector_keeps_xianzhi_post_without_price_unnotified() -> None:
     assert detected.price is None
 
 
+def test_rule_detector_recognizes_common_typos_and_k9() -> None:
+    detector = _detector()
+
+    typo = detector.detect(title="【闲置】百里无谷鸡猫粮 200元")
+    k9 = detector.detect(title="闲置k9罐头鸡肉羊心*2 88元")
+
+    assert typo.brand == "百利"
+    assert typo.category == "cat_food"
+    assert typo.is_deal is True
+    assert k9.brand == "K9 Natural"
+    assert k9.category == "wet_food"
+    assert k9.is_deal is True
+
+
 def test_rule_detector_ignores_content_for_brand_and_price() -> None:
     detector = _detector()
 
