@@ -10,7 +10,6 @@ from app.configuration import load_rule_based_detector
 from app.crawler import DoubanCrawler, DoubanGroupConfig
 from app.database import Deal, Post, Repository
 from app.deal_detector import analyze_comments
-from app.deal_detector.keyword_rules import extract_lowest_price
 from app.feedback import build_feedback_links
 from app.notification import EmailConfig, NotificationService, SmtpEmailSender
 from app.recommendation import (
@@ -71,7 +70,6 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
                     "brand": detected.brand,
                     "category": detected.category,
                     "price": detected.price,
-                    "content_price": extract_lowest_price(post.content),
                     "comment_count": len(post.comments),
                     "reasons": detected.reasons,
                 }
@@ -131,9 +129,6 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             brand_matches=sum(1 for item in detection_diagnostics if item["brand"]),
             category_matches=sum(1 for item in detection_diagnostics if item["category"]),
             price_matches=sum(1 for item in detection_diagnostics if item["price"] is not None),
-            content_price_matches=sum(
-                1 for item in detection_diagnostics if item["content_price"] is not None
-            ),
             sample=detection_diagnostics[:10],
         )
 
