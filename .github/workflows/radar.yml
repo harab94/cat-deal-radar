@@ -14,6 +14,13 @@ on:
           - "false"
           - "true"
 
+permissions:
+  contents: write
+
+concurrency:
+  group: cat-deal-radar
+  cancel-in-progress: false
+
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -52,3 +59,22 @@ jobs:
         env:
           CAT_DEAL_RADAR_SEND_TEST_EMAIL: ${{ inputs.send_test_email || 'false' }}
         run: uv run python -m app.main
+
+      - name: Persist radar state
+        run: |
+          if [ ! -f data/cat_deal_radar.sqlite ]; then
+            echo "No radar database to persist."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/cat_deal_radar.sqlite
+
+          if git diff --cached --quiet; then
+            echo "Radar state unchanged."
+            exit 0
+          fi
+
+          git commit -m "Persist radar state [skip ci]"
+          git push

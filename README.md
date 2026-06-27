@@ -136,6 +136,10 @@ The project has two workflows:
 The scheduled workflow installs dependencies, runs tests, runs Ruff, then starts
 the radar entrypoint.
 
+After a successful radar run, the workflow commits `data/cat_deal_radar.sqlite`
+back to the repository when the database changed. This lets scheduled runs
+remember which Douban posts and notifications were already processed.
+
 When starting the workflow manually, set `send_test_email` to `true` to send a
 fake deal email and verify Gmail delivery without waiting for a real Douban deal.
 
