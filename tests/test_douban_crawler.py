@@ -24,7 +24,7 @@ HTML = """
       </tr>
       <tr>
         <td class="title">
-          <a href="https://www.douban.com/group/topic/987654321/">
+          <a href="https://www.douban.com/group/topic/987654321/?_spm_id=test">
             OP 三文鱼冻干补货
           </a>
         </td>
@@ -69,6 +69,7 @@ def test_parse_douban_group_posts_extracts_topics() -> None:
     assert posts[0].created_at == datetime(2026, 6, 26, 17, 20, tzinfo=UTC)
     assert posts[1].douban_post_id == "987654321"
     assert posts[1].title == "OP 三文鱼冻干补货"
+    assert posts[1].url == "https://www.douban.com/group/topic/987654321/"
 
 
 def test_crawler_saves_new_posts_and_skips_duplicates(
@@ -101,6 +102,19 @@ def test_crawler_saves_new_posts_and_skips_duplicates(
 
 def test_parse_douban_topic_text_extracts_visible_text() -> None:
     assert parse_douban_topic_text(TOPIC_HTML) == "Halo自然光环未拆封，价格 210元，可自提。"
+
+
+def test_parse_douban_topic_text_ignores_sidebar_text() -> None:
+    html = """
+    <html>
+      <body>
+        <aside>自然光环 263r 开车</aside>
+        <div id="link-report">正文只有爱肯拿 330元</div>
+      </body>
+    </html>
+    """
+
+    assert parse_douban_topic_text(html) == "正文只有爱肯拿 330元"
 
 
 def test_fetch_html_includes_http_error_detail(monkeypatch: pytest.MonkeyPatch) -> None:

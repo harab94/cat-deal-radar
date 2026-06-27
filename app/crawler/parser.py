@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from html import unescape
 from html.parser import HTMLParser
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 TOPIC_ID_PATTERN = re.compile(r"/group/topic/(\d+)/?")
 
@@ -53,7 +53,7 @@ class _DoubanTopicParser(HTMLParser):
 
         self._current_link = _TopicLink(
             douban_post_id=match.group(1),
-            url=urljoin(self._base_url, href),
+            url=_canonical_topic_url(self._base_url, match.group(1)),
             title_parts=[],
             created_at=_parse_datetime(attrs_dict.get("data-created-at")),
         )
@@ -92,24 +92,54 @@ class _TopicLink:
 class _TextParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
+        self._capture_depth = 0
         self._skip_depth = 0
         self.text_parts: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag in {"script", "style"}:
             self._skip_depth += 1
+            return
+
+        if self._capture_depth:
+            self._capture_depth += 1
+        elif _is_topic_content_container(attrs):
+            self._capture_depth = 1
 
     def handle_endtag(self, tag: str) -> None:
         if tag in {"script", "style"} and self._skip_depth:
             self._skip_depth -= 1
+            return
+        if self._capture_depth:
+            self._capture_depth -= 1
 
     def handle_data(self, data: str) -> None:
-        if not self._skip_depth:
+        if self._capture_depth and not self._skip_depth:
             self.text_parts.append(data)
 
 
 def _clean_text(value: str) -> str:
     return " ".join(unescape(value).split())
+
+
+def _canonical_topic_url(base_url: str, topic_id: str) -> str:
+    parsed = urlparse(base_url)
+    host = f"{parsed.scheme}://{parsed.netloc}" if parsed.scheme and parsed.netloc else base_url
+    return urljoin(host, f"/group/topic/{topic_id}/")
+
+
+def _is_topic_content_container(attrs: list[tuple[str, str | None]]) -> bool:
+    attrs_dict = dict(attrs)
+    element_id = attrs_dict.get("id", "")
+    class_names = attrs_dict.get("class", "")
+    return element_id == "link-report" or any(
+        name in class_names
+        for name in (
+            "topic-content",
+            "topic-richtext",
+            "rich-content",
+        )
+    )
 
 
 def _parse_datetime(value: str | None) -> datetime | None:
