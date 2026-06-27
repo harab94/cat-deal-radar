@@ -67,6 +67,7 @@ class Repository:
             url=post.url,
             created_at=post.created_at,
             fetched_at=post.fetched_at,
+            comments=post.comments,
         )
 
     def create_post_if_new(self, post: Post) -> Post | None:

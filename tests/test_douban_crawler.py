@@ -8,7 +8,11 @@ from urllib.error import HTTPError
 import pytest
 
 from app.crawler.douban import DoubanCrawler, DoubanGroupConfig, fetch_html
-from app.crawler.parser import parse_douban_group_posts, parse_douban_topic_text
+from app.crawler.parser import (
+    parse_douban_group_posts,
+    parse_douban_topic_comments,
+    parse_douban_topic_text,
+)
 from app.database import Repository
 
 HTML = """
@@ -45,6 +49,8 @@ TOPIC_HTML = """
     <div class="topic-content">
       Halo自然光环未拆封，价格 210元，可自提。
     </div>
+    <div class="reply-content">还能买，我刚拍。</div>
+    <div class="comment-content">好像涨价了。</div>
     <script>ignore me</script>
   </body>
 </html>
@@ -99,10 +105,15 @@ def test_crawler_returns_visible_posts_without_duplicate_inserts(
     assert [post.id for post in second_run] == [post.id for post in first_run]
     assert [post.douban_post_id for post in repository.list_posts()] == ["987654321", "123456789"]
     assert all("价格 210元" in post.content for post in first_run)
+    assert all(post.comments == ("还能买，我刚拍。", "好像涨价了。") for post in first_run)
 
 
 def test_parse_douban_topic_text_extracts_visible_text() -> None:
     assert parse_douban_topic_text(TOPIC_HTML) == "Halo自然光环未拆封，价格 210元，可自提。"
+
+
+def test_parse_douban_topic_comments_extracts_reply_text() -> None:
+    assert parse_douban_topic_comments(TOPIC_HTML) == ["还能买，我刚拍。", "好像涨价了。"]
 
 
 def test_parse_douban_topic_text_ignores_sidebar_text() -> None:

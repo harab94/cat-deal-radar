@@ -7,7 +7,12 @@ from urllib.request import Request, urlopen
 
 import structlog
 
-from app.crawler.parser import ParsedPost, parse_douban_group_posts, parse_douban_topic_text
+from app.crawler.parser import (
+    ParsedPost,
+    parse_douban_group_posts,
+    parse_douban_topic_comments,
+    parse_douban_topic_text,
+)
 from app.database import Post, Repository
 
 logger = structlog.get_logger()
@@ -42,7 +47,7 @@ class DoubanCrawler:
         created_count = 0
 
         for parsed_post in posts:
-            content = self._fetch_post_content(parsed_post)
+            content, comments = self._fetch_post_detail(parsed_post)
             existing_post = self._repository.get_post_by_douban_id(parsed_post.douban_post_id)
             post = Post(
                 id=existing_post.id if existing_post else None,
@@ -54,6 +59,7 @@ class DoubanCrawler:
                 if existing_post
                 else parsed_post.created_at or fetched_at,
                 fetched_at=fetched_at,
+                comments=tuple(comments),
             )
             if existing_post is None:
                 processed_posts.append(self._repository.create_post(post))
@@ -77,7 +83,7 @@ class DoubanCrawler:
     def run_once(self) -> list[Post]:
         return self.save_latest_posts(self.fetch_latest_posts())
 
-    def _fetch_post_content(self, post: ParsedPost) -> str:
+    def _fetch_post_detail(self, post: ParsedPost) -> tuple[str, list[str]]:
         try:
             html = fetch_html(
                 post.url,
@@ -91,10 +97,10 @@ class DoubanCrawler:
                 post_id=post.douban_post_id,
                 error=str(error),
             )
-            return post.title
+            return post.title, []
 
         text = parse_douban_topic_text(html)
-        return text or post.title
+        return text or post.title, parse_douban_topic_comments(html)
 
 
 def _post_content_changed(existing_post: Post, latest_post: Post) -> bool:

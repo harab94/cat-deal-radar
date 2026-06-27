@@ -20,6 +20,7 @@ class Post:
     url: str
     created_at: datetime
     fetched_at: datetime
+    comments: tuple[str, ...] = ()
     id: int | None = None
 
 

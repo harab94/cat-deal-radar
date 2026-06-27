@@ -74,6 +74,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
                     "category": detected.category,
                     "price": detected.price,
                     "content_price": extract_lowest_price(post.content),
+                    "comment_count": len(post.comments),
                     "reasons": detected.reasons,
                 }
             )
@@ -85,7 +86,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
                 brand=_require(detected.brand, "brand"),
                 price=_require(detected.price, "price"),
                 base_confidence=detected.confidence,
-                comment_analysis=analyze_comments([]),
+                comment_analysis=analyze_comments(list(post.comments)),
             )
         )
         if not recommendation.should_notify:

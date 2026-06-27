@@ -31,5 +31,5 @@
 ## Product Follow-Up
 
 - Validate real Douban HTML parsing against the live page.
-- Add comment fetching when the target page structure is confirmed.
+- Verify live Douban reply parsing against production logs.
 - Add real historical average price data before relying on discount scoring in production.

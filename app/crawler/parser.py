@@ -30,6 +30,13 @@ def parse_douban_topic_text(html: str) -> str:
     return _clean_text(" ".join(parser.text_parts))
 
 
+def parse_douban_topic_comments(html: str) -> list[str]:
+    parser = _CommentParser()
+    parser.feed(html)
+    comments = [_clean_text(" ".join(parts)) for parts in parser.comment_parts]
+    return [comment for comment in comments if comment]
+
+
 class _DoubanTopicParser(HTMLParser):
     def __init__(self, base_url: str) -> None:
         super().__init__(convert_charrefs=True)
@@ -118,6 +125,41 @@ class _TextParser(HTMLParser):
             self.text_parts.append(data)
 
 
+class _CommentParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._capture_depth = 0
+        self._skip_depth = 0
+        self._current_parts: list[str] | None = None
+        self.comment_parts: list[list[str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag in {"script", "style"}:
+            self._skip_depth += 1
+            return
+
+        if self._capture_depth:
+            self._capture_depth += 1
+        elif _is_comment_container(attrs):
+            self._capture_depth = 1
+            self._current_parts = []
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in {"script", "style"} and self._skip_depth:
+            self._skip_depth -= 1
+            return
+
+        if self._capture_depth:
+            self._capture_depth -= 1
+            if self._capture_depth == 0 and self._current_parts is not None:
+                self.comment_parts.append(self._current_parts)
+                self._current_parts = None
+
+    def handle_data(self, data: str) -> None:
+        if self._capture_depth and not self._skip_depth and self._current_parts is not None:
+            self._current_parts.append(data)
+
+
 def _clean_text(value: str) -> str:
     return " ".join(unescape(value).split())
 
@@ -138,6 +180,19 @@ def _is_topic_content_container(attrs: list[tuple[str, str | None]]) -> bool:
             "topic-content",
             "topic-richtext",
             "rich-content",
+        )
+    )
+
+
+def _is_comment_container(attrs: list[tuple[str, str | None]]) -> bool:
+    attrs_dict = dict(attrs)
+    class_names = attrs_dict.get("class", "")
+    return any(
+        name in class_names
+        for name in (
+            "reply-content",
+            "comment-content",
+            "topic-reply",
         )
     )
 
