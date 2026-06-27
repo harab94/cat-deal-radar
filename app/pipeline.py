@@ -48,10 +48,20 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
 
     deals_created = 0
     notifications_sent = 0
+    detection_diagnostics: list[dict[str, object]] = []
 
     for post in posts:
         detected = detector.detect(title=post.title, content=post.content)
         if not detected.is_deal:
+            detection_diagnostics.append(
+                {
+                    "title": post.title,
+                    "brand": detected.brand,
+                    "category": detected.category,
+                    "price": detected.price,
+                    "reasons": detected.reasons,
+                }
+            )
             continue
 
         recommendation = scorer.score(
@@ -99,6 +109,16 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             feedback_links=feedback_links,
         )
         notifications_sent += 1
+
+    if deals_created == 0 and posts:
+        logger.info(
+            "deal_detection_summary",
+            posts_seen=len(posts),
+            brand_matches=sum(1 for item in detection_diagnostics if item["brand"]),
+            category_matches=sum(1 for item in detection_diagnostics if item["category"]),
+            price_matches=sum(1 for item in detection_diagnostics if item["price"] is not None),
+            sample=detection_diagnostics[:10],
+        )
 
     return PipelineResult(
         posts_seen=len(posts),
