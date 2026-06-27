@@ -74,6 +74,34 @@ def test_rule_detector_keeps_xianzhi_post_without_price_unnotified() -> None:
     assert detected.price is None
 
 
+def test_rule_detector_uses_content_for_price_not_brand() -> None:
+    detector = _detector()
+
+    detected = detector.detect(
+        title="【闲置】now 车前子壳粉",
+        content="侧栏推荐 Halo 自然光环 263r 开车",
+    )
+
+    assert detected.is_deal is False
+    assert detected.brand is None
+    assert detected.category is None
+    assert detected.price == 263
+
+
+def test_rule_detector_can_use_detail_content_price_for_title_brand() -> None:
+    detector = _detector()
+
+    detected = detector.detect(
+        title="【闲置】halo自然光环2.5kg未拆封",
+        content="正文价格 210元，可自提",
+    )
+
+    assert detected.is_deal is True
+    assert detected.brand == "Halo"
+    assert detected.category == "cat_food"
+    assert detected.price == 210
+
+
 def test_extract_lowest_price_ignores_large_non_price_numbers() -> None:
     assert extract_lowest_price("2026 年 百利 335 元，凑单后 329元") == 329
 

@@ -51,17 +51,18 @@ class RuleBasedDealDetector:
         )
 
     def detect(self, *, title: str, content: str = "") -> DetectedDeal:
-        text = f"{title}\n{content}".strip()
-        brand = self._brand_normalizer.find_in_text(text)
-        category = self._category_for_text(text, brand)
-        price = extract_lowest_price(text)
-        reasons = _reasons(text, brand, category, price)
+        title_text = title.strip()
+        combined_text = f"{title}\n{content}".strip()
+        brand = self._brand_normalizer.find_in_text(title_text)
+        category = self._category_for_text(title_text, brand)
+        price = extract_lowest_price(combined_text)
+        reasons = _reasons(title_text, brand, category, price)
         is_deal = bool(
             brand
             and category
             and price is not None
-            and _has_deal_signal(text)
-            and not _has_expired_signal(text)
+            and _has_deal_signal(title_text)
+            and not _has_expired_signal(title_text)
         )
 
         return DetectedDeal(
