@@ -26,7 +26,6 @@ jobs:
       GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
       DEAL_NOTIFICATION_RECIPIENT: ${{ secrets.DEAL_NOTIFICATION_RECIPIENT }}
       FEEDBACK_BASE_URL: ${{ secrets.FEEDBACK_BASE_URL }}
-      CAT_DEAL_RADAR_SEND_TEST_EMAIL: ${{ inputs.send_test_email || 'false' }}
 
     steps:
       - name: Check out repository
@@ -50,4 +49,6 @@ jobs:
         run: uv run ruff check .
 
       - name: Run radar
+        env:
+          CAT_DEAL_RADAR_SEND_TEST_EMAIL: ${{ inputs.send_test_email || 'false' }}
         run: uv run python -m app.main

@@ -7,12 +7,14 @@ from app.settings import Settings, load_settings
 
 def test_run_returns_success(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr("app.crawler.douban.fetch_html", _empty_html)
+    monkeypatch.delenv("CAT_DEAL_RADAR_SEND_TEST_EMAIL", raising=False)
 
     assert run(_settings(tmp_path)) == 0
 
 
 def test_run_initializes_database(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr("app.crawler.douban.fetch_html", _empty_html)
+    monkeypatch.delenv("CAT_DEAL_RADAR_SEND_TEST_EMAIL", raising=False)
 
     result = run(_settings(tmp_path))
 
