@@ -177,6 +177,8 @@ services:
 Real Douban and Gmail verification still requires repository secrets and a live
 manual run.
 
+Outstanding production follow-ups live in `docs/TODO.md`.
+
 Manual verification for the current phase:
 
 ```bash
