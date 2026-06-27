@@ -8,7 +8,7 @@ from urllib.error import HTTPError
 import pytest
 
 from app.crawler.douban import DoubanCrawler, DoubanGroupConfig, fetch_html
-from app.crawler.parser import parse_douban_group_posts
+from app.crawler.parser import parse_douban_group_posts, parse_douban_topic_text
 from app.database import Repository
 
 HTML = """
@@ -39,6 +39,17 @@ HTML = """
 </html>
 """
 
+TOPIC_HTML = """
+<html>
+  <body>
+    <div class="topic-content">
+      Halo自然光环未拆封，价格 210元，可自提。
+    </div>
+    <script>ignore me</script>
+  </body>
+</html>
+"""
+
 
 @pytest.fixture
 def repository(tmp_path: Path) -> Repository:
@@ -64,7 +75,9 @@ def test_crawler_saves_new_posts_and_skips_duplicates(
     monkeypatch: pytest.MonkeyPatch,
     repository: Repository,
 ) -> None:
-    def fake_fetch_html(*args, **kwargs) -> str:
+    def fake_fetch_html(url, *args, **kwargs) -> str:
+        if "/group/topic/" in url:
+            return TOPIC_HTML
         return HTML
 
     monkeypatch.setattr("app.crawler.douban.fetch_html", fake_fetch_html)
@@ -83,6 +96,11 @@ def test_crawler_saves_new_posts_and_skips_duplicates(
     assert len(first_run) == 2
     assert second_run == []
     assert [post.douban_post_id for post in repository.list_posts()] == ["987654321", "123456789"]
+    assert all("价格 210元" in post.content for post in first_run)
+
+
+def test_parse_douban_topic_text_extracts_visible_text() -> None:
+    assert parse_douban_topic_text(TOPIC_HTML) == "Halo自然光环未拆封，价格 210元，可自提。"
 
 
 def test_fetch_html_includes_http_error_detail(monkeypatch: pytest.MonkeyPatch) -> None:

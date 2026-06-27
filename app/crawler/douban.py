@@ -7,7 +7,7 @@ from urllib.request import Request, urlopen
 
 import structlog
 
-from app.crawler.parser import ParsedPost, parse_douban_group_posts
+from app.crawler.parser import ParsedPost, parse_douban_group_posts, parse_douban_topic_text
 from app.database import Post, Repository
 
 logger = structlog.get_logger()
@@ -41,10 +41,11 @@ class DoubanCrawler:
         saved_posts: list[Post] = []
 
         for parsed_post in posts:
+            content = self._fetch_post_content(parsed_post)
             post = Post(
                 douban_post_id=parsed_post.douban_post_id,
                 title=parsed_post.title,
-                content=parsed_post.title,
+                content=content,
                 url=parsed_post.url,
                 created_at=parsed_post.created_at or fetched_at,
                 fetched_at=fetched_at,
@@ -58,6 +59,25 @@ class DoubanCrawler:
 
     def run_once(self) -> list[Post]:
         return self.save_new_posts(self.fetch_latest_posts())
+
+    def _fetch_post_content(self, post: ParsedPost) -> str:
+        try:
+            html = fetch_html(
+                post.url,
+                cookie=self._config.cookie,
+                user_agent=self._config.user_agent,
+                timeout_seconds=self._config.timeout_seconds,
+            )
+        except RuntimeError as error:
+            logger.warning(
+                "douban_topic_fetch_failed",
+                post_id=post.douban_post_id,
+                error=str(error),
+            )
+            return post.title
+
+        text = parse_douban_topic_text(html)
+        return text or post.title
 
 
 def fetch_html(
