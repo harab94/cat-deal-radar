@@ -3,7 +3,9 @@ from __future__ import annotations
 import smtplib
 from dataclasses import dataclass
 from email.header import Header
-from email.message import EmailMessage as MimeEmailMessage
+from email.message import Message as MimeMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from app.notification.templates import EmailMessage
 
@@ -42,11 +44,11 @@ def build_mime_message(
     message: EmailMessage,
     sender: str,
     recipient: str,
-) -> MimeEmailMessage:
-    mime_message = MimeEmailMessage()
-    mime_message["Subject"] = Header(message.subject, "utf-8", maxlinelen=998).encode(linesep="")
+) -> MimeMessage:
+    mime_message = MIMEMultipart("alternative")
+    mime_message["Subject"] = Header(message.subject, "utf-8", maxlinelen=998)
     mime_message["From"] = sender
     mime_message["To"] = recipient
-    mime_message.set_content(message.text_body)
-    mime_message.add_alternative(message.html_body, subtype="html")
+    mime_message.attach(MIMEText(message.text_body, "plain", "utf-8"))
+    mime_message.attach(MIMEText(message.html_body, "html", "utf-8"))
     return mime_message
