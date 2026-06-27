@@ -23,6 +23,7 @@ def test_pipeline_creates_deal_without_email_when_email_config_is_missing(
     tmp_path: Path,
 ) -> None:
     monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_html)
+    _clear_notification_env(monkeypatch)
     settings = _settings(tmp_path)
     repository = Repository(settings.database_path)
 
@@ -40,6 +41,7 @@ def test_main_run_executes_pipeline(
     tmp_path: Path,
 ) -> None:
     monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_html)
+    _clear_notification_env(monkeypatch)
     settings = _settings(tmp_path)
 
     result = run(settings)
@@ -60,3 +62,14 @@ def _settings(tmp_path: Path) -> Settings:
         douban_group_url="https://www.douban.com/group/haixiuzu/",
         douban_tab_name="闲车禁拼多多",
     )
+
+
+def _clear_notification_env(monkeypatch) -> None:
+    for name in (
+        "GMAIL_USERNAME",
+        "GMAIL_APP_PASSWORD",
+        "GMAIL_SENDER",
+        "DEAL_NOTIFICATION_RECIPIENT",
+        "FEEDBACK_BASE_URL",
+    ):
+        monkeypatch.delenv(name, raising=False)
