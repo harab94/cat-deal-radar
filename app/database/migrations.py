@@ -1,0 +1,54 @@
+from __future__ import annotations
+
+SCHEMA_SQL = """
+CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    douban_post_id TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    url TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    fetched_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS deals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    category TEXT NOT NULL,
+    brand TEXT NOT NULL,
+    product_name TEXT NOT NULL,
+    price REAL NOT NULL,
+    confidence_score INTEGER NOT NULL,
+    cat_score INTEGER NOT NULL,
+    is_duplicate INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    deal_id INTEGER NOT NULL,
+    email_sent INTEGER NOT NULL DEFAULT 0,
+    sent_at TEXT,
+    FOREIGN KEY (deal_id) REFERENCES deals (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS feedback (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    deal_id INTEGER NOT NULL,
+    feedback_type TEXT NOT NULL CHECK (
+        feedback_type IN (
+            'MORE_LIKE_THIS',
+            'LESS_LIKE_THIS',
+            'BOUGHT_FROM_THIS',
+            'ALREADY_HAVE_STOCK'
+        )
+    ),
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (deal_id) REFERENCES deals (id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_deals_post_id ON deals (post_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_deal_id ON notifications (deal_id);
+CREATE INDEX IF NOT EXISTS idx_feedback_deal_id ON feedback (deal_id);
+"""

@@ -1,0 +1,31 @@
+app:
+  name: cat-deal-radar
+  environment: local
+
+monitoring:
+  interval_minutes: 10
+
+database:
+  path: data/cat_deal_radar.sqlite
+
+config:
+  brands_path: config/brands.yaml
+  categories_path: config/categories.yaml
+  preferences_path: config/preferences.yaml
+
+douban:
+  group_url: https://www.douban.com/group/haixiuzu/discussion?start=0
+  tab_name: 闲车禁拼多多
+  cookie_env: DOUBAN_COOKIE
+
+email:
+  smtp_host: smtp.gmail.com
+  smtp_port: 587
+  username_env: GMAIL_USERNAME
+  password_env: GMAIL_APP_PASSWORD
+  sender_env: GMAIL_SENDER
+  recipient_env: DEAL_NOTIFICATION_RECIPIENT
+  use_tls: true
+
+feedback:
+  base_url_env: FEEDBACK_BASE_URL

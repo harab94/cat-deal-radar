@@ -1,0 +1,25 @@
+cat_food:
+  brands:
+    - 爱肯拿
+    - 百利
+    - 法米娜
+    - 金素
+    - Halo
+
+wet_food:
+  brands:
+    - 金色交响乐
+    - 小李子
+    - MJamJam
+
+freeze_dried:
+  brands:
+    - OP
+    - 顽味
+
+cat_litter:
+  keywords:
+    - 铁锤
+    - Arm & Hammer
+    - 豆腐砂
+    - 木薯砂

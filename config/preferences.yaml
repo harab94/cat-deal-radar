@@ -1,0 +1,18 @@
+preferred_brands:
+  爱肯拿: 25
+  百利: 30
+  法米娜: 25
+  金素: 20
+  Halo: 15
+  金色交响乐: 20
+  小李子: 20
+  MJamJam: 20
+  OP: 20
+  顽味: 20
+  Arm & Hammer: 15
+
+category_priorities:
+  cat_food: 30
+  wet_food: 25
+  freeze_dried: 20
+  cat_litter: 15

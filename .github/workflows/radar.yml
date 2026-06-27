@@ -1,0 +1,43 @@
+name: Cat Deal Radar
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    env:
+      DOUBAN_COOKIE: ${{ secrets.DOUBAN_COOKIE }}
+      GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+      DEAL_NOTIFICATION_RECIPIENT: ${{ secrets.DEAL_NOTIFICATION_RECIPIENT }}
+      FEEDBACK_BASE_URL: ${{ secrets.FEEDBACK_BASE_URL }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Run Ruff
+        run: uv run ruff check .
+
+      - name: Run radar
+        run: uv run python -m app.main
