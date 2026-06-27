@@ -52,10 +52,9 @@ class RuleBasedDealDetector:
 
     def detect(self, *, title: str, content: str = "") -> DetectedDeal:
         title_text = title.strip()
-        combined_text = f"{title}\n{content}".strip()
         brand = self._brand_normalizer.find_in_text(title_text)
         category = self._category_for_text(title_text, brand)
-        price = extract_lowest_price(combined_text)
+        price = extract_lowest_price(title_text)
         reasons = _reasons(title_text, brand, category, price)
         is_deal = bool(
             brand
