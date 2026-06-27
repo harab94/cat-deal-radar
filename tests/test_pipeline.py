@@ -52,6 +52,24 @@ def test_main_run_executes_pipeline(
         assert len(repository.list_deals()) == 1
 
 
+def test_pipeline_handles_douban_fetch_failure(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    def fail_fetch(*args, **kwargs) -> str:
+        raise RuntimeError("Failed to fetch Douban page")
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", fail_fetch)
+    settings = _settings(tmp_path)
+    repository = Repository(settings.database_path)
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 0
+    assert result.deals_created == 0
+    assert result.notifications_sent == 0
+
+
 def _fake_fetch_html(*args, **kwargs) -> str:
     return HTML
 

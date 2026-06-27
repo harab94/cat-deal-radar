@@ -28,7 +28,11 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     settings.database_path.parent.mkdir(parents=True, exist_ok=True)
     repository.initialize()
 
-    posts = DoubanCrawler(_douban_config(settings), repository).run_once()
+    try:
+        posts = DoubanCrawler(_douban_config(settings), repository).run_once()
+    except RuntimeError as error:
+        logger.warning("douban_crawl_failed", error=str(error))
+        return PipelineResult(posts_seen=0, deals_created=0, notifications_sent=0)
     detector = RuleBasedDealDetector.from_config_files(
         brands_path=settings.brands_path,
         categories_path=settings.categories_path,
