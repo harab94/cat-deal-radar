@@ -72,7 +72,7 @@ def test_parse_douban_group_posts_extracts_topics() -> None:
     assert posts[1].url == "https://www.douban.com/group/topic/987654321/"
 
 
-def test_crawler_saves_new_posts_and_skips_duplicates(
+def test_crawler_returns_visible_posts_without_duplicate_inserts(
     monkeypatch: pytest.MonkeyPatch,
     repository: Repository,
 ) -> None:
@@ -95,7 +95,8 @@ def test_crawler_saves_new_posts_and_skips_duplicates(
     second_run = crawler.run_once()
 
     assert len(first_run) == 2
-    assert second_run == []
+    assert len(second_run) == 2
+    assert [post.id for post in second_run] == [post.id for post in first_run]
     assert [post.douban_post_id for post in repository.list_posts()] == ["987654321", "123456789"]
     assert all("价格 210元" in post.content for post in first_run)
 

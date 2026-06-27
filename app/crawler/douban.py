@@ -36,29 +36,46 @@ class DoubanCrawler:
         )
         return parse_douban_group_posts(html, base_url=self._config.group_url)
 
-    def save_new_posts(self, posts: list[ParsedPost]) -> list[Post]:
+    def save_latest_posts(self, posts: list[ParsedPost]) -> list[Post]:
         fetched_at = datetime.now(UTC)
-        saved_posts: list[Post] = []
+        processed_posts: list[Post] = []
+        created_count = 0
 
         for parsed_post in posts:
             content = self._fetch_post_content(parsed_post)
+            existing_post = self._repository.get_post_by_douban_id(parsed_post.douban_post_id)
             post = Post(
+                id=existing_post.id if existing_post else None,
                 douban_post_id=parsed_post.douban_post_id,
                 title=parsed_post.title,
                 content=content,
                 url=parsed_post.url,
-                created_at=parsed_post.created_at or fetched_at,
+                created_at=existing_post.created_at
+                if existing_post
+                else parsed_post.created_at or fetched_at,
                 fetched_at=fetched_at,
             )
-            saved_post = self._repository.create_post_if_new(post)
-            if saved_post is not None:
-                saved_posts.append(saved_post)
+            if existing_post is None:
+                processed_posts.append(self._repository.create_post(post))
+                created_count += 1
+            elif _post_content_changed(existing_post, post):
+                processed_posts.append(self._repository.update_post(post))
+            else:
+                processed_posts.append(existing_post)
 
-        logger.info("douban_posts_saved", saved_count=len(saved_posts), parsed_count=len(posts))
-        return saved_posts
+        logger.info(
+            "douban_posts_saved",
+            created_count=created_count,
+            processed_count=len(processed_posts),
+            parsed_count=len(posts),
+        )
+        return processed_posts
+
+    def save_new_posts(self, posts: list[ParsedPost]) -> list[Post]:
+        return self.save_latest_posts(posts)
 
     def run_once(self) -> list[Post]:
-        return self.save_new_posts(self.fetch_latest_posts())
+        return self.save_latest_posts(self.fetch_latest_posts())
 
     def _fetch_post_content(self, post: ParsedPost) -> str:
         try:
@@ -78,6 +95,14 @@ class DoubanCrawler:
 
         text = parse_douban_topic_text(html)
         return text or post.title
+
+
+def _post_content_changed(existing_post: Post, latest_post: Post) -> bool:
+    return (
+        existing_post.title != latest_post.title
+        or existing_post.content != latest_post.content
+        or existing_post.url != latest_post.url
+    )
 
 
 def fetch_html(
