@@ -69,18 +69,23 @@ def _load_local_detection_config(*, brands_path: Path, categories_path: Path) ->
 
 def _feishu_config_from_env(settings: Settings) -> FeishuBaseConfig | None:
     values = {
-        "app_id": os.environ.get(settings.feishu_app_id_env),
-        "app_secret": os.environ.get(settings.feishu_app_secret_env),
-        "base_token": os.environ.get(settings.feishu_base_token_env),
-        "brands_table_id": os.environ.get(settings.feishu_brands_table_id_env),
-        "categories_table_id": os.environ.get(settings.feishu_categories_table_id_env),
-        "detection_rules_table_id": os.environ.get(
-            settings.feishu_detection_rules_table_id_env
-        ),
+        "app_id": _env_value(settings.feishu_app_id_env),
+        "app_secret": _env_value(settings.feishu_app_secret_env),
+        "base_token": _env_value(settings.feishu_base_token_env),
+        "brands_table_id": _env_value(settings.feishu_brands_table_id_env),
+        "categories_table_id": _env_value(settings.feishu_categories_table_id_env),
+        "detection_rules_table_id": _env_value(settings.feishu_detection_rules_table_id_env),
     }
     if not all(values.values()):
         return None
     return FeishuBaseConfig(**values)  # type: ignore[arg-type]
+
+
+def _env_value(name: str) -> str | None:
+    value = os.environ.get(name)
+    if value is None:
+        return None
+    return value.strip()
 
 
 def _normalize_brand_aliases(raw: Any) -> dict[str, list[str]]:

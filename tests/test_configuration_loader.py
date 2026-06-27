@@ -24,12 +24,12 @@ def test_load_rule_based_detector_can_read_feishu_base_config(
     monkeypatch,
     tmp_path: Path,
 ) -> None:
-    monkeypatch.setenv("FEISHU_APP_ID", "cli_test")
-    monkeypatch.setenv("FEISHU_APP_SECRET", "secret")
-    monkeypatch.setenv("FEISHU_BASE_TOKEN", "base_token")
-    monkeypatch.setenv("FEISHU_BRANDS_TABLE_ID", "brands_table")
-    monkeypatch.setenv("FEISHU_CATEGORIES_TABLE_ID", "categories_table")
-    monkeypatch.setenv("FEISHU_DETECTION_RULES_TABLE_ID", "rules_table")
+    monkeypatch.setenv("FEISHU_APP_ID", " cli_test\n")
+    monkeypatch.setenv("FEISHU_APP_SECRET", " secret\n")
+    monkeypatch.setenv("FEISHU_BASE_TOKEN", " base_token\n")
+    monkeypatch.setenv("FEISHU_BRANDS_TABLE_ID", " brands_table\n")
+    monkeypatch.setenv("FEISHU_CATEGORIES_TABLE_ID", " categories_table\n")
+    monkeypatch.setenv("FEISHU_DETECTION_RULES_TABLE_ID", " rules_table\n")
     monkeypatch.setattr("app.configuration.feishu_base.urlopen", _fake_urlopen)
 
     detector = load_rule_based_detector(_settings(tmp_path))

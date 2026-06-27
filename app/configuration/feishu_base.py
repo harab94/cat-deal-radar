@@ -60,7 +60,7 @@ class FeishuBaseReader:
         page_token: str | None = None
 
         while True:
-            params = {"page_size": "500"}
+            params = {"page_size": "100"}
             if page_token:
                 params["page_token"] = page_token
             response = _request_json(
@@ -146,7 +146,11 @@ def _request_json(
     try:
         with urlopen(request, timeout=20) as response:
             result = json.loads(response.read().decode("utf-8"))
-    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError) as error:
+    except HTTPError as error:
+        detail = _http_error_detail(error)
+        msg = f"Feishu API request failed: {method} {_safe_url(url)} ({detail})"
+        raise RuntimeError(msg) from error
+    except (URLError, TimeoutError, json.JSONDecodeError) as error:
         msg = f"Feishu API request failed: {error}"
         raise RuntimeError(msg) from error
 
@@ -178,3 +182,14 @@ def _cell_text(value: Any) -> str:
     if isinstance(value, dict):
         return str(value.get("text") or value.get("name") or "").strip()
     return str(value).strip()
+
+
+def _http_error_detail(error: HTTPError) -> str:
+    body = error.read(500).decode("utf-8", errors="replace").replace("\n", " ")
+    if body:
+        return f"status={error.code} reason={error.reason} body={body[:300]}"
+    return f"status={error.code} reason={error.reason}"
+
+
+def _safe_url(url: str) -> str:
+    return url.split("?")[0]
