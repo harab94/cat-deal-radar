@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from email.header import decode_header, make_header
 from pathlib import Path
 
 import pytest
 
 from app.database import Deal, Post, Repository
 from app.notification import EmailMessage, FeedbackLinks, NotificationService, render_deal_email
+from app.notification.email_sender import build_mime_message
 from app.recommendation import RecommendationScore
 
 NOW = datetime(2026, 6, 27, 12, 0, tzinfo=UTC)
@@ -51,6 +53,25 @@ def test_render_deal_email_escapes_html() -> None:
     assert "<script>bad</script>" not in message.html_body
     assert "&lt;script&gt;bad&lt;/script&gt;" in message.html_body
     assert "&lt;b&gt;title&lt;/b&gt;" in message.html_body
+
+
+def test_mime_message_encodes_unicode_subject() -> None:
+    message = render_deal_email(
+        deal=_deal(deal_id=1),
+        post=_post(post_id=1),
+        recommendation=_recommendation(cat_score=5),
+        feedback_links=FEEDBACK_LINKS,
+    )
+
+    mime_message = build_mime_message(
+        message=message,
+        sender="sender@example.com",
+        recipient="recipient@example.com",
+    )
+    decoded_subject = str(make_header(decode_header(mime_message["Subject"])))
+
+    assert decoded_subject == "🐱🐱🐱🐱🐱【必抢】百利原始鸡 335元"
+    assert "=?utf-8?" in mime_message.as_string().casefold()
 
 
 def test_notification_service_sends_email_and_records_notification(
