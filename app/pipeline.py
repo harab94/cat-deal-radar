@@ -7,11 +7,16 @@ from datetime import UTC, datetime
 import structlog
 
 from app.crawler import DoubanCrawler, DoubanGroupConfig
-from app.database import Deal, Repository
+from app.database import Deal, Post, Repository
 from app.deal_detector import RuleBasedDealDetector, analyze_comments
 from app.feedback import build_feedback_links
 from app.notification import EmailConfig, NotificationService, SmtpEmailSender
-from app.recommendation import DuplicateHandler, RecommendationInput, RecommendationScorer
+from app.recommendation import (
+    DuplicateHandler,
+    RecommendationInput,
+    RecommendationScore,
+    RecommendationScorer,
+)
 from app.settings import Settings
 
 logger = structlog.get_logger()
@@ -27,6 +32,14 @@ class PipelineResult:
 def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     settings.database_path.parent.mkdir(parents=True, exist_ok=True)
     repository.initialize()
+
+    if _send_test_email_enabled():
+        notifications_sent = _send_test_email(settings, repository)
+        return PipelineResult(
+            posts_seen=0,
+            deals_created=1 if notifications_sent else 0,
+            notifications_sent=notifications_sent,
+        )
 
     try:
         posts = DoubanCrawler(_douban_config(settings), repository).run_once()
@@ -154,6 +167,65 @@ def _email_sender_from_env(settings: Settings) -> SmtpEmailSender | None:
             use_tls=settings.email_use_tls,
         )
     )
+
+
+def _send_test_email(settings: Settings, repository: Repository) -> int:
+    sender = _email_sender_from_env(settings)
+    feedback_base_url = os.environ.get(settings.feedback_base_url_env)
+    if sender is None or feedback_base_url is None:
+        logger.warning("test_email_skipped_missing_configuration")
+        return 0
+
+    post = repository.create_post_if_new(
+        _test_post(),
+    ) or _require(
+        repository.get_post_by_douban_id("test-email"),
+        "test post",
+    )
+    deal = repository.create_deal(
+        Deal(
+            post_id=_require(post.id, "post id"),
+            category="cat_food",
+            brand="百利",
+            product_name="测试邮件：百利原始鸡",
+            price=335,
+            confidence_score=95,
+            cat_score=5,
+            is_duplicate=False,
+            created_at=datetime.now(UTC),
+        )
+    )
+    NotificationService(repository=repository, sender=sender).send_deal_notification(
+        deal=deal,
+        post=post,
+        recommendation=RecommendationScore(
+            confidence_score=95,
+            cat_score=5,
+            should_notify=True,
+            reasons=("test email", "Gmail delivery verification"),
+        ),
+        feedback_links=build_feedback_links(
+            base_url=feedback_base_url,
+            deal_id=_require(deal.id, "deal id"),
+        ),
+    )
+    logger.info("test_email_sent", deal_id=deal.id)
+    return 1
+
+
+def _test_post():
+    return Post(
+        douban_post_id="test-email",
+        title="测试邮件：百利原始鸡 335 元",
+        content="这是一封用于验证 Gmail SMTP 投递的测试邮件。",
+        url="https://github.com/harab94/cat-deal-radar",
+        created_at=datetime.now(UTC),
+        fetched_at=datetime.now(UTC),
+    )
+
+
+def _send_test_email_enabled() -> bool:
+    return os.environ.get("CAT_DEAL_RADAR_SEND_TEST_EMAIL", "").casefold() in {"1", "true", "yes"}
 
 
 def _require[T](value: T | None, name: str) -> T:

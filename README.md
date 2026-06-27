@@ -136,6 +136,9 @@ The project has two workflows:
 The scheduled workflow installs dependencies, runs tests, runs Ruff, then starts
 the radar entrypoint.
 
+When starting the workflow manually, set `send_test_email` to `true` to send a
+fake deal email and verify Gmail delivery without waiting for a real Douban deal.
+
 `python -m app.main` now executes one pipeline run:
 
 1. initialize SQLite

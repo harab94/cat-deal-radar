@@ -4,6 +4,15 @@ on:
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
+    inputs:
+      send_test_email:
+        description: "Send a fake deal email to verify Gmail delivery"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 jobs:
   run:
@@ -17,6 +26,7 @@ jobs:
       GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
       DEAL_NOTIFICATION_RECIPIENT: ${{ secrets.DEAL_NOTIFICATION_RECIPIENT }}
       FEEDBACK_BASE_URL: ${{ secrets.FEEDBACK_BASE_URL }}
+      CAT_DEAL_RADAR_SEND_TEST_EMAIL: ${{ inputs.send_test_email || 'false' }}
 
     steps:
       - name: Check out repository
