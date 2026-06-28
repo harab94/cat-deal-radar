@@ -15,9 +15,12 @@ from app.feedback import build_feedback_links
 from app.notification import (
     DealDigestItem,
     EmailConfig,
+    EmailMessage,
     NotificationService,
     PriceContext,
     SmtpEmailSender,
+    WeWorkAppSender,
+    WeWorkConfig,
 )
 from app.recommendation import (
     DuplicateHandler,
@@ -64,7 +67,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     sku_catalog = SkuCatalog(detection_config.skus)
     scorer = RecommendationScorer.from_yaml(settings.preferences_path)
     duplicate_handler = DuplicateHandler()
-    sender = _email_sender_from_env(settings)
+    sender = _notification_sender_from_env(settings)
     feedback_base_url = os.environ.get(settings.feedback_base_url_env)
 
     deals_created = 0
@@ -231,8 +234,48 @@ def _email_sender_from_env(settings: Settings) -> SmtpEmailSender | None:
     )
 
 
+def _wework_sender_from_env(settings: Settings) -> WeWorkAppSender | None:
+    corp_id = os.environ.get(settings.wework_corp_id_env)
+    agent_id = os.environ.get(settings.wework_agent_id_env)
+    app_secret = os.environ.get(settings.wework_app_secret_env)
+    to_user = os.environ.get(settings.wework_to_user_env)
+    if not all([corp_id, agent_id, app_secret, to_user]):
+        return None
+
+    return WeWorkAppSender(
+        WeWorkConfig(
+            corp_id=_require(corp_id, "WeWork corp id"),
+            agent_id=_require(agent_id, "WeWork agent id"),
+            app_secret=_require(app_secret, "WeWork app secret"),
+            to_user=_require(to_user, "WeWork to user"),
+        )
+    )
+
+
+def _notification_sender_from_env(settings: Settings):
+    senders = [
+        sender
+        for sender in (_email_sender_from_env(settings), _wework_sender_from_env(settings))
+        if sender is not None
+    ]
+    if not senders:
+        return None
+    if len(senders) == 1:
+        return senders[0]
+    return CompositeSender(tuple(senders))
+
+
+class CompositeSender:
+    def __init__(self, senders: tuple) -> None:
+        self._senders = senders
+
+    def send(self, message: EmailMessage) -> None:
+        for sender in self._senders:
+            sender.send(message)
+
+
 def _send_test_email(settings: Settings, repository: Repository) -> int:
-    sender = _email_sender_from_env(settings)
+    sender = _notification_sender_from_env(settings)
     feedback_base_url = os.environ.get(settings.feedback_base_url_env)
     if sender is None or feedback_base_url is None:
         logger.warning("test_email_skipped_missing_configuration")

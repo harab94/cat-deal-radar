@@ -32,6 +32,10 @@ class Settings:
     feishu_categories_table_id_env: str = "FEISHU_CATEGORIES_TABLE_ID"
     feishu_detection_rules_table_id_env: str = "FEISHU_DETECTION_RULES_TABLE_ID"
     feishu_skus_table_id_env: str = "FEISHU_SKUS_TABLE_ID"
+    wework_corp_id_env: str = "WEWORK_CORP_ID"
+    wework_agent_id_env: str = "WEWORK_AGENT_ID"
+    wework_app_secret_env: str = "WEWORK_APP_SECRET"
+    wework_to_user_env: str = "WEWORK_TO_USER"
 
 
 def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
@@ -119,6 +123,18 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
                 "skus_table_id_env",
                 default="FEISHU_SKUS_TABLE_ID",
             )
+        ),
+        wework_corp_id_env=str(
+            _nested(raw_settings, "wework", "corp_id_env", default="WEWORK_CORP_ID")
+        ),
+        wework_agent_id_env=str(
+            _nested(raw_settings, "wework", "agent_id_env", default="WEWORK_AGENT_ID")
+        ),
+        wework_app_secret_env=str(
+            _nested(raw_settings, "wework", "app_secret_env", default="WEWORK_APP_SECRET")
+        ),
+        wework_to_user_env=str(
+            _nested(raw_settings, "wework", "to_user_env", default="WEWORK_TO_USER")
         ),
     )
 

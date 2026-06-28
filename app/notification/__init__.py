@@ -10,6 +10,7 @@ from app.notification.templates import (
     render_deal_digest_email,
     render_deal_email,
 )
+from app.notification.wework_sender import WeWorkAppSender, WeWorkConfig
 
 __all__ = [
     "DealDigestItem",
@@ -19,6 +20,8 @@ __all__ = [
     "PriceContext",
     "NotificationService",
     "SmtpEmailSender",
+    "WeWorkAppSender",
+    "WeWorkConfig",
     "render_deal_digest_email",
     "render_deal_email",
 ]

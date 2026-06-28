@@ -110,6 +110,34 @@ def test_pipeline_sends_one_email_for_multiple_deals(
     assert len(repository.list_notifications()) == 2
 
 
+def test_pipeline_can_send_wework_notification_without_email(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    sent_subjects: list[str] = []
+
+    def fake_send(self, message) -> None:
+        sent_subjects.append(message.subject)
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_html)
+    monkeypatch.setenv("WEWORK_CORP_ID", "corp-id")
+    monkeypatch.setenv("WEWORK_AGENT_ID", "1000002")
+    monkeypatch.setenv("WEWORK_APP_SECRET", "secret")
+    monkeypatch.setenv("WEWORK_TO_USER", "Hairahan")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://feedback.example.com")
+    monkeypatch.setattr("app.notification.wework_sender.WeWorkAppSender.send", fake_send)
+    settings = _settings(tmp_path)
+    repository = Repository(settings.database_path)
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 1
+    assert result.deals_created == 1
+    assert result.notifications_sent == 1
+    assert sent_subjects == ["🐱🐱🐱🐱🐱【必抢】闲车 百利原始鸡 335 元 335元"]
+    assert len(repository.list_notifications()) == 1
+
+
 def test_main_run_executes_pipeline(
     monkeypatch,
     tmp_path: Path,
@@ -192,5 +220,9 @@ def _clear_notification_env(monkeypatch) -> None:
         "DEAL_NOTIFICATION_RECIPIENT",
         "FEEDBACK_BASE_URL",
         "CAT_DEAL_RADAR_SEND_TEST_EMAIL",
+        "WEWORK_CORP_ID",
+        "WEWORK_AGENT_ID",
+        "WEWORK_APP_SECRET",
+        "WEWORK_TO_USER",
     ):
         monkeypatch.delenv(name, raising=False)
