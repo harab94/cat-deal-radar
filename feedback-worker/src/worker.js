@@ -32,7 +32,7 @@ export default {
           dealId,
           action,
           feedbackType: ACTION_TYPES[action],
-          createdAt: new Date().toISOString(),
+          createdAt: Date.now(),
         });
       } catch (error) {
         console.error(error);
