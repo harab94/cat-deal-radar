@@ -14,11 +14,15 @@ const ACTION_TYPES = {
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+    if (url.pathname === "/wework/callback") {
+      return handleWeWorkCallback(request, env, url);
+    }
+
     if (request.method !== "GET") {
       return htmlResponse("不支持的请求", "请从邮件里的反馈链接打开。", 405);
     }
 
-    const url = new URL(request.url);
     const dealId = (url.searchParams.get("deal_id") || "").trim();
     const action = (url.searchParams.get("action") || "").trim();
 
@@ -51,6 +55,218 @@ export default {
     );
   },
 };
+
+async function handleWeWorkCallback(request, env, url) {
+  if (request.method === "GET") {
+    return verifyWeWorkCallback(env, url);
+  }
+  if (request.method === "POST") {
+    return receiveWeWorkMessage(request, env, url);
+  }
+  return new Response("method not allowed", { status: 405 });
+}
+
+async function verifyWeWorkCallback(env, url) {
+  const encryptedEcho = requiredParam(url, "echostr");
+  await assertWeWorkSignature(env, url, encryptedEcho);
+  const echo = await decryptWeWorkMessage(env, encryptedEcho);
+  return new Response(echo.message, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
+}
+
+async function receiveWeWorkMessage(request, env, url) {
+  const body = await request.text();
+  const encryptedMessage = xmlValue(body, "Encrypt");
+  if (!encryptedMessage) {
+    return new Response("missing Encrypt", { status: 400 });
+  }
+
+  await assertWeWorkSignature(env, url, encryptedMessage);
+  const decrypted = await decryptWeWorkMessage(env, encryptedMessage);
+  const message = parseWeWorkXml(decrypted.message);
+  const feedback = parseWeWorkFeedback(message.content || "");
+
+  if (!feedback) {
+    await sendWeWorkConfirmation(env, {
+      toUser: message.fromUser,
+      content: "我没看懂这条反馈。可以回复：多推 123、少推 123、买了 123、家里还有 123。",
+    });
+    return new Response("success");
+  }
+
+  try {
+    await writeFeedback(env, {
+      dealId: feedback.dealId,
+      action: feedback.action,
+      brand: null,
+      category: null,
+      doubanUrl: null,
+      feedbackType: ACTION_TYPES[feedback.action],
+      price: null,
+      title: `企业微信回复：${message.content}`,
+      createdAt: Date.now(),
+    });
+    await sendWeWorkConfirmation(env, {
+      toUser: message.fromUser,
+      content: `已记录：${ACTION_LABELS[feedback.action]}（deal ${feedback.dealId}）。`,
+    });
+  } catch (error) {
+    console.error(error);
+    await sendWeWorkConfirmation(env, {
+      toUser: message.fromUser,
+      content: "反馈写入飞书失败了，我这边没收下这条记录。",
+    });
+  }
+
+  return new Response("success");
+}
+
+function parseWeWorkFeedback(content) {
+  const text = content.trim();
+  const dealId = text.match(/\b\d+\b/)?.[0] || "";
+  if (!dealId) return null;
+
+  const normalized = text.replace(/\s+/g, "");
+  const action =
+    matchAny(normalized, ["多推", "类似", "more"]) ||
+    matchAny(normalized, ["少推", "不推", "less"]) ||
+    matchAny(normalized, ["已下单", "下单", "买了", "bought"]) ||
+    matchAny(normalized, ["家里还有", "还有", "库存", "stock"]);
+  if (!action) return null;
+  return { dealId, action };
+}
+
+function matchAny(text, keywords) {
+  if (keywords.some((keyword) => text.includes(keyword))) {
+    if (keywords.includes("more")) return "more";
+    if (keywords.includes("less")) return "less";
+    if (keywords.includes("bought")) return "bought";
+    if (keywords.includes("stock")) return "stock";
+  }
+  return null;
+}
+
+async function sendWeWorkConfirmation(env, { toUser, content }) {
+  if (!env.WEWORK_CORP_ID || !env.WEWORK_APP_SECRET || !env.WEWORK_AGENT_ID || !toUser) {
+    return;
+  }
+  const token = await weworkAccessToken(env);
+  const response = await fetch(
+    `${weworkBaseUrl()}/message/send?access_token=${encodeURIComponent(token)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify({
+        touser: toUser,
+        msgtype: "text",
+        agentid: Number(env.WEWORK_AGENT_ID),
+        text: { content },
+        safe: 0,
+      }),
+    },
+  );
+  await assertWeWorkOk(response);
+}
+
+async function weworkAccessToken(env) {
+  const response = await fetch(
+    `${weworkBaseUrl()}/gettoken?${new URLSearchParams({
+      corpid: env.WEWORK_CORP_ID,
+      corpsecret: env.WEWORK_APP_SECRET,
+    })}`,
+  );
+  const data = await assertWeWorkOk(response);
+  if (!data.access_token) {
+    throw new Error("WeWork access token missing");
+  }
+  return data.access_token;
+}
+
+async function assertWeWorkOk(response) {
+  const data = await response.json();
+  if (!response.ok || data.errcode !== 0) {
+    throw new Error(`WeWork API error: ${response.status} ${JSON.stringify(data).slice(0, 500)}`);
+  }
+  return data;
+}
+
+async function assertWeWorkSignature(env, url, encryptedMessage) {
+  const signature = requiredParam(url, "msg_signature");
+  const timestamp = requiredParam(url, "timestamp");
+  const nonce = requiredParam(url, "nonce");
+  const expected = await sha1Hex(
+    [env.WEWORK_CALLBACK_TOKEN, timestamp, nonce, encryptedMessage].sort().join(""),
+  );
+  if (signature !== expected) {
+    throw new Error("Invalid WeWork callback signature");
+  }
+}
+
+async function decryptWeWorkMessage(env, encryptedMessage) {
+  const key = encodingAesKeyBytes(env.WEWORK_ENCODING_AES_KEY);
+  const encryptedBytes = base64ToBytes(encryptedMessage);
+  const cryptoKey = await crypto.subtle.importKey("raw", key, "AES-CBC", false, ["decrypt"]);
+  const decrypted = new Uint8Array(
+    await crypto.subtle.decrypt({ name: "AES-CBC", iv: key.slice(0, 16) }, cryptoKey, encryptedBytes),
+  );
+  const plain = removePkcs7Padding(decrypted);
+  const messageLength = new DataView(plain.buffer, plain.byteOffset + 16, 4).getUint32(0);
+  const messageStart = 20;
+  const messageEnd = messageStart + messageLength;
+  const message = new TextDecoder().decode(plain.slice(messageStart, messageEnd));
+  const receiveId = new TextDecoder().decode(plain.slice(messageEnd));
+  if (env.WEWORK_CORP_ID && receiveId && receiveId !== env.WEWORK_CORP_ID) {
+    throw new Error("WeWork callback receive id mismatch");
+  }
+  return { message, receiveId };
+}
+
+function encodingAesKeyBytes(encodingAesKey) {
+  if (!encodingAesKey || encodingAesKey.length !== 43) {
+    throw new Error("WEWORK_ENCODING_AES_KEY must be 43 characters");
+  }
+  return base64ToBytes(`${encodingAesKey}=`);
+}
+
+function removePkcs7Padding(bytes) {
+  const padding = bytes.at(-1);
+  if (!padding || padding < 1 || padding > 32) {
+    throw new Error("Invalid PKCS7 padding");
+  }
+  return bytes.slice(0, bytes.length - padding);
+}
+
+function parseWeWorkXml(xml) {
+  return {
+    fromUser: xmlValue(xml, "FromUserName"),
+    toUser: xmlValue(xml, "ToUserName"),
+    content: xmlValue(xml, "Content"),
+    msgType: xmlValue(xml, "MsgType"),
+  };
+}
+
+function xmlValue(xml, tag) {
+  const match = xml.match(new RegExp(`<${tag}><!\\[CDATA\\[([\\s\\S]*?)\\]\\]></${tag}>`));
+  return match?.[1] || "";
+}
+
+async function sha1Hex(value) {
+  const digest = await crypto.subtle.digest("SHA-1", new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function base64ToBytes(value) {
+  return Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+}
+
+function requiredParam(url, name) {
+  const value = (url.searchParams.get(name) || "").trim();
+  if (!value) {
+    throw new Error(`Missing ${name}`);
+  }
+  return value;
+}
 
 function isPreviewMode(env) {
   return env.FEEDBACK_PREVIEW_MODE === "1";
