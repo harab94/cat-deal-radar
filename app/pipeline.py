@@ -122,6 +122,8 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
                 feedback_links=build_feedback_links(
                     base_url=feedback_base_url,
                     deal_id=_require(deal.id, "deal id"),
+                    deal=deal,
+                    post=post,
                 ),
             )
         )
@@ -221,6 +223,8 @@ def _send_test_email(settings: Settings, repository: Repository) -> int:
         feedback_links=build_feedback_links(
             base_url=feedback_base_url,
             deal_id=_require(deal.id, "deal id"),
+            deal=deal,
+            post=post,
         ),
     )
     logger.info("test_email_sent", deal_id=deal.id)

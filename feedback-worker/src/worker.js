@@ -31,7 +31,12 @@ export default {
         await writeFeedback(env, {
           dealId,
           action,
+          brand: optionalParam(url, "brand"),
+          category: optionalParam(url, "category"),
+          doubanUrl: optionalParam(url, "douban_url"),
           feedbackType: ACTION_TYPES[action],
+          price: optionalPrice(url),
+          title: optionalParam(url, "title"),
           createdAt: Date.now(),
         });
       } catch (error) {
@@ -62,15 +67,35 @@ async function writeFeedback(env, feedback) {
         "Content-Type": "application/json; charset=utf-8",
       },
       body: JSON.stringify({
-        fields: {
+        fields: compactFields({
           deal_id: feedback.dealId,
           action: feedback.action,
+          brand: feedback.brand,
+          category: feedback.category,
+          douban_url: feedback.doubanUrl,
+          price: feedback.price,
+          title: feedback.title,
           created_at: feedback.createdAt,
-        },
+        }),
       }),
     },
   );
   await assertFeishuOk(response);
+}
+
+function optionalParam(url, name) {
+  return (url.searchParams.get(name) || "").trim() || null;
+}
+
+function optionalPrice(url) {
+  const value = optionalParam(url, "price");
+  if (!value) return null;
+  const price = Number(value);
+  return Number.isFinite(price) && price > 0 ? price : null;
+}
+
+function compactFields(fields) {
+  return Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== null));
 }
 
 async function tenantAccessToken(env) {

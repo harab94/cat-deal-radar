@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 import pytest
 
@@ -33,6 +34,27 @@ def test_build_feedback_links_preserves_existing_query_string() -> None:
     links = build_feedback_links(base_url="https://example.com/feedback?token=abc", deal_id=42)
 
     assert links.more_like_this == "https://example.com/feedback?token=abc&deal_id=42&action=more"
+
+
+def test_build_feedback_links_can_include_deal_metadata() -> None:
+    post = _post()
+    deal = _deal(post_id=1)
+
+    links = build_feedback_links(
+        base_url="https://example.com/feedback",
+        deal_id=42,
+        deal=deal,
+        post=post,
+    )
+    params = parse_qs(urlparse(links.more_like_this).query)
+
+    assert params["deal_id"] == ["42"]
+    assert params["action"] == ["more"]
+    assert params["brand"] == ["百利"]
+    assert params["category"] == ["cat_food"]
+    assert params["price"] == ["335"]
+    assert params["title"] == ["百利原始鸡"]
+    assert params["douban_url"] == ["https://www.douban.com/group/topic/123456789/"]
 
 
 @pytest.mark.parametrize(
