@@ -8,6 +8,7 @@ from app.notification.templates import (
     DealDigestItem,
     EmailMessage,
     FeedbackLinks,
+    PriceContext,
     render_deal_digest_email,
     render_deal_email,
 )
@@ -30,12 +31,14 @@ class NotificationService:
         post: Post,
         recommendation: RecommendationScore,
         feedback_links: FeedbackLinks,
+        price_context: PriceContext | None = None,
     ) -> Notification:
         message = render_deal_email(
             deal=deal,
             post=post,
             recommendation=recommendation,
             feedback_links=feedback_links,
+            price_context=price_context,
         )
         self._sender.send(message)
         return self._repository.create_notification(

@@ -12,6 +12,7 @@ from app.notification import (
     EmailMessage,
     FeedbackLinks,
     NotificationService,
+    PriceContext,
     render_deal_digest_email,
     render_deal_email,
 )
@@ -84,6 +85,25 @@ def test_render_deal_digest_email_combines_multiple_deals() -> None:
     assert "今日猫车合集" in message.html_body
     assert "百利原始鸡" in message.html_body
     assert "小李子罐头" in message.html_body
+
+
+def test_render_deal_email_includes_reference_price_context() -> None:
+    message = render_deal_email(
+        deal=_deal(deal_id=1, price=263, product_name="halo自然光环"),
+        post=_post(post_id=1, title="闲置 halo自然光环2.5kg未拆封 263元"),
+        recommendation=_recommendation(cat_score=4, reasons=("preferred brand",)),
+        feedback_links=FEEDBACK_LINKS,
+        price_context=PriceContext(
+            sku_key="Halo|cat_food|自然光环全能",
+            product="自然光环全能",
+            reference_price=335,
+            unit="包",
+        ),
+    )
+
+    assert "参考价：335元/包，便宜约 21%" in message.text_body
+    assert "参考价 335元/包" in message.html_body
+    assert "便宜约 21%" in message.html_body
 
 
 def test_mime_message_encodes_unicode_subject() -> None:
@@ -190,6 +210,7 @@ def _deal(
     deal_id: int | None = None,
     post_id: int | None = 1,
     product_name: str = "百利原始鸡",
+    price: float = 335,
 ) -> Deal:
     assert post_id is not None
     return Deal(
@@ -198,7 +219,7 @@ def _deal(
         category="cat_food",
         brand="百利",
         product_name=product_name,
-        price=335,
+        price=price,
         confidence_score=90,
         cat_score=5,
         is_duplicate=False,
@@ -206,10 +227,13 @@ def _deal(
     )
 
 
-def _recommendation(cat_score: int) -> RecommendationScore:
+def _recommendation(
+    cat_score: int,
+    reasons: tuple[str, ...] = ("preferred brand", "26% below average price"),
+) -> RecommendationScore:
     return RecommendationScore(
         confidence_score=90,
         cat_score=cat_score,
         should_notify=True,
-        reasons=("preferred brand", "26% below average price"),
+        reasons=reasons,
     )

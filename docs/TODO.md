@@ -24,13 +24,18 @@
 
 ## Feedback Follow-Up
 
-- Replace the temporary `FEEDBACK_BASE_URL` placeholder with a real endpoint.
-- Implement a lightweight public feedback receiver.
-- Wire feedback links so clicks call the receiver and store feedback in SQLite or another durable store.
-- Verify GitHub Actions can load detection config from Feishu Base secrets.
+- Verify GitHub Actions uses the Cloudflare Worker `FEEDBACK_BASE_URL`, not a GitHub URL.
+- Add `FEISHU_SKUS_TABLE_ID=tblBcUnMsghjbgR0` to GitHub Actions secrets.
+- Make feedback learning consume Feishu feedback records automatically:
+  - 多推类似：brand/category/SKU 加权
+  - 少推类似：brand/category/SKU 降权
+  - 已下单：强加权
+  - 家里还有：短期减少同类推送，不长期降权
 
 ## Product Follow-Up
 
 - Validate real Douban HTML parsing against the live page.
 - Verify live Douban reply parsing against production logs.
-- Add real historical average price data before relying on discount scoring in production.
+- Expand the Feishu `SKUs` table beyond the first seeded SKUs.
+- Add LLM second-pass verification for brand/category matches with missing price or ambiguous product.
+- Consider moving scheduling from GitHub Actions cron to Cloudflare Cron if 10-minute runs remain unreliable.

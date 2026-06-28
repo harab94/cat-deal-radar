@@ -15,6 +15,7 @@ class Settings:
     douban_cookie_env: str = "DOUBAN_COOKIE"
     brands_path: Path = Path("config/brands.yaml")
     categories_path: Path = Path("config/categories.yaml")
+    skus_path: Path = Path("config/skus.yaml")
     preferences_path: Path = Path("config/preferences.yaml")
     feedback_base_url_env: str = "FEEDBACK_BASE_URL"
     email_smtp_host: str = "smtp.gmail.com"
@@ -30,6 +31,7 @@ class Settings:
     feishu_brands_table_id_env: str = "FEISHU_BRANDS_TABLE_ID"
     feishu_categories_table_id_env: str = "FEISHU_CATEGORIES_TABLE_ID"
     feishu_detection_rules_table_id_env: str = "FEISHU_DETECTION_RULES_TABLE_ID"
+    feishu_skus_table_id_env: str = "FEISHU_SKUS_TABLE_ID"
 
 
 def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
@@ -52,6 +54,7 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
         categories_path=Path(
             _nested(raw_settings, "config", "categories_path", default="config/categories.yaml")
         ),
+        skus_path=Path(_nested(raw_settings, "config", "skus_path", default="config/skus.yaml")),
         preferences_path=Path(
             _nested(raw_settings, "config", "preferences_path", default="config/preferences.yaml")
         ),
@@ -107,6 +110,14 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
                 "feishu",
                 "detection_rules_table_id_env",
                 default="FEISHU_DETECTION_RULES_TABLE_ID",
+            )
+        ),
+        feishu_skus_table_id_env=str(
+            _nested(
+                raw_settings,
+                "feishu",
+                "skus_table_id_env",
+                default="FEISHU_SKUS_TABLE_ID",
             )
         ),
     )

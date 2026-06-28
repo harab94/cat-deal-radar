@@ -6,12 +6,19 @@ from datetime import UTC, datetime
 
 import structlog
 
-from app.configuration import load_rule_based_detector
+from app.brand_normalization import BrandNormalizer
+from app.configuration import load_detection_config
 from app.crawler import DoubanCrawler, DoubanGroupConfig
 from app.database import Deal, Post, Repository
 from app.deal_detector import analyze_comments
 from app.feedback import build_feedback_links
-from app.notification import DealDigestItem, EmailConfig, NotificationService, SmtpEmailSender
+from app.notification import (
+    DealDigestItem,
+    EmailConfig,
+    NotificationService,
+    PriceContext,
+    SmtpEmailSender,
+)
 from app.recommendation import (
     DuplicateHandler,
     RecommendationInput,
@@ -19,6 +26,7 @@ from app.recommendation import (
     RecommendationScorer,
 )
 from app.settings import Settings
+from app.sku_catalog import SkuCatalog, SkuMatch
 
 logger = structlog.get_logger()
 
@@ -51,7 +59,9 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             cookie_configured=bool(os.environ.get(settings.douban_cookie_env)),
         )
         return PipelineResult(posts_seen=0, deals_created=0, notifications_sent=0)
-    detector = load_rule_based_detector(settings)
+    detection_config = load_detection_config(settings)
+    detector = _detector_from_config(detection_config)
+    sku_catalog = SkuCatalog(detection_config.skus)
     scorer = RecommendationScorer.from_yaml(settings.preferences_path)
     duplicate_handler = DuplicateHandler()
     sender = _email_sender_from_env(settings)
@@ -63,7 +73,13 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     notification_items: list[DealDigestItem] = []
 
     for post in posts:
-        detected = detector.detect(title=post.title, content=post.content)
+        rich_content = _rich_post_content(post)
+        detected = detector.detect(title=post.title, content=rich_content)
+        sku_match = sku_catalog.match(
+            brand=detected.brand,
+            category=detected.category,
+            text=f"{post.title}\n{rich_content}",
+        )
         if not detected.is_deal:
             detection_diagnostics.append(
                 {
@@ -71,18 +87,21 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
                     "brand": detected.brand,
                     "category": detected.category,
                     "price": detected.price,
+                    "sku": sku_match.sku_key if sku_match else None,
                     "comment_count": len(post.comments),
                     "reasons": detected.reasons,
                 }
             )
             continue
 
+        reference_price = sku_match.reference_price if sku_match else None
         recommendation = scorer.score(
             RecommendationInput(
                 category=_require(detected.category, "category"),
                 brand=_require(detected.brand, "brand"),
                 price=detected.price or 0,
                 base_confidence=detected.confidence,
+                historical_average_price=reference_price,
                 comment_analysis=analyze_comments(list(post.comments)),
             )
         )
@@ -119,6 +138,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
                 deal=deal,
                 post=post,
                 recommendation=recommendation,
+                price_context=_price_context_from_sku_match(sku_match),
                 feedback_links=build_feedback_links(
                     base_url=feedback_base_url,
                     deal_id=_require(deal.id, "deal id"),
@@ -161,6 +181,32 @@ def _douban_config(settings: Settings) -> DoubanGroupConfig:
         group_url=settings.douban_group_url,
         tab_name=settings.douban_tab_name,
         cookie=os.environ.get(settings.douban_cookie_env),
+    )
+
+
+def _detector_from_config(detection_config):
+    from app.deal_detector import RuleBasedDealDetector
+
+    return RuleBasedDealDetector(
+        brand_normalizer=BrandNormalizer.from_mapping(detection_config.brand_aliases),
+        category_config=detection_config.categories,
+        deal_signals=detection_config.deal_signals,
+        expired_signals=detection_config.expired_signals,
+    )
+
+
+def _rich_post_content(post: Post) -> str:
+    return "\n".join(part for part in (post.content, *post.comments) if part)
+
+
+def _price_context_from_sku_match(match: SkuMatch | None) -> PriceContext | None:
+    if match is None:
+        return None
+    return PriceContext(
+        sku_key=match.sku_key,
+        product=match.product,
+        reference_price=match.reference_price,
+        unit=match.unit,
     )
 
 
@@ -225,6 +271,12 @@ def _send_test_email(settings: Settings, repository: Repository) -> int:
             deal_id=_require(deal.id, "deal id"),
             deal=deal,
             post=post,
+        ),
+        price_context=PriceContext(
+            sku_key="百利|cat_food|原始鸡",
+            product="原始鸡",
+            reference_price=335,
+            unit="包",
         ),
     )
     logger.info("test_email_sent", deal_id=deal.id)

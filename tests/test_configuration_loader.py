@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from app.configuration.loader import load_rule_based_detector
+from app.configuration.loader import load_detection_config, load_rule_based_detector
 from app.settings import Settings
 
 
@@ -30,15 +30,19 @@ def test_load_rule_based_detector_can_read_feishu_base_config(
     monkeypatch.setenv("FEISHU_BRANDS_TABLE_ID", " brands_table\n")
     monkeypatch.setenv("FEISHU_CATEGORIES_TABLE_ID", " categories_table\n")
     monkeypatch.setenv("FEISHU_DETECTION_RULES_TABLE_ID", " rules_table\n")
+    monkeypatch.setenv("FEISHU_SKUS_TABLE_ID", " skus_table\n")
     monkeypatch.setattr("app.configuration.feishu_base.urlopen", _fake_urlopen)
 
     detector = load_rule_based_detector(_settings(tmp_path))
     detected = detector.detect(title="推荐 测试别名猫粮 88元")
     expired = detector.detect(title="推荐 已结束 测试别名猫粮 88元")
+    config = load_detection_config(_settings(tmp_path))
 
     assert detected.is_deal is True
     assert detected.brand == "测试品牌"
     assert detected.category == "cat_food"
+    assert config.skus[0].sku_key == "测试品牌|cat_food|测试鸡肉"
+    assert config.skus[0].reference_price == 100
     assert expired.is_deal is False
     assert "expired deal signal" in expired.reasons
 
@@ -57,7 +61,7 @@ def _fake_urlopen(request, timeout):
                         {
                             "fields": {
                                 "canonical_brand": "测试品牌",
-                                "alias": "测试别名",
+                                "aliases": ["测试别名", {"text": "测试品牌猫粮"}],
                                 "enabled": True,
                             }
                         }
@@ -108,6 +112,29 @@ def _fake_urlopen(request, timeout):
                 },
             }
         )
+    if "/tables/skus_table/records" in url:
+        return _Response(
+            {
+                "code": 0,
+                "data": {
+                    "has_more": False,
+                    "items": [
+                        {
+                            "fields": {
+                                "sku_key": "测试品牌|cat_food|测试鸡肉",
+                                "brand": "测试品牌",
+                                "category": "cat_food",
+                                "product": "测试鸡肉",
+                                "aliases": ["测试别名猫粮"],
+                                "reference_price": 100,
+                                "unit": "包",
+                                "enabled": True,
+                            }
+                        }
+                    ],
+                },
+            }
+        )
     raise AssertionError(f"Unexpected URL: {url}")
 
 
@@ -141,5 +168,6 @@ def _clear_feishu_env(monkeypatch) -> None:
         "FEISHU_BRANDS_TABLE_ID",
         "FEISHU_CATEGORIES_TABLE_ID",
         "FEISHU_DETECTION_RULES_TABLE_ID",
+        "FEISHU_SKUS_TABLE_ID",
     ):
         monkeypatch.delenv(name, raising=False)

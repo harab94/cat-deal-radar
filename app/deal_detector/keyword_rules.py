@@ -59,6 +59,8 @@ class RuleBasedDealDetector:
         brand = self._brand_normalizer.find_in_text(title_text)
         category = self._category_for_text(title_text, brand)
         price = extract_lowest_price(title_text)
+        if price is None and brand and category:
+            price = extract_lowest_price(content)
         reasons = _reasons(
             title_text,
             brand,

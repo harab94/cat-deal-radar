@@ -23,11 +23,25 @@ class EmailMessage:
 
 
 @dataclass(frozen=True)
+class PriceContext:
+    sku_key: str
+    product: str
+    reference_price: float | None
+    unit: str | None = None
+
+    def discount_percent(self, current_price: float) -> float | None:
+        if current_price <= 0 or self.reference_price is None or self.reference_price <= 0:
+            return None
+        return max(0.0, (self.reference_price - current_price) / self.reference_price * 100)
+
+
+@dataclass(frozen=True)
 class DealDigestItem:
     deal: Deal
     post: Post
     recommendation: RecommendationScore
     feedback_links: FeedbackLinks
+    price_context: PriceContext | None = None
 
 
 def render_deal_email(
@@ -36,14 +50,29 @@ def render_deal_email(
     post: Post,
     recommendation: RecommendationScore,
     feedback_links: FeedbackLinks,
+    price_context: PriceContext | None = None,
 ) -> EmailMessage:
     cats = "🐱" * recommendation.cat_score
     priority_label = _priority_label(recommendation.cat_score)
     price_label = _price_label(deal.price)
     subject = f"{cats}{priority_label}{deal.product_name} {price_label}"
     reasons = recommendation.reasons or ("No reasons recorded",)
-    text_body = _render_text_body(deal, post, recommendation, feedback_links, reasons)
-    html_body = _render_html_body(deal, post, recommendation, feedback_links, reasons)
+    text_body = _render_text_body(
+        deal,
+        post,
+        recommendation,
+        feedback_links,
+        reasons,
+        price_context,
+    )
+    html_body = _render_html_body(
+        deal,
+        post,
+        recommendation,
+        feedback_links,
+        reasons,
+        price_context,
+    )
     return EmailMessage(subject=subject, text_body=text_body, html_body=html_body)
 
 
@@ -58,6 +87,7 @@ def render_deal_digest_email(items: list[DealDigestItem]) -> EmailMessage:
             post=item.post,
             recommendation=item.recommendation,
             feedback_links=item.feedback_links,
+            price_context=item.price_context,
         )
 
     top_item = max(items, key=lambda item: item.recommendation.cat_score)
@@ -84,8 +114,10 @@ def _render_text_body(
     recommendation: RecommendationScore,
     feedback_links: FeedbackLinks,
     reasons: tuple[str, ...],
+    price_context: PriceContext | None,
 ) -> str:
     reason_lines = "\n".join(f"- {reason}" for reason in reasons)
+    price_context_text = _price_context_text(deal.price, price_context)
     return f"""【推荐理由】
 {reason_lines}
 
@@ -94,6 +126,7 @@ def _render_text_body(
 品牌：{deal.brand}
 品类：{deal.category}
 价格：{_price_label(deal.price)}
+{price_context_text}
 信心分：{recommendation.confidence_score}
 原帖标题：{post.title}
 
@@ -114,6 +147,7 @@ def _render_html_body(
     recommendation: RecommendationScore,
     feedback_links: FeedbackLinks,
     reasons: tuple[str, ...],
+    price_context: PriceContext | None,
 ) -> str:
     reason_items = "".join(
         f"""
@@ -128,6 +162,7 @@ def _render_html_body(
     )
     priority_label = _priority_label(recommendation.cat_score)
     price_label = _price_label(deal.price)
+    price_context_html = _price_context_html(deal.price, price_context)
     category_label = _category_label(deal.category)
     cats = "🐱" * recommendation.cat_score
     return f"""<!doctype html>
@@ -203,6 +238,7 @@ def _render_html_body(
                 <strong style="color: #111;">{escape(price_label)}</strong>
               </td>
             </tr>
+            {price_context_html}
 
             <tr>
               <td style="padding: 22px 0; border-top: 1px solid #e5e5e5;
@@ -283,6 +319,7 @@ def _render_digest_text_body(items: list[DealDigestItem]) -> str:
 品牌：{item.deal.brand}
 品类：{item.deal.category}
 价格：{_price_label(item.deal.price)}
+{_price_context_text(item.deal.price, item.price_context)}
 信心分：{item.recommendation.confidence_score}
 原帖：{item.post.url}
 
@@ -359,6 +396,7 @@ def _digest_card(item: DealDigestItem, index: int) -> str:
     cats = "🐱" * recommendation.cat_score
     priority_label = _priority_label(recommendation.cat_score)
     reasons = " · ".join(recommendation.reasons[:3]) or "推荐理由待补充"
+    price_context_html = _price_context_html(deal.price, item.price_context, compact=True)
     return f"""
             <tr>
               <td style="padding: 24px 0; border-bottom: 1px solid #e5e5e5;">
@@ -383,6 +421,7 @@ def _digest_card(item: DealDigestItem, index: int) -> str:
                       <strong style="color:#111;">{escape(_price_label(deal.price))}</strong>
                     </td>
                   </tr>
+                  {price_context_html}
                   <tr>
                     <td style="font-size: 16px; line-height: 1.5; color: #555;
                       padding-bottom: 16px;">
@@ -417,6 +456,47 @@ def _price_label(price: float) -> str:
     if price <= 0:
         return "价格未知"
     return f"{price:g}元"
+
+
+def _price_context_text(price: float, context: PriceContext | None) -> str:
+    if context is None:
+        return ""
+    reference = "参考价未知"
+    if context.reference_price is not None and context.reference_price > 0:
+        unit = f"/{context.unit}" if context.unit else ""
+        reference = f"参考价：{context.reference_price:g}元{unit}"
+    discount = context.discount_percent(price)
+    discount_label = f"，便宜约 {discount:.0f}%" if discount is not None else ""
+    return f"SKU：{context.sku_key}\n{reference}{discount_label}"
+
+
+def _price_context_html(
+    price: float,
+    context: PriceContext | None,
+    *,
+    compact: bool = False,
+) -> str:
+    if context is None:
+        return ""
+    discount = context.discount_percent(price)
+    reference = "参考价未知"
+    if context.reference_price is not None and context.reference_price > 0:
+        unit = f"/{context.unit}" if context.unit else ""
+        reference = f"参考价 {context.reference_price:g}元{unit}"
+    discount_label = f"便宜约 {discount:.0f}%" if discount is not None else "折扣待判断"
+    padding = "0 0 12px" if compact else "0 0 26px"
+    font_size = "15px" if compact else "18px"
+    return f"""
+                  <tr>
+                    <td style="padding: {padding};">
+                      <span style="display:inline-block; padding: 8px 11px;
+                        background:#fff3c4; border:1px solid #e8cf7a;
+                        font-size:{font_size}; font-weight:700;">
+                        {escape(reference)} · {escape(discount_label)}
+                      </span>
+                    </td>
+                  </tr>
+"""
 
 
 def _category_label(category: str) -> str:

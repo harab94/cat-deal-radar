@@ -18,6 +18,7 @@ class FeishuBaseConfig:
     brands_table_id: str
     categories_table_id: str
     detection_rules_table_id: str
+    skus_table_id: str | None = None
 
 
 class FeishuBaseReader:
@@ -31,11 +32,17 @@ class FeishuBaseReader:
         brand_records = self._list_records(token, self._config.brands_table_id)
         category_records = self._list_records(token, self._config.categories_table_id)
         rule_records = self._list_records(token, self._config.detection_rules_table_id)
+        sku_records = (
+            self._list_records(token, self._config.skus_table_id)
+            if self._config.skus_table_id
+            else []
+        )
 
         deal_signals, expired_signals = _rules_from_records(rule_records)
         return DetectionConfig(
             brand_aliases=_brand_aliases_from_records(brand_records),
             categories=_categories_from_records(category_records),
+            skus=_skus_from_records(sku_records),
             deal_signals=deal_signals,
             expired_signals=expired_signals,
         )
@@ -89,9 +96,10 @@ def _brand_aliases_from_records(records: list[dict[str, Any]]) -> dict[str, list
         if not _enabled(fields):
             continue
         canonical = _cell_text(fields.get("canonical_brand"))
-        alias = _cell_text(fields.get("alias"))
-        if canonical and alias:
-            aliases.setdefault(canonical, []).append(alias)
+        if not canonical:
+            continue
+        record_aliases = _cell_list(fields.get("aliases")) or _cell_list(fields.get("alias"))
+        aliases.setdefault(canonical, []).extend(record_aliases)
     return aliases
 
 
@@ -128,6 +136,34 @@ def _rules_from_records(records: list[dict[str, Any]]) -> tuple[tuple[str, ...],
         if rule_type == "expired_signal" and keyword:
             expired_signals.append(keyword)
     return tuple(deal_signals), tuple(expired_signals)
+
+
+def _skus_from_records(records: list[dict[str, Any]]):
+    from app.configuration.loader import SkuReference
+
+    skus: list[SkuReference] = []
+    for record in records:
+        fields = _fields(record)
+        if not _enabled(fields):
+            continue
+        brand = _cell_text(fields.get("brand"))
+        category = _cell_text(fields.get("category"))
+        product = _cell_text(fields.get("product"))
+        if not (brand and category and product):
+            continue
+        sku_key = _cell_text(fields.get("sku_key")) or "|".join((brand, category, product))
+        skus.append(
+            SkuReference(
+                sku_key=sku_key,
+                brand=brand,
+                category=category,
+                product=product,
+                aliases=tuple(_cell_list(fields.get("aliases"))),
+                reference_price=_cell_float(fields.get("reference_price")),
+                unit=_cell_text(fields.get("unit")) or None,
+            )
+        )
+    return tuple(skus)
 
 
 def _request_json(
@@ -182,6 +218,28 @@ def _cell_text(value: Any) -> str:
     if isinstance(value, dict):
         return str(value.get("text") or value.get("name") or "").strip()
     return str(value).strip()
+
+
+def _cell_list(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        values = [_cell_text(item) for item in value]
+        return [item for item in values if item]
+    text = _cell_text(value)
+    if not text:
+        return []
+    return [item.strip() for item in text.replace("，", ",").split(",") if item.strip()]
+
+
+def _cell_float(value: Any) -> float | None:
+    text = _cell_text(value)
+    if not text:
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
 
 
 def _http_error_detail(error: HTTPError) -> str:

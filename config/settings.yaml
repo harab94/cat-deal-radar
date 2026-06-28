@@ -11,6 +11,7 @@ database:
 config:
   brands_path: config/brands.yaml
   categories_path: config/categories.yaml
+  skus_path: config/skus.yaml
   preferences_path: config/preferences.yaml
 
 douban:
@@ -37,3 +38,4 @@ feishu:
   brands_table_id_env: FEISHU_BRANDS_TABLE_ID
   categories_table_id_env: FEISHU_CATEGORIES_TABLE_ID
   detection_rules_table_id_env: FEISHU_DETECTION_RULES_TABLE_ID
+  skus_table_id_env: FEISHU_SKUS_TABLE_ID

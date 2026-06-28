@@ -88,7 +88,7 @@ def test_rule_detector_recognizes_common_typos_and_k9() -> None:
     assert k9.is_deal is True
 
 
-def test_rule_detector_ignores_content_for_brand_and_price() -> None:
+def test_rule_detector_ignores_content_for_brand_to_avoid_sidebar_noise() -> None:
     detector = _detector()
 
     detected = detector.detect(
@@ -102,7 +102,7 @@ def test_rule_detector_ignores_content_for_brand_and_price() -> None:
     assert detected.price is None
 
 
-def test_rule_detector_allows_title_brand_without_detail_content_price() -> None:
+def test_rule_detector_uses_detail_content_price_when_title_brand_is_known() -> None:
     detector = _detector()
 
     detected = detector.detect(
@@ -113,7 +113,7 @@ def test_rule_detector_allows_title_brand_without_detail_content_price() -> None
     assert detected.is_deal is True
     assert detected.brand == "Halo"
     assert detected.category == "cat_food"
-    assert detected.price is None
+    assert detected.price == 210
 
 
 def test_extract_lowest_price_ignores_large_non_price_numbers() -> None:

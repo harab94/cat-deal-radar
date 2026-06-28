@@ -18,9 +18,21 @@ logger = structlog.get_logger()
 
 
 @dataclass(frozen=True)
+class SkuReference:
+    sku_key: str
+    brand: str
+    category: str
+    product: str
+    aliases: tuple[str, ...]
+    reference_price: float | None = None
+    unit: str | None = None
+
+
+@dataclass(frozen=True)
 class DetectionConfig:
     brand_aliases: dict[str, list[str]]
     categories: dict[str, dict[str, list[str]]]
+    skus: tuple[SkuReference, ...]
     deal_signals: tuple[str, ...]
     expired_signals: tuple[str, ...]
 
@@ -49,19 +61,27 @@ def load_detection_config(settings: Settings) -> DetectionConfig:
     return _load_local_detection_config(
         brands_path=settings.brands_path,
         categories_path=settings.categories_path,
+        skus_path=settings.skus_path,
     )
 
 
-def _load_local_detection_config(*, brands_path: Path, categories_path: Path) -> DetectionConfig:
+def _load_local_detection_config(
+    *,
+    brands_path: Path,
+    categories_path: Path,
+    skus_path: Path,
+) -> DetectionConfig:
     with brands_path.open(encoding="utf-8") as file:
         brand_config = yaml.safe_load(file) or {}
         brand_aliases = brand_config.get("brand_aliases", {})
     with categories_path.open(encoding="utf-8") as file:
         categories = yaml.safe_load(file) or {}
+    skus = _load_local_skus(skus_path)
 
     return DetectionConfig(
         brand_aliases=_normalize_brand_aliases(brand_aliases),
         categories=_normalize_categories(categories),
+        skus=tuple(skus),
         deal_signals=DEAL_SIGNALS,
         expired_signals=EXPIRED_SIGNALS,
     )
@@ -75,8 +95,10 @@ def _feishu_config_from_env(settings: Settings) -> FeishuBaseConfig | None:
         "brands_table_id": _env_value(settings.feishu_brands_table_id_env),
         "categories_table_id": _env_value(settings.feishu_categories_table_id_env),
         "detection_rules_table_id": _env_value(settings.feishu_detection_rules_table_id_env),
+        "skus_table_id": _env_value(settings.feishu_skus_table_id_env),
     }
-    if not all(values.values()):
+    required_values = {key: value for key, value in values.items() if key != "skus_table_id"}
+    if not all(required_values.values()):
         return None
     return FeishuBaseConfig(**values)  # type: ignore[arg-type]
 
@@ -110,3 +132,53 @@ def _normalize_categories(raw: Any) -> dict[str, dict[str, list[str]]]:
             "keywords": [str(value) for value in config.get("keywords", []) or []],
         }
     return categories
+
+
+def _load_local_skus(path: Path) -> list[SkuReference]:
+    if not path.exists():
+        return []
+
+    with path.open(encoding="utf-8") as file:
+        raw = yaml.safe_load(file) or {}
+
+    records = raw.get("skus", [])
+    if not isinstance(records, list):
+        return []
+
+    skus: list[SkuReference] = []
+    for record in records:
+        if not isinstance(record, dict) or record.get("enabled", True) is False:
+            continue
+        sku = _sku_from_mapping(record)
+        if sku.brand and sku.category and sku.product:
+            skus.append(sku)
+    return skus
+
+
+def _sku_from_mapping(record: dict[str, Any]) -> SkuReference:
+    brand = str(record.get("brand", "")).strip()
+    category = str(record.get("category", "")).strip()
+    product = str(record.get("product", "")).strip()
+    sku_key = str(record.get("sku_key") or _sku_key(brand, category, product)).strip()
+    aliases = tuple(str(alias).strip() for alias in record.get("aliases", []) or [] if alias)
+    reference_price = _optional_float(record.get("reference_price"))
+    unit = str(record.get("unit", "")).strip() or None
+    return SkuReference(
+        sku_key=sku_key,
+        brand=brand,
+        category=category,
+        product=product,
+        aliases=aliases,
+        reference_price=reference_price,
+        unit=unit,
+    )
+
+
+def _sku_key(brand: str, category: str, product: str) -> str:
+    return "|".join(part for part in (brand, category, product) if part)
+
+
+def _optional_float(value: Any) -> float | None:
+    if value in (None, ""):
+        return None
+    return float(value)

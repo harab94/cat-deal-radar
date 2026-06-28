@@ -6,6 +6,7 @@ from app.notification.templates import (
     DealDigestItem,
     EmailMessage,
     FeedbackLinks,
+    PriceContext,
     render_deal_digest_email,
     render_deal_email,
 )
@@ -15,6 +16,7 @@ __all__ = [
     "EmailConfig",
     "EmailMessage",
     "FeedbackLinks",
+    "PriceContext",
     "NotificationService",
     "SmtpEmailSender",
     "render_deal_digest_email",

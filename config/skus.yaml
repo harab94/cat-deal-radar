@@ -1,0 +1,55 @@
+skus:
+  - sku_key: 百利|cat_food|原始鸡
+    brand: 百利
+    category: cat_food
+    product: 原始鸡
+    aliases:
+      - 百利原始鸡
+      - 百利无谷鸡
+      - instinct原始鸡
+      - 天然百利鸡
+    reference_price: 335
+    unit: 包
+
+  - sku_key: Halo|cat_food|自然光环全能
+    brand: Halo
+    category: cat_food
+    product: 自然光环全能
+    aliases:
+      - 自然光环全能系列
+      - halo自然光环
+      - halo 全能
+    reference_price: 335
+    unit: 包
+
+  - sku_key: 小李子|wet_food|禽肉罐头
+    brand: 小李子
+    category: wet_food
+    product: 禽肉罐头
+    aliases:
+      - 小李子罐头禽肉
+      - 小李子猫罐头
+      - 德国小李子
+    reference_price: 16
+    unit: 罐
+
+  - sku_key: K9 Natural|wet_food|鸡肉羊心罐头
+    brand: K9 Natural
+    category: wet_food
+    product: 鸡肉羊心罐头
+    aliases:
+      - k9罐头鸡肉羊心
+      - K9罐头鸡肉羊心
+    reference_price: 18
+    unit: 罐
+
+  - sku_key: VE|freeze_dried|猪肉粒
+    brand: VE
+    category: freeze_dried
+    product: 猪肉粒
+    aliases:
+      - ve猪肉粒
+      - VE猪肉粒
+      - VE 冻干猪肉粒
+    reference_price: 88
+    unit: 包
