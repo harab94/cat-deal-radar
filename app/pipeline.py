@@ -68,7 +68,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     scorer = RecommendationScorer.from_yaml(settings.preferences_path)
     duplicate_handler = DuplicateHandler()
     sender = _notification_sender_from_env(settings)
-    feedback_base_url = os.environ.get(settings.feedback_base_url_env)
+    feedback_base_url = _feedback_base_url_from_env(settings)
 
     deals_created = 0
     notifications_sent = 0
@@ -76,6 +76,9 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     notification_items: list[DealDigestItem] = []
 
     for post in posts:
+        if repository.has_notification_for_post(_require(post.id, "post id")):
+            continue
+
         rich_content = _rich_post_content(post)
         detected = detector.detect(title=post.title, content=rich_content)
         sku_match = sku_catalog.match(
@@ -152,11 +155,6 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
         )
 
     if notification_items and sender is not None:
-        if feedback_base_url and "github.com" in feedback_base_url.casefold():
-            logger.warning(
-                "feedback_base_url_points_to_github",
-                feedback_base_url=feedback_base_url,
-            )
         notifications = NotificationService(repository=repository, sender=sender).send_deal_digest(
             items=notification_items,
         )
@@ -265,6 +263,26 @@ def _notification_sender_from_env(settings: Settings):
     return CompositeSender(tuple(senders))
 
 
+def _feedback_base_url_from_env(settings: Settings) -> str | None:
+    value = os.environ.get(settings.feedback_base_url_env)
+    if value is None:
+        return None
+
+    feedback_base_url = value.strip()
+    if not feedback_base_url:
+        return None
+
+    lower_url = feedback_base_url.casefold()
+    if any(placeholder in lower_url for placeholder in ("example.com", "github.com")):
+        logger.warning(
+            "feedback_base_url_placeholder_ignored",
+            feedback_base_url=feedback_base_url,
+        )
+        return None
+
+    return feedback_base_url
+
+
 class CompositeSender:
     def __init__(self, senders: tuple) -> None:
         self._senders = senders
@@ -276,7 +294,7 @@ class CompositeSender:
 
 def _send_test_email(settings: Settings, repository: Repository) -> int:
     sender = _notification_sender_from_env(settings)
-    feedback_base_url = os.environ.get(settings.feedback_base_url_env)
+    feedback_base_url = _feedback_base_url_from_env(settings)
     if sender is None or feedback_base_url is None:
         logger.warning("test_email_skipped_missing_configuration")
         return 0

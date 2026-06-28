@@ -1,8 +1,6 @@
 name: Cat Deal Radar
 
 on:
-  schedule:
-    - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
       send_test_email:
@@ -80,6 +78,7 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main
           git add -f data/cat_deal_radar.sqlite
 
           if git diff --cached --quiet; then

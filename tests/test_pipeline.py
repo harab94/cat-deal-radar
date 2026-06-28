@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from datetime import UTC, datetime
 from pathlib import Path
 
-from app.database import Repository
+from app.database import Deal, Notification, Post, Repository
 from app.main import run
 from app.pipeline import run_pipeline
 from app.settings import Settings
@@ -39,6 +40,8 @@ PRICELESS_HTML = """
   </body>
 </html>
 """
+
+NOW = datetime(2026, 6, 27, 12, 0, tzinfo=UTC)
 
 
 def test_pipeline_creates_deal_without_email_when_email_config_is_missing(
@@ -91,11 +94,12 @@ def test_pipeline_sends_one_email_for_multiple_deals(
         sent_subjects.append(message.subject)
 
     monkeypatch.setattr("app.crawler.douban.fetch_html", lambda *args, **kwargs: MULTI_DEAL_HTML)
+    _clear_wework_env(monkeypatch)
     monkeypatch.setenv("GMAIL_USERNAME", "sender@example.com")
     monkeypatch.setenv("GMAIL_APP_PASSWORD", "app-password")
     monkeypatch.setenv("GMAIL_SENDER", "sender@example.com")
     monkeypatch.setenv("DEAL_NOTIFICATION_RECIPIENT", "recipient@example.com")
-    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://feedback.example.com")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://cat-deal-radar.hairihanb.workers.dev")
     monkeypatch.setattr("app.notification.email_sender.SmtpEmailSender.send", fake_send)
     settings = _settings(tmp_path)
     repository = Repository(settings.database_path)
@@ -124,7 +128,7 @@ def test_pipeline_can_send_wework_notification_without_email(
     monkeypatch.setenv("WEWORK_AGENT_ID", "1000002")
     monkeypatch.setenv("WEWORK_APP_SECRET", "secret")
     monkeypatch.setenv("WEWORK_TO_USER", "Hairahan")
-    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://feedback.example.com")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://cat-deal-radar.hairihanb.workers.dev")
     monkeypatch.setattr("app.notification.wework_sender.WeWorkAppSender.send", fake_send)
     settings = _settings(tmp_path)
     repository = Repository(settings.database_path)
@@ -182,11 +186,12 @@ def test_pipeline_can_send_fake_deal_email(
         sent_subjects.append(message.subject)
 
     monkeypatch.setenv("CAT_DEAL_RADAR_SEND_TEST_EMAIL", "true")
+    _clear_wework_env(monkeypatch)
     monkeypatch.setenv("GMAIL_USERNAME", "sender@example.com")
     monkeypatch.setenv("GMAIL_APP_PASSWORD", "app-password")
     monkeypatch.setenv("GMAIL_SENDER", "sender@example.com")
     monkeypatch.setenv("DEAL_NOTIFICATION_RECIPIENT", "recipient@example.com")
-    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://example.com/feedback")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://cat-deal-radar.hairihanb.workers.dev")
     monkeypatch.setattr("app.notification.email_sender.SmtpEmailSender.send", fake_send)
     settings = _settings(tmp_path)
     repository = Repository(settings.database_path)
@@ -198,6 +203,70 @@ def test_pipeline_can_send_fake_deal_email(
     assert result.notifications_sent == 1
     assert sent_subjects == ["🐱🐱🐱🐱🐱【必抢】测试邮件：百利原始鸡 335元"]
     assert len(repository.list_notifications()) == 1
+
+
+def test_pipeline_does_not_send_notification_with_placeholder_feedback_url(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    sent_subjects: list[str] = []
+
+    def fake_send(self, message) -> None:
+        sent_subjects.append(message.subject)
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_html)
+    _clear_wework_env(monkeypatch)
+    monkeypatch.setenv("GMAIL_USERNAME", "sender@example.com")
+    monkeypatch.setenv("GMAIL_APP_PASSWORD", "app-password")
+    monkeypatch.setenv("GMAIL_SENDER", "sender@example.com")
+    monkeypatch.setenv("DEAL_NOTIFICATION_RECIPIENT", "recipient@example.com")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://feedback.example.com")
+    monkeypatch.setattr("app.notification.email_sender.SmtpEmailSender.send", fake_send)
+    settings = _settings(tmp_path)
+    repository = Repository(settings.database_path)
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 1
+    assert result.deals_created == 1
+    assert result.notifications_sent == 0
+    assert sent_subjects == []
+
+
+def test_pipeline_does_not_notify_same_post_twice_even_if_deal_name_changes(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    sent_subjects: list[str] = []
+
+    def fake_send(self, message) -> None:
+        sent_subjects.append(message.subject)
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_html)
+    monkeypatch.setenv("GMAIL_USERNAME", "sender@example.com")
+    monkeypatch.setenv("GMAIL_APP_PASSWORD", "app-password")
+    monkeypatch.setenv("GMAIL_SENDER", "sender@example.com")
+    monkeypatch.setenv("DEAL_NOTIFICATION_RECIPIENT", "recipient@example.com")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://cat-deal-radar.hairihanb.workers.dev")
+    monkeypatch.setattr("app.notification.email_sender.SmtpEmailSender.send", fake_send)
+    settings = _settings(tmp_path)
+    settings.database_path.parent.mkdir(parents=True, exist_ok=True)
+    repository = Repository(settings.database_path)
+    repository.initialize()
+    post = repository.create_post(
+        _post_for_existing_notification("123456789", title="旧标题 百利鸡")
+    )
+    deal = repository.create_deal(
+        _deal_for_existing_notification(post_id=post.id, product_name="旧识别 百利鸡")
+    )
+    repository.create_notification(_notification_for_existing_notification(deal_id=deal.id))
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 1
+    assert result.deals_created == 0
+    assert result.notifications_sent == 0
+    assert sent_subjects == []
 
 
 def _fake_fetch_html(*args, **kwargs) -> str:
@@ -212,6 +281,37 @@ def _settings(tmp_path: Path) -> Settings:
     )
 
 
+def _post_for_existing_notification(douban_post_id: str, *, title: str) -> Post:
+    return Post(
+        douban_post_id=douban_post_id,
+        title=title,
+        content=title,
+        url=f"https://www.douban.com/group/topic/{douban_post_id}/",
+        created_at=NOW,
+        fetched_at=NOW,
+    )
+
+
+def _deal_for_existing_notification(*, post_id: int | None, product_name: str) -> Deal:
+    assert post_id is not None
+    return Deal(
+        post_id=post_id,
+        category="cat_food",
+        brand="百利",
+        product_name=product_name,
+        price=335,
+        confidence_score=90,
+        cat_score=5,
+        is_duplicate=False,
+        created_at=NOW,
+    )
+
+
+def _notification_for_existing_notification(*, deal_id: int | None) -> Notification:
+    assert deal_id is not None
+    return Notification(deal_id=deal_id, email_sent=True, sent_at=NOW)
+
+
 def _clear_notification_env(monkeypatch) -> None:
     for name in (
         "GMAIL_USERNAME",
@@ -220,6 +320,16 @@ def _clear_notification_env(monkeypatch) -> None:
         "DEAL_NOTIFICATION_RECIPIENT",
         "FEEDBACK_BASE_URL",
         "CAT_DEAL_RADAR_SEND_TEST_EMAIL",
+        "WEWORK_CORP_ID",
+        "WEWORK_AGENT_ID",
+        "WEWORK_APP_SECRET",
+        "WEWORK_TO_USER",
+    ):
+        monkeypatch.delenv(name, raising=False)
+
+
+def _clear_wework_env(monkeypatch) -> None:
+    for name in (
         "WEWORK_CORP_ID",
         "WEWORK_AGENT_ID",
         "WEWORK_APP_SECRET",

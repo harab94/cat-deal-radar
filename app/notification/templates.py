@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from html import escape
+from urllib.parse import urlparse
 
 from app.database import Deal, Post
 from app.recommendation import RecommendationScore
@@ -165,6 +166,7 @@ def _render_html_body(
     price_context_html = _price_context_html(deal.price, price_context)
     category_label = _category_label(deal.category)
     cats = "🐱" * recommendation.cat_score
+    douban_url = _public_douban_url(post.url)
     return f"""<!doctype html>
 <html lang="zh-CN">
   <body style="margin:0; padding:0; background:#ffffff; color:#242424;">
@@ -295,7 +297,7 @@ def _render_html_body(
 
             <tr>
               <td style="padding-top: 18px; font-size: 16px;">
-                <a href="{escape(post.url)}" style="color:#111; font-weight:700;">
+                <a href="{escape(douban_url)}" style="color:#111; font-weight:700;">
                   打开豆瓣原帖 →
                 </a>
               </td>
@@ -397,6 +399,7 @@ def _digest_card(item: DealDigestItem, index: int) -> str:
     priority_label = _priority_label(recommendation.cat_score)
     reasons = " · ".join(recommendation.reasons[:3]) or "推荐理由待补充"
     price_context_html = _price_context_html(deal.price, item.price_context, compact=True)
+    douban_url = _public_douban_url(post.url)
     return f"""
             <tr>
               <td style="padding: 24px 0; border-bottom: 1px solid #e5e5e5;">
@@ -441,7 +444,7 @@ def _digest_card(item: DealDigestItem, index: int) -> str:
                   </tr>
                   <tr>
                     <td style="font-size: 15px;">
-                      <a href="{escape(post.url)}" style="color:#111; font-weight:700;">
+                      <a href="{escape(douban_url)}" style="color:#111; font-weight:700;">
                         打开豆瓣原帖 →
                       </a>
                     </td>
@@ -456,6 +459,15 @@ def _price_label(price: float) -> str:
     if price <= 0:
         return "价格未知"
     return f"{price:g}元"
+
+
+def _public_douban_url(url: str) -> str:
+    parsed = urlparse(url)
+    if parsed.netloc in {"www.douban.com", "douban.com"} and parsed.path.startswith(
+        "/group/topic/"
+    ):
+        return f"https://m.douban.com{parsed.path}"
+    return url
 
 
 def _price_context_text(price: float, context: PriceContext | None) -> str:

@@ -216,6 +216,19 @@ class Repository:
         rows = self.connect().execute("SELECT * FROM notifications ORDER BY id DESC")
         return [_notification_from_row(row) for row in rows]
 
+    def has_notification_for_post(self, post_id: int) -> bool:
+        row = self.connect().execute(
+            """
+            SELECT 1
+            FROM notifications
+            JOIN deals ON deals.id = notifications.deal_id
+            WHERE deals.post_id = ?
+            LIMIT 1
+            """,
+            (post_id,),
+        ).fetchone()
+        return row is not None
+
     def update_notification(self, notification: Notification) -> Notification:
         _require_id(notification.id, "notification")
         self.connect().execute(

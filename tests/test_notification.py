@@ -48,6 +48,7 @@ def test_render_deal_email_includes_priority_subject_and_feedback_links() -> Non
     assert "preferred brand" in message.text_body
     assert "https://example.com/more" in message.text_body
     assert "打开豆瓣原帖" in message.html_body
+    assert 'href="https://m.douban.com/group/topic/123456789/"' in message.html_body
 
 
 def test_render_deal_email_escapes_html() -> None:
@@ -85,6 +86,7 @@ def test_render_deal_digest_email_combines_multiple_deals() -> None:
     assert "今日猫车合集" in message.html_body
     assert "百利原始鸡" in message.html_body
     assert "小李子罐头" in message.html_body
+    assert 'href="https://m.douban.com/group/topic/123456789/"' in message.html_body
 
 
 def test_render_deal_email_includes_reference_price_context() -> None:
