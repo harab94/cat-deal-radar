@@ -47,6 +47,16 @@ class Notification:
 
 
 @dataclass(frozen=True)
+class RadarRun:
+    started_at: datetime
+    finished_at: datetime
+    posts_seen: int
+    deals_created: int
+    notifications_sent: int
+    id: int | None = None
+
+
+@dataclass(frozen=True)
 class Feedback:
     deal_id: int
     feedback_type: FeedbackType

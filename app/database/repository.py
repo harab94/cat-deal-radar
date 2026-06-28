@@ -6,7 +6,7 @@ from pathlib import Path
 from types import TracebackType
 
 from app.database.migrations import SCHEMA_SQL
-from app.database.models import Deal, Feedback, FeedbackType, Notification, Post
+from app.database.models import Deal, Feedback, FeedbackType, Notification, Post, RadarRun
 
 
 class Repository:
@@ -238,6 +238,49 @@ class Repository:
         self.connect().execute("DELETE FROM notifications WHERE id = ?", (notification_id,))
         self.connect().commit()
 
+    def create_radar_run(self, radar_run: RadarRun) -> RadarRun:
+        cursor = self.connect().execute(
+            """
+            INSERT INTO radar_runs (
+                started_at, finished_at, posts_seen, deals_created, notifications_sent
+            )
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                _to_db_time(radar_run.started_at),
+                _to_db_time(radar_run.finished_at),
+                radar_run.posts_seen,
+                radar_run.deals_created,
+                radar_run.notifications_sent,
+            ),
+        )
+        self.connect().commit()
+        return RadarRun(
+            id=cursor.lastrowid,
+            started_at=radar_run.started_at,
+            finished_at=radar_run.finished_at,
+            posts_seen=radar_run.posts_seen,
+            deals_created=radar_run.deals_created,
+            notifications_sent=radar_run.notifications_sent,
+        )
+
+    def list_radar_runs_since(self, since: datetime) -> list[RadarRun]:
+        rows = self.connect().execute(
+            """
+            SELECT * FROM radar_runs
+            WHERE finished_at >= ?
+            ORDER BY finished_at DESC, id DESC
+            """,
+            (_to_db_time(since),),
+        )
+        return [_radar_run_from_row(row) for row in rows]
+
+    def latest_radar_run(self) -> RadarRun | None:
+        row = self.connect().execute(
+            "SELECT * FROM radar_runs ORDER BY finished_at DESC, id DESC LIMIT 1"
+        ).fetchone()
+        return _radar_run_from_row(row) if row else None
+
     def create_feedback(self, feedback: Feedback) -> Feedback:
         cursor = self.connect().execute(
             """
@@ -348,6 +391,17 @@ def _notification_from_row(row: sqlite3.Row) -> Notification:
         deal_id=row["deal_id"],
         email_sent=bool(row["email_sent"]),
         sent_at=_from_db_time(sent_at) if sent_at else None,
+    )
+
+
+def _radar_run_from_row(row: sqlite3.Row) -> RadarRun:
+    return RadarRun(
+        id=row["id"],
+        started_at=_from_db_time(row["started_at"]),
+        finished_at=_from_db_time(row["finished_at"]),
+        posts_seen=row["posts_seen"],
+        deals_created=row["deals_created"],
+        notifications_sent=row["notifications_sent"],
     )
 
 

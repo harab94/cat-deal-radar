@@ -1,0 +1,35 @@
+name: Cat Deal Radar Daily Report
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    env:
+      GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+      DEAL_NOTIFICATION_RECIPIENT: ${{ secrets.DEAL_NOTIFICATION_RECIPIENT }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Send daily report
+        run: uv run python -m app.daily_report

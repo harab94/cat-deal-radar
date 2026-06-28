@@ -1,6 +1,6 @@
 """SQLite database access for Cat Deal Radar."""
 
-from app.database.models import Deal, Feedback, FeedbackType, Notification, Post
+from app.database.models import Deal, Feedback, FeedbackType, Notification, Post, RadarRun
 from app.database.repository import Repository
 
 __all__ = [
@@ -9,5 +9,6 @@ __all__ = [
     "FeedbackType",
     "Notification",
     "Post",
+    "RadarRun",
     "Repository",
 ]

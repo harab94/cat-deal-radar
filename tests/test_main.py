@@ -21,6 +21,11 @@ def test_run_initializes_database(monkeypatch, tmp_path: Path) -> None:
     assert result == 0
     with Repository(_settings(tmp_path).database_path) as repository:
         assert repository.list_posts() == []
+        latest_run = repository.latest_radar_run()
+        assert latest_run is not None
+        assert latest_run.posts_seen == 0
+        assert latest_run.deals_created == 0
+        assert latest_run.notifications_sent == 0
 
 
 def test_load_settings_reads_yaml(tmp_path: Path) -> None:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sqlite3
 from dataclasses import replace
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -13,6 +13,7 @@ from app.database import (
     FeedbackType,
     Notification,
     Post,
+    RadarRun,
     Repository,
 )
 
@@ -94,6 +95,31 @@ def test_notification_crud(repository: Repository) -> None:
     repository.delete_notification(notification.id)
 
     assert repository.get_notification(notification.id) is None
+
+
+def test_radar_run_records_are_listed_by_finished_at(repository: Repository) -> None:
+    older = repository.create_radar_run(
+        RadarRun(
+            started_at=NOW - timedelta(hours=2),
+            finished_at=NOW - timedelta(hours=2),
+            posts_seen=1,
+            deals_created=0,
+            notifications_sent=0,
+        )
+    )
+    newer = repository.create_radar_run(
+        RadarRun(
+            started_at=NOW,
+            finished_at=NOW,
+            posts_seen=3,
+            deals_created=2,
+            notifications_sent=1,
+        )
+    )
+
+    assert repository.latest_radar_run() == newer
+    assert repository.list_radar_runs_since(NOW - timedelta(hours=1)) == [newer]
+    assert repository.list_radar_runs_since(NOW - timedelta(hours=3)) == [newer, older]
 
 
 def test_feedback_crud(repository: Repository) -> None:

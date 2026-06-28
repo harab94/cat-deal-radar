@@ -33,6 +33,15 @@ CREATE TABLE IF NOT EXISTS notifications (
     FOREIGN KEY (deal_id) REFERENCES deals (id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS radar_runs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    started_at TEXT NOT NULL,
+    finished_at TEXT NOT NULL,
+    posts_seen INTEGER NOT NULL,
+    deals_created INTEGER NOT NULL,
+    notifications_sent INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS feedback (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     deal_id INTEGER NOT NULL,
@@ -50,5 +59,6 @@ CREATE TABLE IF NOT EXISTS feedback (
 
 CREATE INDEX IF NOT EXISTS idx_deals_post_id ON deals (post_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_deal_id ON notifications (deal_id);
+CREATE INDEX IF NOT EXISTS idx_radar_runs_finished_at ON radar_runs (finished_at);
 CREATE INDEX IF NOT EXISTS idx_feedback_deal_id ON feedback (deal_id);
 """
