@@ -10,8 +10,10 @@ import yaml
 from app.brand_normalization import BrandNormalizer
 
 DEAL_SIGNALS = ("团购", "闲车", "闲置", "好价", "补货", "凑单")
-EXPIRED_SIGNALS = ("开车", "已开车", "车走了")
-PRICE_PATTERN = re.compile(r"(?:¥|￥)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB|r|R)")
+EXPIRED_SIGNALS = ("开车", "已开车", "车走了", "已出", "出掉", "已售", "售出", "卖掉")
+PRICE_PATTERN = re.compile(
+    r"(?:¥|￥|💰)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB|r|R)"
+)
 WEIGHT_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:kg|KG|公斤|克|g|G|斤|磅)")
 
 

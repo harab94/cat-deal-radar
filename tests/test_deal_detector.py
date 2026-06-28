@@ -52,6 +52,18 @@ def test_rule_detector_treats_kaiche_as_expired_in_douban_group() -> None:
     assert "expired deal signal" in detected.reasons
 
 
+def test_rule_detector_treats_yichu_as_expired_and_reads_money_bag_price() -> None:
+    detector = _detector()
+
+    detected = detector.detect(title="【闲置】已出 💰200百利生鲜鸡冻干拼鸡肉猫粮")
+
+    assert detected.is_deal is False
+    assert detected.brand == "百利"
+    assert detected.category == "cat_food"
+    assert detected.price == 200
+    assert "expired deal signal" in detected.reasons
+
+
 def test_rule_detector_identifies_real_xianzhi_orijen_title() -> None:
     detector = _detector()
 
