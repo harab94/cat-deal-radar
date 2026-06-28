@@ -7,7 +7,14 @@ from pathlib import Path
 import pytest
 
 from app.database import Deal, Post, Repository
-from app.notification import EmailMessage, FeedbackLinks, NotificationService, render_deal_email
+from app.notification import (
+    DealDigestItem,
+    EmailMessage,
+    FeedbackLinks,
+    NotificationService,
+    render_deal_digest_email,
+    render_deal_email,
+)
 from app.notification.email_sender import build_mime_message
 from app.recommendation import RecommendationScore
 
@@ -55,6 +62,30 @@ def test_render_deal_email_escapes_html() -> None:
     assert "&lt;b&gt;title&lt;/b&gt;" in message.html_body
 
 
+def test_render_deal_digest_email_combines_multiple_deals() -> None:
+    message = render_deal_digest_email(
+        [
+            DealDigestItem(
+                deal=_deal(deal_id=1, product_name="百利原始鸡"),
+                post=_post(post_id=1, title="闲置 百利原始鸡"),
+                recommendation=_recommendation(cat_score=5),
+                feedback_links=FEEDBACK_LINKS,
+            ),
+            DealDigestItem(
+                deal=_deal(deal_id=2, product_name="小李子罐头"),
+                post=_post(post_id=2, title="闲置 小李子罐头"),
+                recommendation=_recommendation(cat_score=4),
+                feedback_links=FEEDBACK_LINKS,
+            ),
+        ]
+    )
+
+    assert message.subject.startswith("🐱猫车雷达今日发现 2 条")
+    assert "今日猫车合集" in message.html_body
+    assert "百利原始鸡" in message.html_body
+    assert "小李子罐头" in message.html_body
+
+
 def test_mime_message_encodes_unicode_subject() -> None:
     message = render_deal_email(
         deal=_deal(deal_id=1),
@@ -95,6 +126,28 @@ def test_notification_service_sends_email_and_records_notification(
     assert repository.get_notification(notification.id) == notification
 
 
+def test_notification_service_sends_one_digest_and_records_each_notification(
+    repository: Repository,
+) -> None:
+    post_a = repository.create_post(_post("douban-a"))
+    post_b = repository.create_post(_post("douban-b", title="小李子罐头"))
+    deal_a = repository.create_deal(_deal(post_id=post_a.id, product_name="百利原始鸡"))
+    deal_b = repository.create_deal(_deal(post_id=post_b.id, product_name="小李子罐头"))
+    sender = FakeSender()
+    service = NotificationService(repository=repository, sender=sender)
+
+    notifications = service.send_deal_digest(
+        items=[
+            DealDigestItem(deal_a, post_a, _recommendation(cat_score=5), FEEDBACK_LINKS),
+            DealDigestItem(deal_b, post_b, _recommendation(cat_score=4), FEEDBACK_LINKS),
+        ]
+    )
+
+    assert len(sender.sent_messages) == 1
+    assert len(notifications) == 2
+    assert len(repository.list_notifications()) == 2
+
+
 def test_notification_service_requires_persisted_deal(repository: Repository) -> None:
     service = NotificationService(repository=repository, sender=FakeSender())
 
@@ -115,10 +168,15 @@ class FakeSender:
         self.sent_messages.append(message)
 
 
-def _post(post_id: int | None = None, title: str = "百利原始鸡 335") -> Post:
+def _post(
+    douban_post_id: str = "123456789",
+    *,
+    post_id: int | None = None,
+    title: str = "百利原始鸡 335",
+) -> Post:
     return Post(
         id=post_id,
-        douban_post_id="123456789",
+        douban_post_id=douban_post_id,
         title=title,
         content=title,
         url="https://www.douban.com/group/topic/123456789/",

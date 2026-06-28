@@ -22,6 +22,14 @@ class EmailMessage:
     html_body: str
 
 
+@dataclass(frozen=True)
+class DealDigestItem:
+    deal: Deal
+    post: Post
+    recommendation: RecommendationScore
+    feedback_links: FeedbackLinks
+
+
 def render_deal_email(
     *,
     deal: Deal,
@@ -36,6 +44,29 @@ def render_deal_email(
     reasons = recommendation.reasons or ("No reasons recorded",)
     text_body = _render_text_body(deal, post, recommendation, feedback_links, reasons)
     html_body = _render_html_body(deal, post, recommendation, feedback_links, reasons)
+    return EmailMessage(subject=subject, text_body=text_body, html_body=html_body)
+
+
+def render_deal_digest_email(items: list[DealDigestItem]) -> EmailMessage:
+    if not items:
+        msg = "Cannot render an empty deal digest."
+        raise ValueError(msg)
+    if len(items) == 1:
+        item = items[0]
+        return render_deal_email(
+            deal=item.deal,
+            post=item.post,
+            recommendation=item.recommendation,
+            feedback_links=item.feedback_links,
+        )
+
+    top_item = max(items, key=lambda item: item.recommendation.cat_score)
+    subject = (
+        f"🐱猫车雷达今日发现 {len(items)} 条："
+        f"{top_item.deal.product_name} 等"
+    )
+    text_body = _render_digest_text_body(items)
+    html_body = _render_digest_html_body(items)
     return EmailMessage(subject=subject, text_body=text_body, html_body=html_body)
 
 
@@ -239,6 +270,146 @@ def _render_html_body(
     </table>
   </body>
 </html>
+"""
+
+
+def _render_digest_text_body(items: list[DealDigestItem]) -> str:
+    sections = []
+    for index, item in enumerate(items, start=1):
+        priority_label = _priority_label(item.recommendation.cat_score)
+        title = f"{index}. {priority_label} {item.deal.product_name}"
+        sections.append(
+            f"""【{title}】
+品牌：{item.deal.brand}
+品类：{item.deal.category}
+价格：{_price_label(item.deal.price)}
+信心分：{item.recommendation.confidence_score}
+原帖：{item.post.url}
+
+快速反馈：
+多推类似：{item.feedback_links.more_like_this}
+少推类似：{item.feedback_links.less_like_this}
+因为这次推荐下单了：{item.feedback_links.bought}
+家里还有，下次再买：{item.feedback_links.already_have_stock}
+"""
+        )
+    return "猫车雷达本轮发现\n\n" + "\n".join(sections)
+
+
+def _render_digest_html_body(items: list[DealDigestItem]) -> str:
+    cards = "".join(_digest_card(item, index) for index, item in enumerate(items, start=1))
+    return f"""<!doctype html>
+<html lang="zh-CN">
+  <body style="margin:0; padding:0; background:#ffffff; color:#242424;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+      style="border-collapse:collapse; font-family: Arial, Helvetica, sans-serif;">
+      <tr>
+        <td style="padding: 36px 28px;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+            style="max-width: 820px; margin: 0 auto; border-collapse: collapse;">
+            <tr>
+              <td style="padding-bottom: 28px;">
+                <table role="presentation" cellspacing="0" cellpadding="0"
+                  style="border-collapse: collapse;">
+                  <tr>
+                    <td style="width: 52px; height: 52px; border-radius: 50%;
+                      background: #fff3c4; text-align: center; font-size: 28px;">
+                      🐱
+                    </td>
+                    <td style="padding-left: 14px; font-size: 18px; line-height: 1.4;">
+                      <div style="font-weight: 700;">Cat Deal Radar</div>
+                      <div style="color: #777;">本轮发现 {len(items)} 条猫咪好价</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="font-family: Georgia, 'Times New Roman', serif;
+                font-size: 58px; line-height: 0.96; font-weight: 700; letter-spacing: 0;
+                padding-bottom: 24px;">
+                今日猫车合集
+              </td>
+            </tr>
+            <tr>
+              <td style="border-top: 2px solid #222; padding-top: 26px;
+                padding-bottom: 8px;">
+                <div style="font-size: 14px; font-weight: 700; color: #666;
+                  text-transform: uppercase; letter-spacing: 0.08em;">
+                  DEAL HIGHLIGHTS
+                </div>
+              </td>
+            </tr>
+            {cards}
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+"""
+
+
+def _digest_card(item: DealDigestItem, index: int) -> str:
+    deal = item.deal
+    recommendation = item.recommendation
+    post = item.post
+    feedback_links = item.feedback_links
+    cats = "🐱" * recommendation.cat_score
+    priority_label = _priority_label(recommendation.cat_score)
+    reasons = " · ".join(recommendation.reasons[:3]) or "推荐理由待补充"
+    return f"""
+            <tr>
+              <td style="padding: 24px 0; border-bottom: 1px solid #e5e5e5;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0"
+                  style="border-collapse: collapse;">
+                  <tr>
+                    <td style="font-size: 14px; color: #777; padding-bottom: 10px;">
+                      #{index} {escape(priority_label)} · {cats} ·
+                      信心分 {recommendation.confidence_score}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 28px; line-height: 1.2; font-weight: 800;
+                      padding-bottom: 10px;">
+                      {escape(deal.product_name)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 18px; line-height: 1.45; color: #666;
+                      padding-bottom: 12px;">
+                      {escape(deal.brand)} · {escape(_category_label(deal.category))} ·
+                      <strong style="color:#111;">{escape(_price_label(deal.price))}</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 16px; line-height: 1.5; color: #555;
+                      padding-bottom: 16px;">
+                      推荐理由：{escape(reasons)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding-bottom: 14px;">
+                      {_button(feedback_links.more_like_this, "❤️ 多推")}
+                      <span style="display:inline-block; width:8px;"></span>
+                      {_button(feedback_links.less_like_this, "🙈 少推")}
+                      <span style="display:inline-block; width:8px;"></span>
+                      {_button(feedback_links.bought, "🛍️ 已下单")}
+                      <span style="display:inline-block; width:8px;"></span>
+                      {_button(feedback_links.already_have_stock, "📦 家里还有")}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-size: 15px;">
+                      <a href="{escape(post.url)}" style="color:#111; font-weight:700;">
+                        打开豆瓣原帖 →
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
 """
 
 

@@ -17,6 +17,19 @@ HTML = """
 </html>
 """
 
+MULTI_DEAL_HTML = """
+<html>
+  <body>
+    <a href="/group/topic/123456789/" data-created-at="2026-06-27T12:00:00+08:00">
+      闲车 百利原始鸡 335 元
+    </a>
+    <a href="/group/topic/223456789/" data-created-at="2026-06-27T12:03:00+08:00">
+      闲置 k9罐头鸡肉羊心*2
+    </a>
+  </body>
+</html>
+"""
+
 PRICELESS_HTML = """
 <html>
   <body>
@@ -66,6 +79,35 @@ def test_pipeline_creates_deal_when_title_price_is_missing(
     deal = repository.list_deals()[0]
     assert deal.product_name == "闲置 ve猪肉粒"
     assert deal.price == 0
+
+
+def test_pipeline_sends_one_email_for_multiple_deals(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    sent_subjects: list[str] = []
+
+    def fake_send(self, message) -> None:
+        sent_subjects.append(message.subject)
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", lambda *args, **kwargs: MULTI_DEAL_HTML)
+    monkeypatch.setenv("GMAIL_USERNAME", "sender@example.com")
+    monkeypatch.setenv("GMAIL_APP_PASSWORD", "app-password")
+    monkeypatch.setenv("GMAIL_SENDER", "sender@example.com")
+    monkeypatch.setenv("DEAL_NOTIFICATION_RECIPIENT", "recipient@example.com")
+    monkeypatch.setenv("FEEDBACK_BASE_URL", "https://feedback.example.com")
+    monkeypatch.setattr("app.notification.email_sender.SmtpEmailSender.send", fake_send)
+    settings = _settings(tmp_path)
+    repository = Repository(settings.database_path)
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 2
+    assert result.deals_created == 2
+    assert result.notifications_sent == 2
+    assert len(sent_subjects) == 1
+    assert sent_subjects[0].startswith("🐱猫车雷达今日发现 2 条")
+    assert len(repository.list_notifications()) == 2
 
 
 def test_main_run_executes_pipeline(

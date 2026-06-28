@@ -4,7 +4,13 @@ from datetime import UTC, datetime
 from typing import Protocol
 
 from app.database import Deal, Notification, Post, Repository
-from app.notification.templates import EmailMessage, FeedbackLinks, render_deal_email
+from app.notification.templates import (
+    DealDigestItem,
+    EmailMessage,
+    FeedbackLinks,
+    render_deal_digest_email,
+    render_deal_email,
+)
 from app.recommendation import RecommendationScore
 
 
@@ -35,6 +41,21 @@ class NotificationService:
         return self._repository.create_notification(
             Notification(deal_id=_require_deal_id(deal), email_sent=True, sent_at=datetime.now(UTC))
         )
+
+    def send_deal_digest(self, *, items: list[DealDigestItem]) -> list[Notification]:
+        message = render_deal_digest_email(items)
+        self._sender.send(message)
+        sent_at = datetime.now(UTC)
+        return [
+            self._repository.create_notification(
+                Notification(
+                    deal_id=_require_deal_id(item.deal),
+                    email_sent=True,
+                    sent_at=sent_at,
+                )
+            )
+            for item in items
+        ]
 
 
 def _require_deal_id(deal: Deal) -> int:

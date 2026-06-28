@@ -11,7 +11,7 @@ from app.crawler import DoubanCrawler, DoubanGroupConfig
 from app.database import Deal, Post, Repository
 from app.deal_detector import analyze_comments
 from app.feedback import build_feedback_links
-from app.notification import EmailConfig, NotificationService, SmtpEmailSender
+from app.notification import DealDigestItem, EmailConfig, NotificationService, SmtpEmailSender
 from app.recommendation import (
     DuplicateHandler,
     RecommendationInput,
@@ -60,6 +60,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     deals_created = 0
     notifications_sent = 0
     detection_diagnostics: list[dict[str, object]] = []
+    notification_items: list[DealDigestItem] = []
 
     for post in posts:
         detected = detector.detect(title=post.title, content=post.content)
@@ -107,20 +108,34 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
         deals_created += 1
 
         if sender is None or feedback_base_url is None:
-            logger.info("notification_skipped_missing_configuration", deal_id=deal.id)
+            logger.info(
+                "notification_skipped_missing_configuration",
+                deal_id=deal.id,
+            )
             continue
 
-        feedback_links = build_feedback_links(
-            base_url=feedback_base_url,
-            deal_id=_require(deal.id, "deal id"),
+        notification_items.append(
+            DealDigestItem(
+                deal=deal,
+                post=post,
+                recommendation=recommendation,
+                feedback_links=build_feedback_links(
+                    base_url=feedback_base_url,
+                    deal_id=_require(deal.id, "deal id"),
+                ),
+            )
         )
-        NotificationService(repository=repository, sender=sender).send_deal_notification(
-            deal=deal,
-            post=post,
-            recommendation=recommendation,
-            feedback_links=feedback_links,
+
+    if notification_items and sender is not None:
+        if feedback_base_url and "github.com" in feedback_base_url.casefold():
+            logger.warning(
+                "feedback_base_url_points_to_github",
+                feedback_base_url=feedback_base_url,
+            )
+        notifications = NotificationService(repository=repository, sender=sender).send_deal_digest(
+            items=notification_items,
         )
-        notifications_sent += 1
+        notifications_sent = len(notifications)
 
     if deals_created == 0 and posts:
         logger.info(
