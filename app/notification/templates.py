@@ -31,7 +31,8 @@ def render_deal_email(
 ) -> EmailMessage:
     cats = "🐱" * recommendation.cat_score
     priority_label = _priority_label(recommendation.cat_score)
-    subject = f"{cats}{priority_label}{deal.product_name} {deal.price:g}元"
+    price_label = _price_label(deal.price)
+    subject = f"{cats}{priority_label}{deal.product_name} {price_label}"
     reasons = recommendation.reasons or ("No reasons recorded",)
     text_body = _render_text_body(deal, post, recommendation, feedback_links, reasons)
     html_body = _render_html_body(deal, post, recommendation, feedback_links, reasons)
@@ -61,7 +62,7 @@ def _render_text_body(
 商品：{deal.product_name}
 品牌：{deal.brand}
 品类：{deal.category}
-价格：{deal.price:g}元
+价格：{_price_label(deal.price)}
 信心分：{recommendation.confidence_score}
 原帖标题：{post.title}
 
@@ -87,7 +88,7 @@ def _render_html_body(
     return f"""<!doctype html>
 <html lang="zh-CN">
   <body>
-    <h2>{escape(deal.product_name)} {deal.price:g}元</h2>
+    <h2>{escape(deal.product_name)} {escape(_price_label(deal.price))}</h2>
     <h3>推荐理由</h3>
     <ul>{reason_items}</ul>
     <h3>社区信息</h3>
@@ -108,3 +109,9 @@ def _render_html_body(
   </body>
 </html>
 """
+
+
+def _price_label(price: float) -> str:
+    if price <= 0:
+        return "价格未知"
+    return f"{price:g}元"

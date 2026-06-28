@@ -27,7 +27,14 @@ class DuplicateHandler:
         if not matches:
             return DuplicateDecision(is_duplicate=False, should_notify=True)
 
-        lowest_existing = min(matches, key=lambda deal: deal.price)
+        if _unknown_price(candidate.price):
+            return DuplicateDecision(is_duplicate=True, should_notify=False)
+
+        known_price_matches = [deal for deal in matches if not _unknown_price(deal.price)]
+        if not known_price_matches:
+            return DuplicateDecision(is_duplicate=False, should_notify=True)
+
+        lowest_existing = min(known_price_matches, key=lambda deal: deal.price)
         if candidate.price < lowest_existing.price:
             return DuplicateDecision(
                 is_duplicate=False,
@@ -44,6 +51,10 @@ def _same_product(left: Deal, right: Deal) -> bool:
         and _normalize_product_name(left.product_name)
         == _normalize_product_name(right.product_name)
     )
+
+
+def _unknown_price(price: float) -> bool:
+    return price <= 0
 
 
 def _normalize_product_name(value: str) -> str:

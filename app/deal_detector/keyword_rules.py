@@ -70,7 +70,6 @@ class RuleBasedDealDetector:
         is_deal = bool(
             brand
             and category
-            and price is not None
             and _has_any_signal(title_text, self._deal_signals)
             and not _has_any_signal(title_text, self._expired_signals)
         )

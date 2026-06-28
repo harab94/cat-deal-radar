@@ -52,3 +52,24 @@ https://<your-worker-domain>?deal_id=<id>&action=less
 https://<your-worker-domain>?deal_id=<id>&action=bought
 https://<your-worker-domain>?deal_id=<id>&action=stock
 ```
+
+## Local Preview
+
+Create `feedback-worker/.dev.vars` for local preview:
+
+```text
+FEEDBACK_PREVIEW_MODE=1
+```
+
+Then run:
+
+```bash
+cd feedback-worker
+npx wrangler dev --local --port 8787
+```
+
+Open:
+
+```text
+http://localhost:8787/?deal_id=preview-1&action=more
+```

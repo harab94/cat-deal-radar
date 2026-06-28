@@ -17,6 +17,16 @@ HTML = """
 </html>
 """
 
+PRICELESS_HTML = """
+<html>
+  <body>
+    <a href="/group/topic/223456789/" data-created-at="2026-06-27T12:00:00+08:00">
+      闲置 ve猪肉粒
+    </a>
+  </body>
+</html>
+"""
+
 
 def test_pipeline_creates_deal_without_email_when_email_config_is_missing(
     monkeypatch,
@@ -34,6 +44,28 @@ def test_pipeline_creates_deal_without_email_when_email_config_is_missing(
     assert result.notifications_sent == 0
     assert len(repository.list_deals()) == 1
     assert repository.list_notifications() == []
+
+
+def test_pipeline_creates_deal_when_title_price_is_missing(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr(
+        "app.crawler.douban.fetch_html",
+        lambda *args, **kwargs: PRICELESS_HTML,
+    )
+    _clear_notification_env(monkeypatch)
+    settings = _settings(tmp_path)
+    repository = Repository(settings.database_path)
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 1
+    assert result.deals_created == 1
+    assert result.notifications_sent == 0
+    deal = repository.list_deals()[0]
+    assert deal.product_name == "闲置 ve猪肉粒"
+    assert deal.price == 0
 
 
 def test_main_run_executes_pipeline(

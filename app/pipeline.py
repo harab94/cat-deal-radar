@@ -80,7 +80,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             RecommendationInput(
                 category=_require(detected.category, "category"),
                 brand=_require(detected.brand, "brand"),
-                price=_require(detected.price, "price"),
+                price=detected.price or 0,
                 base_confidence=detected.confidence,
                 comment_analysis=analyze_comments(list(post.comments)),
             )
@@ -93,7 +93,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             category=_require(detected.category, "category"),
             brand=_require(detected.brand, "brand"),
             product_name=_require(detected.product_name, "product name"),
-            price=_require(detected.price, "price"),
+            price=detected.price or 0,
             confidence_score=recommendation.confidence_score,
             cat_score=recommendation.cat_score,
             is_duplicate=False,

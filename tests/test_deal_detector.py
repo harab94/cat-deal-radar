@@ -63,12 +63,12 @@ def test_rule_detector_identifies_real_xianzhi_orijen_title() -> None:
     assert detected.price == 330
 
 
-def test_rule_detector_keeps_xianzhi_post_without_price_unnotified() -> None:
+def test_rule_detector_allows_xianzhi_post_without_price() -> None:
     detector = _detector()
 
     detected = detector.detect(title="【闲置】官旗出爱肯拿农场牧场猫粮")
 
-    assert detected.is_deal is False
+    assert detected.is_deal is True
     assert detected.brand == "爱肯拿"
     assert detected.category == "cat_food"
     assert detected.price is None
@@ -102,7 +102,7 @@ def test_rule_detector_ignores_content_for_brand_and_price() -> None:
     assert detected.price is None
 
 
-def test_rule_detector_does_not_use_detail_content_price_for_title_brand() -> None:
+def test_rule_detector_allows_title_brand_without_detail_content_price() -> None:
     detector = _detector()
 
     detected = detector.detect(
@@ -110,7 +110,7 @@ def test_rule_detector_does_not_use_detail_content_price_for_title_brand() -> No
         content="正文价格 210元，可自提",
     )
 
-    assert detected.is_deal is False
+    assert detected.is_deal is True
     assert detected.brand == "Halo"
     assert detected.category == "cat_food"
     assert detected.price is None

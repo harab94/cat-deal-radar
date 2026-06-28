@@ -26,16 +26,18 @@ export default {
       return htmlResponse("反馈链接无效", "缺少 deal_id 或 action 参数。", 400);
     }
 
-    try {
-      await writeFeedback(env, {
-        dealId,
-        action,
-        feedbackType: ACTION_TYPES[action],
-        createdAt: new Date().toISOString(),
-      });
-    } catch (error) {
-      console.error(error);
-      return htmlResponse("记录失败", "飞书暂时没有收下这条反馈，请稍后再试。", 502);
+    if (!isPreviewMode(env)) {
+      try {
+        await writeFeedback(env, {
+          dealId,
+          action,
+          feedbackType: ACTION_TYPES[action],
+          createdAt: new Date().toISOString(),
+        });
+      } catch (error) {
+        console.error(error);
+        return htmlResponse("记录失败", "飞书暂时没有收下这条反馈，请稍后再试。", 502);
+      }
     }
 
     return htmlResponse(
@@ -44,6 +46,10 @@ export default {
     );
   },
 };
+
+function isPreviewMode(env) {
+  return env.FEEDBACK_PREVIEW_MODE === "1";
+}
 
 async function writeFeedback(env, feedback) {
   const token = await tenantAccessToken(env);

@@ -45,6 +45,21 @@ def test_recommendation_below_three_cats_does_not_notify() -> None:
     assert score.should_notify is False
 
 
+def test_recommendation_notifies_strong_freeze_dried_title_without_price() -> None:
+    score = _scorer().score(
+        RecommendationInput(
+            category="freeze_dried",
+            brand="VE",
+            price=0,
+            base_confidence=90,
+        )
+    )
+
+    assert score.cat_score == 3
+    assert score.should_notify is True
+    assert "strong title match" in score.reasons
+
+
 def test_negative_comments_lower_confidence_but_do_not_hide_score() -> None:
     score = _scorer().score(
         RecommendationInput(
@@ -99,6 +114,26 @@ def test_duplicate_handler_notifies_lower_price_duplicate_inside_window() -> Non
 def test_duplicate_handler_ignores_matches_outside_window() -> None:
     existing = _deal(deal_id=1, price=335, created_at=NOW - timedelta(hours=25))
     candidate = _deal(price=350)
+
+    decision = DuplicateHandler().evaluate(candidate, [existing])
+
+    assert decision.is_duplicate is False
+    assert decision.should_notify is True
+
+
+def test_duplicate_handler_suppresses_unknown_price_duplicate_inside_window() -> None:
+    existing = _deal(deal_id=1, price=335)
+    candidate = _deal(price=0)
+
+    decision = DuplicateHandler().evaluate(candidate, [existing])
+
+    assert decision.is_duplicate is True
+    assert decision.should_notify is False
+
+
+def test_duplicate_handler_notifies_known_price_after_unknown_price() -> None:
+    existing = _deal(deal_id=1, price=0)
+    candidate = _deal(price=335)
 
     decision = DuplicateHandler().evaluate(candidate, [existing])
 

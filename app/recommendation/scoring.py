@@ -58,6 +58,9 @@ class RecommendationScorer:
             reasons.append("high priority category")
         if brand_points:
             reasons.append("preferred brand")
+        if recommendation.base_confidence >= 80:
+            points += 10
+            reasons.append("strong title match")
 
         discount = _discount_percent(recommendation.price, recommendation.historical_average_price)
         if discount is not None:
@@ -88,7 +91,7 @@ class RecommendationScorer:
 
 
 def _discount_percent(price: float, historical_average_price: float | None) -> float | None:
-    if historical_average_price is None or historical_average_price <= 0:
+    if price <= 0 or historical_average_price is None or historical_average_price <= 0:
         return None
     return max(0.0, (historical_average_price - price) / historical_average_price * 100)
 
