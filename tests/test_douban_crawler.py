@@ -108,6 +108,52 @@ def test_crawler_returns_visible_posts_without_duplicate_inserts(
     assert all(post.comments == ("还能买，我刚拍。", "好像涨价了。") for post in first_run)
 
 
+def test_crawler_skips_posts_when_topic_detail_fetch_fails(
+    monkeypatch: pytest.MonkeyPatch,
+    repository: Repository,
+) -> None:
+    def fake_fetch_html(url, *args, **kwargs) -> str:
+        if "/group/topic/" in url:
+            raise RuntimeError("Failed to fetch Douban page")
+        return HTML
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", fake_fetch_html)
+
+    crawler = DoubanCrawler(
+        DoubanGroupConfig(
+            group_url="https://www.douban.com/group/haixiuzu/",
+            tab_name="闲车禁拼多多",
+        ),
+        repository,
+    )
+
+    assert crawler.run_once() == []
+    assert repository.list_posts() == []
+
+
+def test_crawler_skips_unavailable_topic_pages(
+    monkeypatch: pytest.MonkeyPatch,
+    repository: Repository,
+) -> None:
+    def fake_fetch_html(url, *args, **kwargs) -> str:
+        if "/group/topic/" in url:
+            return "<html><body>你没有权限访问这个页面。</body></html>"
+        return HTML
+
+    monkeypatch.setattr("app.crawler.douban.fetch_html", fake_fetch_html)
+
+    crawler = DoubanCrawler(
+        DoubanGroupConfig(
+            group_url="https://www.douban.com/group/haixiuzu/",
+            tab_name="闲车禁拼多多",
+        ),
+        repository,
+    )
+
+    assert crawler.run_once() == []
+    assert repository.list_posts() == []
+
+
 def test_parse_douban_topic_text_extracts_visible_text() -> None:
     assert parse_douban_topic_text(TOPIC_HTML) == "Halo自然光环未拆封，价格 210元，可自提。"
 

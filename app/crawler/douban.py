@@ -47,7 +47,11 @@ class DoubanCrawler:
         created_count = 0
 
         for parsed_post in posts:
-            content, comments = self._fetch_post_detail(parsed_post)
+            detail = self._fetch_post_detail(parsed_post)
+            if detail is None:
+                continue
+
+            content, comments = detail
             existing_post = self._repository.get_post_by_douban_id(parsed_post.douban_post_id)
             post = Post(
                 id=existing_post.id if existing_post else None,
@@ -83,7 +87,7 @@ class DoubanCrawler:
     def run_once(self) -> list[Post]:
         return self.save_latest_posts(self.fetch_latest_posts())
 
-    def _fetch_post_detail(self, post: ParsedPost) -> tuple[str, list[str]]:
+    def _fetch_post_detail(self, post: ParsedPost) -> tuple[str, list[str]] | None:
         try:
             html = fetch_html(
                 post.url,
@@ -97,7 +101,15 @@ class DoubanCrawler:
                 post_id=post.douban_post_id,
                 error=str(error),
             )
-            return post.title, []
+            return None
+
+        if _is_unavailable_topic_page(html):
+            logger.warning(
+                "douban_topic_unavailable",
+                post_id=post.douban_post_id,
+                url=post.url,
+            )
+            return None
 
         text = parse_douban_topic_text(html)
         return text or post.title, parse_douban_topic_comments(html)
@@ -109,6 +121,19 @@ def _post_content_changed(existing_post: Post, latest_post: Post) -> bool:
         or existing_post.content != latest_post.content
         or existing_post.url != latest_post.url
     )
+
+
+def _is_unavailable_topic_page(html: str) -> bool:
+    unavailable_markers = (
+        "没有权限访问这个页面",
+        "你没有权限访问这个页面",
+        "页面不存在",
+        "该话题不存在",
+        "内容不存在",
+        "帖子不存在",
+        "已被删除",
+    )
+    return any(marker in html for marker in unavailable_markers)
 
 
 def fetch_html(

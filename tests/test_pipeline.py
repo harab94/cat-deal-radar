@@ -41,6 +41,17 @@ PRICELESS_HTML = """
 </html>
 """
 
+TOPIC_DETAIL_HTML = """
+<html>
+  <body>
+    <div class="topic-content">
+      闲车 百利原始鸡 335 元，还有货。
+    </div>
+    <div class="reply-content">还能买。</div>
+  </body>
+</html>
+"""
+
 NOW = datetime(2026, 6, 27, 12, 0, tzinfo=UTC)
 
 
@@ -270,6 +281,9 @@ def test_pipeline_does_not_notify_same_post_twice_even_if_deal_name_changes(
 
 
 def _fake_fetch_html(*args, **kwargs) -> str:
+    url = str(args[0]) if args else ""
+    if "/group/topic/" in url:
+        return TOPIC_DETAIL_HTML
     return HTML
 
 
