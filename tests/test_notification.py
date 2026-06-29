@@ -148,6 +148,27 @@ def test_notification_service_sends_email_and_records_notification(
     assert repository.get_notification(notification.id) == notification
 
 
+def test_notification_service_records_attempt_before_sending(
+    repository: Repository,
+) -> None:
+    post = repository.create_post(_post())
+    deal = repository.create_deal(_deal(post_id=post.id))
+    service = NotificationService(repository=repository, sender=FailingSender())
+
+    with pytest.raises(RuntimeError, match="send failed"):
+        service.send_deal_notification(
+            deal=deal,
+            post=post,
+            recommendation=_recommendation(cat_score=5),
+            feedback_links=FEEDBACK_LINKS,
+        )
+
+    notifications = repository.list_notifications()
+    assert len(notifications) == 1
+    assert notifications[0].deal_id == deal.id
+    assert notifications[0].email_sent is False
+
+
 def test_notification_service_sends_one_digest_and_records_each_notification(
     repository: Repository,
 ) -> None:
@@ -188,6 +209,11 @@ class FakeSender:
 
     def send(self, message: EmailMessage) -> None:
         self.sent_messages.append(message)
+
+
+class FailingSender:
+    def send(self, message: EmailMessage) -> None:
+        raise RuntimeError("send failed")
 
 
 def _post(

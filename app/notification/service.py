@@ -40,24 +40,39 @@ class NotificationService:
             feedback_links=feedback_links,
             price_context=price_context,
         )
+        notification = self._repository.create_notification(
+            Notification(deal_id=_require_deal_id(deal), email_sent=False)
+        )
         self._sender.send(message)
-        return self._repository.create_notification(
-            Notification(deal_id=_require_deal_id(deal), email_sent=True, sent_at=datetime.now(UTC))
+        return self._repository.update_notification(
+            Notification(
+                id=notification.id,
+                deal_id=notification.deal_id,
+                email_sent=True,
+                sent_at=datetime.now(UTC),
+            )
         )
 
     def send_deal_digest(self, *, items: list[DealDigestItem]) -> list[Notification]:
         message = render_deal_digest_email(items)
+        notifications = [
+            self._repository.create_notification(
+                Notification(deal_id=_require_deal_id(item.deal), email_sent=False)
+            )
+            for item in items
+        ]
         self._sender.send(message)
         sent_at = datetime.now(UTC)
         return [
-            self._repository.create_notification(
+            self._repository.update_notification(
                 Notification(
-                    deal_id=_require_deal_id(item.deal),
+                    id=notification.id,
+                    deal_id=notification.deal_id,
                     email_sent=True,
                     sent_at=sent_at,
                 )
             )
-            for item in items
+            for notification in notifications
         ]
 
 
