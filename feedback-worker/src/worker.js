@@ -82,7 +82,6 @@ async function triggerRadarWorkflow(env) {
       },
       body: JSON.stringify({
         ref,
-        inputs: { send_test_email: "false" },
       }),
     },
   );
