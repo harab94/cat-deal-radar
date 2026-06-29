@@ -2,6 +2,15 @@ name: Cat Deal Radar
 
 on:
   workflow_dispatch:
+    inputs:
+      run_radar:
+        description: "Type yes to run the radar and send real notifications"
+        required: true
+        default: "no"
+        type: choice
+        options:
+          - "no"
+          - "yes"
 
 permissions:
   contents: write
@@ -12,6 +21,7 @@ concurrency:
 
 jobs:
   run:
+    if: ${{ inputs.run_radar == 'yes' }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
 
