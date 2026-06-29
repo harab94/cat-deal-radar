@@ -16,11 +16,11 @@ from app.notification import (
     DealDigestItem,
     EmailConfig,
     EmailMessage,
+    FeishuWebhookConfig,
+    FeishuWebhookSender,
     NotificationService,
     PriceContext,
     SmtpEmailSender,
-    WeWorkAppSender,
-    WeWorkConfig,
 )
 from app.recommendation import (
     DuplicateHandler,
@@ -76,7 +76,9 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     notification_items: list[DealDigestItem] = []
 
     for post in posts:
-        if repository.has_notification_for_post(_require(post.id, "post id")):
+        if repository.has_notification_for_post(
+            _require(post.id, "post id")
+        ) or repository.has_notification_for_post_title(post.title):
             continue
 
         rich_content = _rich_post_content(post)
@@ -155,10 +157,17 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
         )
 
     if notification_items and sender is not None:
-        notifications = NotificationService(repository=repository, sender=sender).send_deal_digest(
-            items=notification_items,
-        )
-        notifications_sent = len(notifications)
+        try:
+            service = NotificationService(repository=repository, sender=sender)
+            notifications = service.send_deal_digest(items=notification_items)
+        except RuntimeError as error:
+            logger.warning(
+                "notification_delivery_failed",
+                error=str(error),
+                deal_ids=[item.deal.id for item in notification_items],
+            )
+        else:
+            notifications_sent = len(notifications)
 
     if deals_created == 0 and posts:
         logger.info(
@@ -232,20 +241,15 @@ def _email_sender_from_env(settings: Settings) -> SmtpEmailSender | None:
     )
 
 
-def _wework_sender_from_env(settings: Settings) -> WeWorkAppSender | None:
-    corp_id = os.environ.get(settings.wework_corp_id_env)
-    agent_id = os.environ.get(settings.wework_agent_id_env)
-    app_secret = os.environ.get(settings.wework_app_secret_env)
-    to_user = os.environ.get(settings.wework_to_user_env)
-    if not all([corp_id, agent_id, app_secret, to_user]):
+def _feishu_sender_from_env(settings: Settings) -> FeishuWebhookSender | None:
+    webhook_url = os.environ.get(settings.feishu_bot_webhook_env)
+    if not webhook_url:
         return None
 
-    return WeWorkAppSender(
-        WeWorkConfig(
-            corp_id=_require(corp_id, "WeWork corp id"),
-            agent_id=_require(agent_id, "WeWork agent id"),
-            app_secret=_require(app_secret, "WeWork app secret"),
-            to_user=_require(to_user, "WeWork to user"),
+    return FeishuWebhookSender(
+        FeishuWebhookConfig(
+            webhook_url=webhook_url,
+            secret=os.environ.get(settings.feishu_bot_secret_env),
         )
     )
 
@@ -253,7 +257,7 @@ def _wework_sender_from_env(settings: Settings) -> WeWorkAppSender | None:
 def _notification_sender_from_env(settings: Settings):
     senders = [
         sender
-        for sender in (_email_sender_from_env(settings), _wework_sender_from_env(settings))
+        for sender in (_email_sender_from_env(settings), _feishu_sender_from_env(settings))
         if sender is not None
     ]
     if not senders:

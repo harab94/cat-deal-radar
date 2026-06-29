@@ -229,6 +229,20 @@ class Repository:
         ).fetchone()
         return row is not None
 
+    def has_notification_for_post_title(self, title: str) -> bool:
+        row = self.connect().execute(
+            """
+            SELECT 1
+            FROM notifications
+            JOIN deals ON deals.id = notifications.deal_id
+            JOIN posts ON posts.id = deals.post_id
+            WHERE posts.title = ?
+            LIMIT 1
+            """,
+            (title,),
+        ).fetchone()
+        return row is not None
+
     def update_notification(self, notification: Notification) -> Notification:
         _require_id(notification.id, "notification")
         self.connect().execute(

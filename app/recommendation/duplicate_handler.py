@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
-from datetime import datetime, timedelta
 
 from app.database import Deal
+
+PRICE_TEXT_PATTERN = re.compile(r"(?:¥|￥)?\s*\d+(?:\.\d+)?\s*(?:元|块|rmb|RMB|r|R)?")
+NOISE_WORDS = ("闲车", "闲置", "好价", "补货", "出", "转", "卖", "有货")
 
 
 @dataclass(frozen=True)
@@ -14,16 +17,8 @@ class DuplicateDecision:
 
 
 class DuplicateHandler:
-    def __init__(self, *, window_hours: int = 24) -> None:
-        self._window = timedelta(hours=window_hours)
-
     def evaluate(self, candidate: Deal, existing_deals: list[Deal]) -> DuplicateDecision:
-        matches = [
-            deal
-            for deal in existing_deals
-            if _same_product(candidate, deal)
-            and _within_window(candidate.created_at, deal.created_at, self._window)
-        ]
+        matches = [deal for deal in existing_deals if _same_product(candidate, deal)]
         if not matches:
             return DuplicateDecision(is_duplicate=False, should_notify=True)
 
@@ -58,8 +53,7 @@ def _unknown_price(price: float) -> bool:
 
 
 def _normalize_product_name(value: str) -> str:
-    return value.casefold().replace(" ", "").replace("-", "").replace("_", "")
-
-
-def _within_window(left: datetime, right: datetime, window: timedelta) -> bool:
-    return abs(left - right) <= window
+    normalized = PRICE_TEXT_PATTERN.sub(" ", value.casefold())
+    for word in NOISE_WORDS:
+        normalized = normalized.replace(word.casefold(), " ")
+    return normalized.replace(" ", "").replace("-", "").replace("_", "")

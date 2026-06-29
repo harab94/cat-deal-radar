@@ -45,6 +45,21 @@ def test_recommendation_below_three_cats_does_not_notify() -> None:
     assert score.should_notify is False
 
 
+def test_recommendation_does_not_notify_when_price_matches_reference() -> None:
+    score = _scorer().score(
+        RecommendationInput(
+            category="cat_food",
+            brand="百利",
+            price=335,
+            base_confidence=100,
+            historical_average_price=335,
+        )
+    )
+
+    assert score.should_notify is False
+    assert "not enough below reference price" in score.reasons
+
+
 def test_recommendation_notifies_strong_freeze_dried_title_without_price() -> None:
     score = _scorer().score(
         RecommendationInput(
@@ -90,7 +105,7 @@ def test_duplicate_handler_allows_first_matching_deal() -> None:
     assert decision.should_notify is True
 
 
-def test_duplicate_handler_suppresses_higher_price_duplicate_inside_window() -> None:
+def test_duplicate_handler_suppresses_higher_price_duplicate() -> None:
     existing = _deal(deal_id=1, price=335)
     candidate = _deal(price=350)
 
@@ -100,7 +115,7 @@ def test_duplicate_handler_suppresses_higher_price_duplicate_inside_window() -> 
     assert decision.should_notify is False
 
 
-def test_duplicate_handler_notifies_lower_price_duplicate_inside_window() -> None:
+def test_duplicate_handler_notifies_lower_price_duplicate() -> None:
     existing = _deal(deal_id=1, price=335)
     candidate = _deal(price=329)
 
@@ -111,17 +126,52 @@ def test_duplicate_handler_notifies_lower_price_duplicate_inside_window() -> Non
     assert decision.superseded_deal_id == 1
 
 
-def test_duplicate_handler_ignores_matches_outside_window() -> None:
-    existing = _deal(deal_id=1, price=335, created_at=NOW - timedelta(hours=25))
-    candidate = _deal(price=350)
+def test_duplicate_handler_suppresses_same_product_when_title_price_text_differs() -> None:
+    existing = _deal(
+        deal_id=1,
+        product_name="闲车 百利原始鸡 335 元",
+        price=335,
+    )
+    candidate = _deal(
+        product_name="闲置 百利原始鸡 335元",
+        price=335,
+    )
+
+    decision = DuplicateHandler().evaluate(candidate, [existing])
+
+    assert decision.is_duplicate is True
+    assert decision.should_notify is False
+
+
+def test_duplicate_handler_allows_lower_price_when_title_price_text_differs() -> None:
+    existing = _deal(
+        deal_id=1,
+        product_name="闲车 百利原始鸡 335 元",
+        price=335,
+    )
+    candidate = _deal(
+        product_name="闲置 百利原始鸡 250元",
+        price=250,
+    )
 
     decision = DuplicateHandler().evaluate(candidate, [existing])
 
     assert decision.is_duplicate is False
     assert decision.should_notify is True
+    assert decision.superseded_deal_id == 1
 
 
-def test_duplicate_handler_suppresses_unknown_price_duplicate_inside_window() -> None:
+def test_duplicate_handler_suppresses_duplicate_even_outside_old_window() -> None:
+    existing = _deal(deal_id=1, price=335, created_at=NOW - timedelta(hours=25))
+    candidate = _deal(price=350)
+
+    decision = DuplicateHandler().evaluate(candidate, [existing])
+
+    assert decision.is_duplicate is True
+    assert decision.should_notify is False
+
+
+def test_duplicate_handler_suppresses_unknown_price_duplicate() -> None:
     existing = _deal(deal_id=1, price=335)
     candidate = _deal(price=0)
 
@@ -149,6 +199,7 @@ def _deal(
     *,
     deal_id: int | None = None,
     price: float,
+    product_name: str = "百利原始鸡",
     created_at: datetime = NOW,
 ) -> Deal:
     return Deal(
@@ -156,7 +207,7 @@ def _deal(
         post_id=1,
         category="cat_food",
         brand="百利",
-        product_name="百利原始鸡",
+        product_name=product_name,
         price=price,
         confidence_score=90,
         cat_score=5,

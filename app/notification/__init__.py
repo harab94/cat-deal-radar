@@ -1,6 +1,7 @@
 """Email notification support."""
 
 from app.notification.email_sender import EmailConfig, SmtpEmailSender
+from app.notification.feishu_sender import FeishuWebhookConfig, FeishuWebhookSender
 from app.notification.service import NotificationService
 from app.notification.templates import (
     DealDigestItem,
@@ -16,6 +17,8 @@ __all__ = [
     "DealDigestItem",
     "EmailConfig",
     "EmailMessage",
+    "FeishuWebhookConfig",
+    "FeishuWebhookSender",
     "FeedbackLinks",
     "PriceContext",
     "NotificationService",

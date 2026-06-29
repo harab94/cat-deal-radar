@@ -31,14 +31,15 @@ jobs:
       FEISHU_CATEGORIES_TABLE_ID: ${{ secrets.FEISHU_CATEGORIES_TABLE_ID }}
       FEISHU_DETECTION_RULES_TABLE_ID: ${{ secrets.FEISHU_DETECTION_RULES_TABLE_ID }}
       FEISHU_SKUS_TABLE_ID: ${{ secrets.FEISHU_SKUS_TABLE_ID }}
-      WEWORK_CORP_ID: ${{ secrets.WEWORK_CORP_ID }}
-      WEWORK_AGENT_ID: ${{ secrets.WEWORK_AGENT_ID }}
-      WEWORK_APP_SECRET: ${{ secrets.WEWORK_APP_SECRET }}
-      WEWORK_TO_USER: ${{ secrets.WEWORK_TO_USER }}
+      FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
+      FEISHU_BOT_SECRET: ${{ secrets.FEISHU_BOT_SECRET }}
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Refresh radar state
+        run: git pull --ff-only origin main
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -72,7 +73,6 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase --autostash origin main
           git add -f data/cat_deal_radar.sqlite
 
           if git diff --cached --quiet; then

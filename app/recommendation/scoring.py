@@ -8,6 +8,8 @@ import yaml
 
 from app.deal_detector import CommentAnalysis
 
+MIN_REFERENCE_DISCOUNT_TO_NOTIFY = 10
+
 
 @dataclass(frozen=True)
 class RecommendationInput:
@@ -74,10 +76,14 @@ class RecommendationScorer:
         points -= min(recommendation.negative_feedback_count * 10, 30)
 
         cat_score = _cat_score(points)
+        should_notify = cat_score >= 3
+        if discount is not None and discount < MIN_REFERENCE_DISCOUNT_TO_NOTIFY:
+            should_notify = False
+            reasons.append("not enough below reference price")
         return RecommendationScore(
             confidence_score=_clamp(confidence, 0, 100),
             cat_score=cat_score,
-            should_notify=cat_score >= 3,
+            should_notify=should_notify,
             reasons=tuple(reasons),
         )
 
