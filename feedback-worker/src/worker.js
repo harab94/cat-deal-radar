@@ -13,6 +13,10 @@ const ACTION_TYPES = {
 };
 
 export default {
+  async scheduled(_event, env, ctx) {
+    ctx.waitUntil(triggerRadarWorkflow(env));
+  },
+
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/wework/callback") {
@@ -56,12 +60,52 @@ export default {
   },
 };
 
-async function handleWeWorkCallback(request, env, url) {
-  if (request.method === "GET") {
-    return verifyWeWorkCallback(env, url);
+async function triggerRadarWorkflow(env) {
+  const repository = env.GITHUB_REPOSITORY || "harab94/cat-deal-radar";
+  const workflowId = env.GITHUB_WORKFLOW_ID || "radar.yml";
+  const ref = env.GITHUB_REF || "main";
+
+  if (!env.GITHUB_ACTIONS_TOKEN) {
+    throw new Error("GITHUB_ACTIONS_TOKEN is required to dispatch the radar workflow");
   }
-  if (request.method === "POST") {
-    return receiveWeWorkMessage(request, env, url);
+
+  const response = await fetch(
+    `https://api.github.com/repos/${repository}/actions/workflows/${workflowId}/dispatches`,
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${env.GITHUB_ACTIONS_TOKEN}`,
+        "Content-Type": "application/json; charset=utf-8",
+        "User-Agent": "cat-deal-radar-worker",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      body: JSON.stringify({
+        ref,
+        inputs: { send_test_email: "false" },
+      }),
+    },
+  );
+
+  if (response.status !== 204) {
+    const body = await response.text();
+    throw new Error(`GitHub workflow dispatch failed: ${response.status} ${body.slice(0, 500)}`);
+  }
+
+  console.log("radar_workflow_dispatched", { repository, workflowId, ref });
+}
+
+async function handleWeWorkCallback(request, env, url) {
+  try {
+    if (request.method === "GET") {
+      return await verifyWeWorkCallback(env, url);
+    }
+    if (request.method === "POST") {
+      return await receiveWeWorkMessage(request, env, url);
+    }
+  } catch (error) {
+    console.error("wework_callback_failed", error);
+    return new Response("wework callback failed", { status: 400 });
   }
   return new Response("method not allowed", { status: 405 });
 }
@@ -347,6 +391,10 @@ async function assertFeishuOk(response) {
 
 function feishuBaseUrl() {
   return "https://open.feishu.cn/open-apis";
+}
+
+function weworkBaseUrl() {
+  return "https://qyapi.weixin.qq.com/cgi-bin";
 }
 
 function htmlResponse(title, message, status = 200) {

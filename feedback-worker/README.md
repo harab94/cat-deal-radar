@@ -1,7 +1,8 @@
 # Cat Deal Radar Feedback Worker
 
 This Cloudflare Worker receives email feedback clicks and writes them to the
-Feishu Base `Feedback` table.
+Feishu Base `Feedback` table. It also owns the 10-minute cron trigger for the
+radar run and dispatches the GitHub Actions workflow.
 
 ## Required Feishu Permission
 
@@ -27,7 +28,12 @@ npx wrangler secret put WEWORK_AGENT_ID
 npx wrangler secret put WEWORK_APP_SECRET
 npx wrangler secret put WEWORK_CALLBACK_TOKEN
 npx wrangler secret put WEWORK_ENCODING_AES_KEY
+npx wrangler secret put GITHUB_ACTIONS_TOKEN
 ```
+
+`GITHUB_ACTIONS_TOKEN` must be a GitHub fine-grained token that can dispatch
+the `Cat Deal Radar` workflow in this repository. Grant Actions read/write
+access for `harab94/cat-deal-radar`.
 
 Current values:
 
@@ -42,6 +48,15 @@ FEISHU_FEEDBACK_TABLE_ID=tblMHSAXVv6GXqU8
 cd feedback-worker
 npx wrangler deploy
 ```
+
+The Worker cron is configured in `wrangler.toml`:
+
+```text
+*/10 * * * *
+```
+
+GitHub Actions no longer has its own scheduled trigger; the Worker calls
+`workflow_dispatch` every 10 minutes instead.
 
 After deployment, set the GitHub repository secret:
 

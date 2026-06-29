@@ -1,3 +1,11 @@
 name = "cat-deal-radar"
 main = "src/worker.js"
 compatibility_date = "2026-06-27"
+
+[triggers]
+crons = ["*/10 * * * *"]
+
+[vars]
+GITHUB_REPOSITORY = "harab94/cat-deal-radar"
+GITHUB_WORKFLOW_ID = "radar.yml"
+GITHUB_REF = "main"
