@@ -175,6 +175,31 @@ def test_parse_douban_topic_text_ignores_sidebar_text() -> None:
     assert parse_douban_topic_text(html) == "正文只有爱肯拿 330元"
 
 
+def test_parse_douban_topic_text_trims_related_topic_recommendations() -> None:
+    html = """
+    <html>
+      <body>
+        <div id="link-report">
+          Jarrow牛初乳，120粒装，100包邮，保质期至，27.5月
+          now辅酶Q10，60粒30毫克装，40包邮，保质期至28.8
+          打包-5
+          赞 转发 微信扫码 新浪微博 QQ好友 QQ空间 回复
+          相关内容推荐
+          闲车禁拼多多｜【开车】jarrow60粒220r，返利12r，到手208r
+          闲车禁拼多多｜【开车】小李子罐头禽肉200g 12.17r
+        </div>
+      </body>
+    </html>
+    """
+
+    text = parse_douban_topic_text(html)
+
+    assert "100包邮" in text
+    assert "40包邮" in text
+    assert "12.17r" not in text
+    assert "返利12r" not in text
+
+
 def test_fetch_html_includes_http_error_detail(monkeypatch: pytest.MonkeyPatch) -> None:
     def fail_urlopen(*args, **kwargs):
         raise HTTPError(

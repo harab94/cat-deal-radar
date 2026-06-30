@@ -165,6 +165,15 @@ def test_extract_lowest_price_reads_common_plus_shipping_suffix() -> None:
     assert extract_lowest_price("【闲置】渴望八重守护5.4kg，540+u，效期27.7 深圳可自提") == 540
 
 
+def test_extract_lowest_price_reads_main_post_after_topic_chrome_is_removed() -> None:
+    text = (
+        "Jarrow牛初乳，120粒装，100包邮，保质期至，27.5月 "
+        "now辅酶Q10，60粒30毫克装，40包邮，保质期至28.8 打包-5"
+    )
+
+    assert extract_lowest_price(text) == 40
+
+
 def test_analyze_comments_scores_availability_signals() -> None:
     analysis = analyze_comments(["还能买，我已上车", "没了，好像无货"])
 

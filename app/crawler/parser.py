@@ -27,7 +27,7 @@ def parse_douban_group_posts(html: str, *, base_url: str) -> list[ParsedPost]:
 def parse_douban_topic_text(html: str) -> str:
     parser = _TextParser()
     parser.feed(html)
-    return _clean_text(" ".join(parser.text_parts))
+    return _trim_topic_chrome(_clean_text(" ".join(parser.text_parts)))
 
 
 def parse_douban_topic_comments(html: str) -> list[str]:
@@ -162,6 +162,21 @@ class _CommentParser(HTMLParser):
 
 def _clean_text(value: str) -> str:
     return " ".join(unescape(value).split())
+
+
+def _trim_topic_chrome(value: str) -> str:
+    markers = (
+        " 赞 转发 微信扫码",
+        " 相关内容推荐 ",
+        " 最新讨论 ",
+        " © 2005",
+    )
+    trimmed = value
+    for marker in markers:
+        index = trimmed.find(marker)
+        if index >= 0:
+            trimmed = trimmed[:index]
+    return trimmed.strip()
 
 
 def _canonical_topic_url(base_url: str, topic_id: str) -> str:
