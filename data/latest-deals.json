@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-06-30T23:13:39.524368+00:00",
+      "id": 33,
+      "post_title": "【闲置】出费力威补充液2瓶、希尔斯id/ad罐、空气净化器",
+      "post_url": "https://m.douban.com/group/topic/489897509/",
+      "price": 0.0,
+      "product_name": "【闲置】出费力威补充液2瓶、希尔斯id/ad罐、空气净化器"
+    },
+    {
       "brand": "小李子",
       "cat_score": 4,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/490239891/",
       "price": 0.0,
       "product_name": "【闲置】渴望八重守护5.4kg，540+u，效期27.7 深圳可自提"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-28T12:23:43.923072+00:00",
-      "id": 13,
-      "post_title": "【闲置】已出💰200百利生鲜鸡冻干拼鸡肉猫粮",
-      "post_url": "https://m.douban.com/group/topic/492213922/",
-      "price": 0.0,
-      "product_name": "【闲置】已出💰200百利生鲜鸡冻干拼鸡肉猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-06-30T23:04:14.597774+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-06-30T23:13:41.562070+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-06-30T23:04:14.691711+00:00"
+  "published_at": "2026-06-30T23:13:41.666611+00:00"
 }
