@@ -29,6 +29,8 @@ class SkuCatalog:
         normalized_text = _normalize_text(text)
         if not normalized_text:
             return None
+        if brand is None and category is None:
+            return None
 
         candidates = [
             sku

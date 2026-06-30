@@ -11,6 +11,12 @@ from app.brand_normalization import BrandNormalizer
 
 DEAL_SIGNALS = ("团购", "闲车", "闲置", "好价", "补货", "凑单")
 EXPIRED_SIGNALS = ("开车", "已开车", "车走了", "已出", "出掉", "已售", "售出", "卖掉")
+DEFAULT_CATEGORY_KEYWORDS = {
+    "cat_food": ("猫粮", "主粮"),
+    "wet_food": ("罐头", "餐包", "湿粮"),
+    "freeze_dried": ("冻干",),
+    "cat_litter": ("猫砂", "豆腐砂", "木薯砂"),
+}
 PRICE_PATTERN = re.compile(
     r"(?:¥|￥|💰)\s*(\d+(?:\.\d+)?)"
     r"|(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB)"
@@ -99,7 +105,11 @@ class RuleBasedDealDetector:
 
         normalized_text = text.casefold()
         for category, config in self._category_config.items():
-            for keyword in config.get("keywords", []):
+            keywords = (
+                *config.get("keywords", []),
+                *DEFAULT_CATEGORY_KEYWORDS.get(category, ()),
+            )
+            for keyword in keywords:
                 if str(keyword).casefold() in normalized_text:
                     return str(category)
         return None

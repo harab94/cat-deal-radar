@@ -40,6 +40,16 @@ def test_rule_detector_uses_category_keywords_for_cat_litter() -> None:
     assert detected.price == 89
 
 
+def test_rule_detector_uses_builtin_category_keywords_without_known_brand() -> None:
+    detector = _detector()
+
+    detected = detector.detect(title="【闲置】德金猫粮野猪45/斤，2斤包邮")
+
+    assert detected.is_deal is False
+    assert detected.brand is None
+    assert detected.category == "cat_food"
+
+
 def test_rule_detector_treats_kaiche_as_expired_in_douban_group() -> None:
     detector = _detector()
 
