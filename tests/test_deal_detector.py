@@ -136,6 +136,25 @@ def test_extract_lowest_price_ignores_weight_numbers() -> None:
     assert extract_lowest_price("自然光环全能系列10磅 263r") == 263
 
 
+def test_extract_lowest_price_reads_xianzhi_shipping_price_not_dates_or_weights() -> None:
+    text = """皇家英短成猫粮BS34【整袋加分装】大于6.5kg
+适合12个月以上英短、蓝猫、银渐层等短毛猫
+
+大袋的26年6月淘宝买的，4.5kg，正品有防伪码，日期新鲜，保质期很长
+
+分装的是4月27日淘宝买的，抽真空分装的，每包200克左右，十包至少2kg
+
+猫心脏有问题要换处方粮了，闲置出
+320包邮
+营山可自提"""
+
+    assert extract_lowest_price(text) == 320
+
+
+def test_extract_lowest_price_reads_common_plus_shipping_suffix() -> None:
+    assert extract_lowest_price("【闲置】渴望八重守护5.4kg，540+u，效期27.7 深圳可自提") == 540
+
+
 def test_analyze_comments_scores_availability_signals() -> None:
     analysis = analyze_comments(["还能买，我已上车", "没了，好像无货"])
 

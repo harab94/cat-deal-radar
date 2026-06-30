@@ -12,7 +12,10 @@ from app.brand_normalization import BrandNormalizer
 DEAL_SIGNALS = ("团购", "闲车", "闲置", "好价", "补货", "凑单")
 EXPIRED_SIGNALS = ("开车", "已开车", "车走了", "已出", "出掉", "已售", "售出", "卖掉")
 PRICE_PATTERN = re.compile(
-    r"(?:¥|￥|💰)\s*(\d+(?:\.\d+)?)|(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB|r|R)"
+    r"(?:¥|￥|💰)\s*(\d+(?:\.\d+)?)"
+    r"|(\d+(?:\.\d+)?)\s*(?:元|块|rmb|RMB)"
+    r"|(?<![A-Za-z0-9])(\d+(?:\.\d+)?)\s*[rR](?![A-Za-z])"
+    r"|(?<!\d)(\d+(?:\.\d+)?)\s*(?:包邮|\+u|\+U|自提|出)"
 )
 WEIGHT_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:kg|KG|公斤|克|g|G|斤|磅)")
 
@@ -106,7 +109,7 @@ def extract_lowest_price(text: str) -> float | None:
     text_without_weights = WEIGHT_PATTERN.sub(" ", text)
     prices = []
     for match in PRICE_PATTERN.finditer(text_without_weights):
-        raw_price = match.group(1) or match.group(2)
+        raw_price = next(group for group in match.groups() if group is not None)
         price = float(raw_price)
         if _looks_like_price(price):
             prices.append(price)
