@@ -172,10 +172,26 @@ Configure these repository secrets before enabling the full production run:
 - `FEISHU_BRANDS_TABLE_ID`
 - `FEISHU_CATEGORIES_TABLE_ID`
 - `FEISHU_DETECTION_RULES_TABLE_ID`
+- `FEISHU_BRAND_CANDIDATES_TABLE_ID` (optional, for unknown brand review)
 
 When Feishu secrets are present, detection config is loaded from Feishu Base.
 When they are missing or Feishu is unavailable, the app falls back to local YAML
 files in `config/`.
+
+Unknown brand candidates can be written to a separate Feishu Base table for
+manual review. Create a table with these fields:
+
+- `candidate_brand`
+- `category`
+- `post_title`
+- `post_url`
+- `source`
+- `status`
+- `note`
+
+Rows created by the radar use `source=system_auto` and `status=needs_review`.
+Review this table regularly before adding approved values to the main Brands
+and Categories tables.
 
 Current Feishu Base:
 

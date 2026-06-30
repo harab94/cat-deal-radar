@@ -32,6 +32,7 @@ class Settings:
     feishu_categories_table_id_env: str = "FEISHU_CATEGORIES_TABLE_ID"
     feishu_detection_rules_table_id_env: str = "FEISHU_DETECTION_RULES_TABLE_ID"
     feishu_skus_table_id_env: str = "FEISHU_SKUS_TABLE_ID"
+    feishu_brand_candidates_table_id_env: str = "FEISHU_BRAND_CANDIDATES_TABLE_ID"
     feishu_bot_webhook_env: str = "FEISHU_BOT_WEBHOOK"
     feishu_bot_secret_env: str = "FEISHU_BOT_SECRET"
     wework_corp_id_env: str = "WEWORK_CORP_ID"
@@ -124,6 +125,14 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
                 "feishu",
                 "skus_table_id_env",
                 default="FEISHU_SKUS_TABLE_ID",
+            )
+        ),
+        feishu_brand_candidates_table_id_env=str(
+            _nested(
+                raw_settings,
+                "feishu",
+                "brand_candidates_table_id_env",
+                default="FEISHU_BRAND_CANDIDATES_TABLE_ID",
             )
         ),
         feishu_bot_webhook_env=str(

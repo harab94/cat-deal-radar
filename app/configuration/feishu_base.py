@@ -19,6 +19,7 @@ class FeishuBaseConfig:
     categories_table_id: str
     detection_rules_table_id: str
     skus_table_id: str | None = None
+    brand_candidates_table_id: str | None = None
 
 
 class FeishuBaseReader:
@@ -87,6 +88,51 @@ class FeishuBaseReader:
             if not data.get("has_more"):
                 return records
             page_token = str(data.get("page_token", ""))
+
+
+class FeishuBrandCandidateWriter:
+    def __init__(self, config: FeishuBaseConfig) -> None:
+        if not config.brand_candidates_table_id:
+            msg = "Feishu brand candidates table id is required."
+            raise ValueError(msg)
+        self._config = config
+
+    def report(self, candidate) -> None:
+        token = self._tenant_access_token()
+        _request_json(
+            "POST",
+            (
+                f"{FEISHU_API_BASE}/bitable/v1/apps/{self._config.base_token}"
+                f"/tables/{self._config.brand_candidates_table_id}/records"
+            ),
+            token=token,
+            data={
+                "fields": {
+                    "candidate_brand": candidate.candidate_brand,
+                    "category": candidate.category,
+                    "post_title": candidate.post_title,
+                    "post_url": candidate.post_url,
+                    "source": candidate.source,
+                    "status": candidate.status,
+                    "note": candidate.note,
+                }
+            },
+        )
+
+    def _tenant_access_token(self) -> str:
+        response = _request_json(
+            "POST",
+            f"{FEISHU_API_BASE}/auth/v3/tenant_access_token/internal",
+            data={
+                "app_id": self._config.app_id,
+                "app_secret": self._config.app_secret,
+            },
+        )
+        token = response.get("tenant_access_token")
+        if not token:
+            msg = f"Failed to get Feishu tenant token: {response}"
+            raise RuntimeError(msg)
+        return str(token)
 
 
 def _brand_aliases_from_records(records: list[dict[str, Any]]) -> dict[str, list[str]]:

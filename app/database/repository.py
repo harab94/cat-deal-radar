@@ -363,6 +363,37 @@ class Repository:
         self.connect().execute("DELETE FROM feedback WHERE id = ?", (feedback_id,))
         self.connect().commit()
 
+    def has_brand_candidate_report(self, *, post_id: int, candidate_brand: str) -> bool:
+        row = self.connect().execute(
+            """
+            SELECT 1
+            FROM brand_candidate_reports
+            WHERE post_id = ? AND candidate_brand = ?
+            LIMIT 1
+            """,
+            (post_id, candidate_brand),
+        ).fetchone()
+        return row is not None
+
+    def create_brand_candidate_report(
+        self,
+        *,
+        post_id: int,
+        candidate_brand: str,
+        category: str,
+        reported_at: datetime,
+    ) -> None:
+        self.connect().execute(
+            """
+            INSERT OR IGNORE INTO brand_candidate_reports (
+                post_id, candidate_brand, category, reported_at
+            )
+            VALUES (?, ?, ?, ?)
+            """,
+            (post_id, candidate_brand, category, _to_db_time(reported_at)),
+        )
+        self.connect().commit()
+
 
 def _require_id(value: int | None, model_name: str) -> None:
     if value is None:

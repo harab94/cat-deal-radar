@@ -41,6 +41,16 @@ PRICELESS_HTML = """
 </html>
 """
 
+UNKNOWN_BRAND_HTML = """
+<html>
+  <body>
+    <a href="/group/topic/323456789/" data-created-at="2026-06-27T12:00:00+08:00">
+      【闲置】德金猫粮野猪45/斤，2斤包邮
+    </a>
+  </body>
+</html>
+"""
+
 REFERENCE_PRICE_HTML = """
 <html>
   <body>
@@ -239,6 +249,30 @@ def test_pipeline_does_not_notify_when_price_matches_reference(
     assert result.notifications_sent == 0
     assert sent_subjects == []
     assert repository.list_notifications() == []
+
+
+def test_pipeline_reports_unknown_brand_candidate_once(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    reporter = _Reporter()
+    monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_unknown_brand_html)
+    monkeypatch.setattr(
+        "app.pipeline._brand_candidate_reporter_from_env",
+        lambda settings: reporter,
+    )
+    _clear_notification_env(monkeypatch)
+    settings = _settings(tmp_path)
+    repository = Repository(settings.database_path)
+
+    first = run_pipeline(settings, repository)
+    second = run_pipeline(settings, repository)
+
+    assert first.posts_seen == 1
+    assert second.posts_seen == 1
+    assert first.deals_created == 0
+    assert second.deals_created == 0
+    assert [candidate.candidate_brand for candidate in reporter.candidates] == ["德金"]
 
 
 def test_pipeline_keeps_run_successful_when_notification_fails(
@@ -498,6 +532,13 @@ def _fake_fetch_discounted_html(*args, **kwargs) -> str:
     return DISCOUNTED_HTML
 
 
+def _fake_fetch_unknown_brand_html(*args, **kwargs) -> str:
+    url = str(args[0]) if args else ""
+    if "/group/topic/" in url:
+        return "【闲置】德金猫粮野猪45/斤，2斤包邮"
+    return UNKNOWN_BRAND_HTML
+
+
 def _settings(tmp_path: Path) -> Settings:
     return Settings(
         database_path=tmp_path / "data" / "cat_deal_radar.sqlite",
@@ -552,6 +593,7 @@ def _clear_notification_env(monkeypatch) -> None:
         "CAT_DEAL_RADAR_SEND_TEST_EMAIL",
         "FEISHU_BOT_WEBHOOK",
         "FEISHU_BOT_SECRET",
+        "FEISHU_BRAND_CANDIDATES_TABLE_ID",
         "WEWORK_CORP_ID",
         "WEWORK_AGENT_ID",
         "WEWORK_APP_SECRET",
@@ -584,5 +626,14 @@ def _clear_feishu_bot_env(monkeypatch) -> None:
     for name in (
         "FEISHU_BOT_WEBHOOK",
         "FEISHU_BOT_SECRET",
+        "FEISHU_BRAND_CANDIDATES_TABLE_ID",
     ):
         monkeypatch.delenv(name, raising=False)
+
+
+class _Reporter:
+    def __init__(self) -> None:
+        self.candidates = []
+
+    def report(self, candidate) -> None:
+        self.candidates.append(candidate)

@@ -96,8 +96,10 @@ def _feishu_config_from_env(settings: Settings) -> FeishuBaseConfig | None:
         "categories_table_id": _env_value(settings.feishu_categories_table_id_env),
         "detection_rules_table_id": _env_value(settings.feishu_detection_rules_table_id_env),
         "skus_table_id": _env_value(settings.feishu_skus_table_id_env),
+        "brand_candidates_table_id": _env_value(settings.feishu_brand_candidates_table_id_env),
     }
-    required_values = {key: value for key, value in values.items() if key != "skus_table_id"}
+    optional_keys = {"skus_table_id", "brand_candidates_table_id"}
+    required_values = {key: value for key, value in values.items() if key not in optional_keys}
     if not all(required_values.values()):
         return None
     return FeishuBaseConfig(**values)  # type: ignore[arg-type]

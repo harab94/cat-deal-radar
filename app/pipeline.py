@@ -6,8 +6,10 @@ from datetime import UTC, datetime
 
 import structlog
 
+from app.brand_candidates import report_brand_candidate
 from app.brand_normalization import BrandNormalizer
 from app.configuration import load_detection_config
+from app.configuration.feishu_base import FeishuBaseConfig, FeishuBrandCandidateWriter
 from app.crawler import DoubanCrawler, DoubanGroupConfig
 from app.database import Deal, Post, Repository
 from app.deal_detector import analyze_comments
@@ -69,6 +71,7 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
     duplicate_handler = DuplicateHandler()
     sender = _notification_sender_from_env(settings)
     feedback_base_url = _feedback_base_url_from_env(settings)
+    brand_candidate_reporter = _brand_candidate_reporter_from_env(settings)
 
     deals_created = 0
     notifications_sent = 0
@@ -88,6 +91,30 @@ def run_pipeline(settings: Settings, repository: Repository) -> PipelineResult:
             category=detected.category,
             text=f"{post.title}\n{rich_content}",
         )
+        if brand_candidate_reporter is not None:
+            try:
+                reported = report_brand_candidate(
+                    repository=repository,
+                    post=post,
+                    category=detected.category,
+                    brand=detected.brand,
+                    reporter=brand_candidate_reporter,
+                )
+            except RuntimeError as error:
+                logger.warning(
+                    "brand_candidate_report_failed",
+                    post_id=post.id,
+                    title=post.title,
+                    error=str(error),
+                )
+            else:
+                if reported:
+                    logger.info(
+                        "brand_candidate_reported",
+                        post_id=post.id,
+                        title=post.title,
+                        category=detected.category,
+                    )
         if not detected.is_deal:
             detection_diagnostics.append(
                 {
@@ -285,6 +312,31 @@ def _feedback_base_url_from_env(settings: Settings) -> str | None:
         return None
 
     return feedback_base_url
+
+
+def _brand_candidate_reporter_from_env(settings: Settings) -> FeishuBrandCandidateWriter | None:
+    table_id = os.environ.get(settings.feishu_brand_candidates_table_id_env)
+    app_id = os.environ.get(settings.feishu_app_id_env)
+    app_secret = os.environ.get(settings.feishu_app_secret_env)
+    base_token = os.environ.get(settings.feishu_base_token_env)
+    if not all([table_id, app_id, app_secret, base_token]):
+        return None
+
+    return FeishuBrandCandidateWriter(
+        FeishuBaseConfig(
+            app_id=str(app_id),
+            app_secret=str(app_secret),
+            base_token=str(base_token),
+            brands_table_id=os.environ.get(settings.feishu_brands_table_id_env, ""),
+            categories_table_id=os.environ.get(settings.feishu_categories_table_id_env, ""),
+            detection_rules_table_id=os.environ.get(
+                settings.feishu_detection_rules_table_id_env,
+                "",
+            ),
+            skus_table_id=os.environ.get(settings.feishu_skus_table_id_env),
+            brand_candidates_table_id=str(table_id),
+        )
+    )
 
 
 class CompositeSender:

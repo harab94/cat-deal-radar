@@ -169,5 +169,6 @@ def _clear_feishu_env(monkeypatch) -> None:
         "FEISHU_CATEGORIES_TABLE_ID",
         "FEISHU_DETECTION_RULES_TABLE_ID",
         "FEISHU_SKUS_TABLE_ID",
+        "FEISHU_BRAND_CANDIDATES_TABLE_ID",
     ):
         monkeypatch.delenv(name, raising=False)
