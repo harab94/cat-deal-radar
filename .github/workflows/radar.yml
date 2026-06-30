@@ -64,17 +64,27 @@ jobs:
           CAT_DEAL_RADAR_SEND_TEST_EMAIL: "false"
         run: uv run python -m app.main
 
+      - name: Export web deals
+        if: always()
+        run: uv run python -m app.web_export
+
       - name: Persist radar state
         if: always()
         run: |
-          if [ ! -f data/cat_deal_radar.sqlite ]; then
-            echo "No radar database to persist."
-            exit 0
-          fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f data/cat_deal_radar.sqlite
+
+          if [ -f data/cat_deal_radar.sqlite ]; then
+            git add -f data/cat_deal_radar.sqlite
+          else
+            echo "No radar database to persist."
+          fi
+
+          if [ -f data/latest-deals.json ]; then
+            git add -f data/latest-deals.json
+          else
+            echo "No web deals export to persist."
+          fi
 
           if git diff --cached --quiet; then
             echo "Radar state unchanged."

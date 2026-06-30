@@ -293,9 +293,9 @@ Goal:
 
 Deploy the system automatically.
 
-Schedule:
+Trigger:
 
-Every 10 minutes.
+Cloudflare Cron every 10 minutes dispatches the GitHub Actions workflow.
 
 Workflow:
 

@@ -394,7 +394,7 @@ no change
 
 ⸻
 
-12. GitHub Actions
+12. Cloudflare Cron + GitHub Actions
 
 Schedule:
 
@@ -403,6 +403,10 @@ cron:
 
 Workflow:
 
+Cloudflare Worker scheduled event
+↓
+workflow_dispatch
+↓
 checkout
 ↓
 install uv
@@ -493,4 +497,3 @@ The MVP is complete when:
 ✓ Persists data in SQLite
 
 ✓ Deploys successfully on GitHub Actions
-

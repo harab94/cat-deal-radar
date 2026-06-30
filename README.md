@@ -132,11 +132,11 @@ memory or save them back to a YAML file.
 The project has two workflows:
 
 - `CI`: runs on push and pull request
-- `Cat Deal Radar`: runs every 10 minutes and can also be started manually with
-  `workflow_dispatch`
+- `Cat Deal Radar`: can be started manually with `workflow_dispatch`
 
-The scheduled workflow installs dependencies, runs tests, runs Ruff, then starts
-the radar entrypoint.
+Cloudflare Cron triggers the feedback Worker every 10 minutes. The Worker
+dispatches the `Cat Deal Radar` workflow, which installs dependencies, runs
+tests, runs Ruff, then starts the radar entrypoint.
 
 After a successful radar run, the workflow commits `data/cat_deal_radar.sqlite`
 back to the repository when the database changed. This lets scheduled runs

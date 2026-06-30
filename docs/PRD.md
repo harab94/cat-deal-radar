@@ -142,9 +142,11 @@ Every 10 minutes.
 
 Implementation:
 
-GitHub Actions Cron:
+Cloudflare Cron:
 
 */10 * * * *
+
+Cloudflare Worker dispatches the GitHub Actions radar workflow.
 
 ⸻
 

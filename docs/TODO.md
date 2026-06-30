@@ -38,4 +38,3 @@
 - Verify live Douban reply parsing against production logs.
 - Expand the Feishu `SKUs` table beyond the first seeded SKUs.
 - Add LLM second-pass verification for brand/category matches with missing price or ambiguous product.
-- Consider moving scheduling from GitHub Actions cron to Cloudflare Cron if 10-minute runs remain unreliable.
