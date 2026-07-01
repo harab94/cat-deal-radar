@@ -5,6 +5,18 @@
       "cat_score": 4,
       "category": "cat_food",
       "confidence_score": 90,
+      "created_at": "2026-07-01T08:34:54.201423+00:00",
+      "id": 40,
+      "post_title": "【闲置】halo全能鸡肉猫粮",
+      "post_url": "https://m.douban.com/group/topic/492521717/",
+      "price": 0.0,
+      "product_name": "【闲置】halo全能鸡肉猫粮"
+    },
+    {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
       "created_at": "2026-07-01T07:14:57.636500+00:00",
       "id": 39,
       "post_title": "【已出】halo海鲜味美毛猫粮10磅改地址，249一包",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492353732/",
       "price": 0.0,
       "product_name": "【闲置】渴望鸡5.4kg 有效期至12月"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-29T12:44:50.624473+00:00",
-      "id": 20,
-      "post_title": "【闲置】爱肯拿鱼分装",
-      "post_url": "https://m.douban.com/group/topic/492339306/",
-      "price": 16.0,
-      "product_name": "【闲置】爱肯拿鱼分装"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T08:25:47.744901+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 53
+    "deals_created": 1,
+    "finished_at": "2026-07-01T08:34:56.200878+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 52
   },
-  "published_at": "2026-07-01T08:25:47.857225+00:00"
+  "published_at": "2026-07-01T08:34:56.309449+00:00"
 }
