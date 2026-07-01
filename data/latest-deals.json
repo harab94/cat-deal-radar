@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "金素",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-01T06:17:50.941476+00:00",
+      "id": 37,
+      "post_title": "【闲置】金素鲜肉高蛋白",
+      "post_url": "https://m.douban.com/group/topic/490897399/",
+      "price": 0.0,
+      "product_name": "【闲置】金素鲜肉高蛋白"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -139,7 +151,7 @@
       "confidence_score": 95,
       "created_at": "2026-06-30T00:34:15.832144+00:00",
       "id": 25,
-      "post_title": "【闲置】mag乳铁蛋白、八重守护分装",
+      "post_title": "【闲置】已出",
       "post_url": "https://m.douban.com/group/topic/492382443/",
       "price": 7.0,
       "product_name": "【闲置】mag乳铁蛋白、小李子菲力鲱鱼罐、八重守护分装"
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/489788568/",
       "price": 0.0,
       "product_name": "【闲置】爱肯拿猫粮"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-29T06:50:15.812691+00:00",
-      "id": 17,
-      "post_title": "【闲置】皇家肾脏处方粮1.5公斤",
-      "post_url": "https://m.douban.com/group/topic/492292402/",
-      "price": 0.0,
-      "product_name": "【闲置】皇家肾脏处方粮1.5公斤"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T06:13:07.382669+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T06:17:52.135113+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T06:13:07.496154+00:00"
+  "published_at": "2026-07-01T06:17:52.253565+00:00"
 }
