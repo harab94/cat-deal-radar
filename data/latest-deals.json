@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T04:34:56.510063+00:00",
+      "id": 35,
+      "post_title": "【闲置】自然光环holo成猫鸡肉鸡肝10磅（实际4.5kg）",
+      "post_url": "https://m.douban.com/group/topic/492501672/",
+      "price": 280.0,
+      "product_name": "【闲置】自然光环holo成猫鸡肉鸡肝10磅（实际4.5kg）"
+    },
+    {
       "brand": "渴望",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492299436/",
       "price": 0.0,
       "product_name": "【闲置】巅峰鹿肉/牛肉、小李子餐包"
-    },
-    {
-      "brand": "NOW Fresh",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-29T06:50:15.803231+00:00",
-      "id": 15,
-      "post_title": "【闲置】熟自制，now碳酸钙+碘化钾",
-      "post_url": "https://m.douban.com/group/topic/487672450/",
-      "price": 75.0,
-      "product_name": "【闲置】熟自制，now碳酸钙+碘化钾"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T04:24:33.547452+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T04:34:59.474969+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-01T04:24:33.651588+00:00"
+  "published_at": "2026-07-01T04:34:59.592565+00:00"
 }
