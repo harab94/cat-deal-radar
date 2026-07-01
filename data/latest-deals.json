@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T15:05:40.118836+00:00",
+      "id": 47,
+      "post_title": "【闲置】295出舀一勺的希尔斯台版zd猫粮",
+      "post_url": "https://m.douban.com/group/topic/490807933/",
+      "price": 295.0,
+      "product_name": "【闲置】295出舀一勺的希尔斯台版zd猫粮"
+    },
+    {
       "brand": "渴望",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/489961982/",
       "price": 15.0,
       "product_name": "【闲置】海乐妙12/粒 小李子800g25.92"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-30T03:15:11.312502+00:00",
-      "id": 27,
-      "post_title": "【闲置】halo自然光环健美鸡1kg",
-      "post_url": "https://m.douban.com/group/topic/491617874/",
-      "price": 288.0,
-      "product_name": "【闲置】halo自然光环健美鸡1kg"
     }
   ],
   "latest_run": {
     "deals_created": 1,
-    "finished_at": "2026-07-01T14:55:38.493664+00:00",
+    "finished_at": "2026-07-01T15:05:41.703500+00:00",
     "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T14:55:38.616304+00:00"
+  "published_at": "2026-07-01T15:05:41.817013+00:00"
 }
