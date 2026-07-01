@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "K9 Natural",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T13:55:30.424895+00:00",
+      "id": 45,
+      "post_title": "【闲置】猫罐头k9盖浇饭/陶瓷饮水机/普乐高宁",
+      "post_url": "https://m.douban.com/group/topic/492554915/",
+      "price": 80.0,
+      "product_name": "【闲置】猫罐头k9盖浇饭/陶瓷饮水机/普乐高宁"
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492384045/",
       "price": 60.0,
       "product_name": "【闲置】出一包已拆爱肯拿鸡"
-    },
-    {
-      "brand": "小李子",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-30T00:34:15.832144+00:00",
-      "id": 25,
-      "post_title": "【闲置】已出",
-      "post_url": "https://m.douban.com/group/topic/492382443/",
-      "price": 7.0,
-      "product_name": "【闲置】mag乳铁蛋白、小李子菲力鲱鱼罐、八重守护分装"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T13:46:12.620425+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 52
+    "deals_created": 1,
+    "finished_at": "2026-07-01T13:55:31.432259+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 53
   },
-  "published_at": "2026-07-01T13:46:12.725202+00:00"
+  "published_at": "2026-07-01T13:55:31.540940+00:00"
 }
