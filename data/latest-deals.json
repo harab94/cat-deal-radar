@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "NOW Fresh",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T12:54:47.015529+00:00",
+      "id": 44,
+      "post_title": "【闲置】now foods 深海鱼油",
+      "post_url": "https://m.douban.com/group/topic/492547098/",
+      "price": 42.0,
+      "product_name": "【闲置】now foods 深海鱼油"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492382443/",
       "price": 7.0,
       "product_name": "【闲置】mag乳铁蛋白、小李子菲力鲱鱼罐、八重守护分装"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-29T15:25:00.011863+00:00",
-      "id": 24,
-      "post_title": "［闲置］皇家sac36 皮肤处方粮 刚到货刚拆包仅吃了一点点 130...",
-      "post_url": "https://m.douban.com/group/topic/488330658/",
-      "price": 60.0,
-      "product_name": "［闲置］皇家sac36 皮肤处方粮 刚到货刚拆包仅吃了一点点 130..."
     }
   ],
   "latest_run": {
     "deals_created": 1,
-    "finished_at": "2026-07-01T12:45:55.771212+00:00",
+    "finished_at": "2026-07-01T12:54:48.560664+00:00",
     "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T12:45:55.876951+00:00"
+  "published_at": "2026-07-01T12:54:48.665697+00:00"
 }
