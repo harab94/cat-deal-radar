@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "渴望",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T00:44:43.157120+00:00",
+      "id": 34,
+      "post_title": "【闲置】重庆出渴望六种鱼",
+      "post_url": "https://m.douban.com/group/topic/492485608/",
+      "price": 36.0,
+      "product_name": "【闲置】重庆出渴望六种鱼"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/487672450/",
       "price": 75.0,
       "product_name": "【闲置】熟自制，now碳酸钙+碘化钾"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-29T06:50:15.800528+00:00",
-      "id": 14,
-      "post_title": "【闲置】渴望八重守护5.4kg，540+u，效期27.7 深圳可自提",
-      "post_url": "https://m.douban.com/group/topic/490239891/",
-      "price": 0.0,
-      "product_name": "【闲置】渴望八重守护5.4kg，540+u，效期27.7 深圳可自提"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T00:34:29.955339+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T00:44:44.395465+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-01T00:34:30.079046+00:00"
+  "published_at": "2026-07-01T00:44:44.519105+00:00"
 }
