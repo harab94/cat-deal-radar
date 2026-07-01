@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T16:35:08.049854+00:00",
+      "id": 48,
+      "post_title": "【闲置】330出百利高蛋白 日期到26.11",
+      "post_url": "https://m.douban.com/group/topic/492579386/",
+      "price": 330.0,
+      "product_name": "【闲置】330出百利高蛋白 日期到26.11"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492410404/",
       "price": 7.0,
       "product_name": "出闲置希尔斯低敏美毛猫粮7磅一袋"
-    },
-    {
-      "brand": "小李子",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-30T06:45:47.201266+00:00",
-      "id": 28,
-      "post_title": "【闲置】🈚海乐妙12/粒 小李子800g25.92",
-      "post_url": "https://m.douban.com/group/topic/489961982/",
-      "price": 15.0,
-      "product_name": "【闲置】海乐妙12/粒 小李子800g25.92"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T16:24:53.097449+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T16:35:09.172982+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T16:24:53.191084+00:00"
+  "published_at": "2026-07-01T16:35:09.285075+00:00"
 }
