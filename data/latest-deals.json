@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "巅峰",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T09:05:52.251076+00:00",
+      "id": 41,
+      "post_title": "ziwi普口185g 18块算不算好价啊",
+      "post_url": "https://m.douban.com/group/topic/492524811/",
+      "price": 18.0,
+      "product_name": "ziwi普口185g 18块算不算好价啊"
+    },
+    {
       "brand": "Halo",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491415738/",
       "price": 0.0,
       "product_name": "【闲置】now柠檬酸钙粉"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-29T14:15:08.808391+00:00",
-      "id": 21,
-      "post_title": "【闲置】渴望鸡5.4kg 有效期至12月",
-      "post_url": "https://m.douban.com/group/topic/492353732/",
-      "price": 0.0,
-      "product_name": "【闲置】渴望鸡5.4kg 有效期至12月"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T08:55:26.183625+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T09:05:53.596285+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T08:55:26.300675+00:00"
+  "published_at": "2026-07-01T09:05:53.701807+00:00"
 }
