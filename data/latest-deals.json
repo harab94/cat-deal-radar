@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "渴望",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T14:55:29.329788+00:00",
+      "id": 46,
+      "post_title": "【闲置】猫超渴望六种鱼360出不包邮 已拆封",
+      "post_url": "https://m.douban.com/group/topic/492565653/",
+      "price": 360.0,
+      "product_name": "【闲置】猫超渴望六种鱼360出不包邮 已拆封"
+    },
+    {
       "brand": "K9 Natural",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491617874/",
       "price": 288.0,
       "product_name": "【闲置】halo自然光环健美鸡1kg"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-30T01:04:30.121131+00:00",
-      "id": 26,
-      "post_title": "【闲置】出一包已拆爱肯拿鸡",
-      "post_url": "https://m.douban.com/group/topic/492384045/",
-      "price": 60.0,
-      "product_name": "【闲置】出一包已拆爱肯拿鸡"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T14:45:11.219371+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T14:55:38.493664+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T14:45:11.328138+00:00"
+  "published_at": "2026-07-01T14:55:38.616304+00:00"
 }
