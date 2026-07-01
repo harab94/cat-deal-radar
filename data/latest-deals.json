@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-01T07:14:57.636500+00:00",
+      "id": 39,
+      "post_title": "【闲置】halo海鲜味美毛猫粮10磅改地址，249一包",
+      "post_url": "https://m.douban.com/group/topic/492514818/",
+      "price": 0.0,
+      "product_name": "【闲置】halo海鲜味美毛猫粮10磅改地址，249一包"
+    },
+    {
       "brand": "K9 Natural",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492339306/",
       "price": 16.0,
       "product_name": "【闲置】爱肯拿鱼分装"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-29T12:44:50.621131+00:00",
-      "id": 19,
-      "post_title": "【闲置】两个百利高罐头16r",
-      "post_url": "https://m.douban.com/group/topic/492326286/",
-      "price": 16.0,
-      "product_name": "【闲置】两个百利高罐头16r"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T07:05:21.494709+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T07:14:59.475126+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T07:05:21.608379+00:00"
+  "published_at": "2026-07-01T07:14:59.552103+00:00"
 }
