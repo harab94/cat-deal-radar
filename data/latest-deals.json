@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "K9 Natural",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T11:14:59.259657+00:00",
+      "id": 42,
+      "post_title": "【闲置】k9小罐50元/8罐不包u江苏",
+      "post_url": "https://m.douban.com/group/topic/492537457/",
+      "price": 50.0,
+      "product_name": "【闲置】k9小罐50元/8罐不包u江苏"
+    },
+    {
       "brand": "巅峰",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491434402/",
       "price": 60.0,
       "product_name": "【闲置】出百利生鲜6.1斤150出"
-    },
-    {
-      "brand": "NOW Fresh",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-29T14:56:09.980420+00:00",
-      "id": 22,
-      "post_title": "【闲置】now柠檬酸钙粉",
-      "post_url": "https://m.douban.com/group/topic/491415738/",
-      "price": 0.0,
-      "product_name": "【闲置】now柠檬酸钙粉"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T11:04:42.722103+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T11:15:00.806057+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T11:04:42.834142+00:00"
+  "published_at": "2026-07-01T11:15:00.926564+00:00"
 }
