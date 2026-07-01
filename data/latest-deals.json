@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "K9 Natural",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-01T06:45:22.860378+00:00",
+      "id": 38,
+      "post_title": "【出闲置】K9 85g牛肉鳕鱼11罐",
+      "post_url": "https://m.douban.com/group/topic/492512265/",
+      "price": 6.0,
+      "product_name": "【出闲置】K9 85g牛肉鳕鱼11罐"
+    },
+    {
       "brand": "金素",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492326286/",
       "price": 16.0,
       "product_name": "【闲置】两个百利高罐头16r"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-29T08:03:40.420467+00:00",
-      "id": 18,
-      "post_title": "【闲置】爱肯拿猫粮",
-      "post_url": "https://m.douban.com/group/topic/489788568/",
-      "price": 0.0,
-      "product_name": "【闲置】爱肯拿猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-01T06:35:26.547132+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-01T06:45:23.984716+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-01T06:35:26.658784+00:00"
+  "published_at": "2026-07-01T06:45:24.097506+00:00"
 }
