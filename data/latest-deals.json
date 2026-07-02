@@ -5,6 +5,18 @@
       "cat_score": 5,
       "category": "cat_food",
       "confidence_score": 95,
+      "created_at": "2026-07-02T12:25:59.797463+00:00",
+      "id": 56,
+      "post_title": "【闲置】百利高分装3.28斤",
+      "post_url": "https://m.douban.com/group/topic/492657137/",
+      "price": 120.0,
+      "product_name": "【闲置】百利高分装3.28斤"
+    },
+    {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
       "created_at": "2026-07-02T10:34:39.405296+00:00",
       "id": 55,
       "post_title": "出闲置百利猫罐头",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/490897399/",
       "price": 0.0,
       "product_name": "【闲置】金素鲜肉高蛋白"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 80,
-      "created_at": "2026-07-01T05:05:24.539684+00:00",
-      "id": 36,
-      "post_title": "百利无谷鸡这算好价吗",
-      "post_url": "https://m.douban.com/group/topic/491533936/",
-      "price": 0.0,
-      "product_name": "百利无谷鸡这算好价吗"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-02T12:14:16.819962+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 52
+    "deals_created": 1,
+    "finished_at": "2026-07-02T12:26:01.168042+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 50
   },
-  "published_at": "2026-07-02T12:14:16.994346+00:00"
+  "published_at": "2026-07-02T12:26:01.285764+00:00"
 }
