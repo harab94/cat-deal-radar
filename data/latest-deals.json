@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "朗诺",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-02T04:44:34.187994+00:00",
+      "id": 51,
+      "post_title": "【闲置】朗诺鸡脖冻干75g",
+      "post_url": "https://m.douban.com/group/topic/492610764/",
+      "price": 5.0,
+      "product_name": "【闲置】朗诺鸡脖冻干75g"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492459911/",
       "price": 8.0,
       "product_name": "【闲置】黑夜传说80g猫罐头，混合口味6个，8r/1个 小李子菲力..."
-    },
-    {
-      "brand": "NOW Fresh",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-30T13:44:43.457603+00:00",
-      "id": 31,
-      "post_title": "【闲置】Jarrow牛初乳，now辅酶Q10",
-      "post_url": "https://m.douban.com/group/topic/492450636/",
-      "price": 12.0,
-      "product_name": "【闲置】Jarrow牛初乳，now辅酶Q10"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-02T04:34:51.689264+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-02T04:44:36.047741+00:00",
+    "notifications_sent": 1,
     "posts_seen": 51
   },
-  "published_at": "2026-07-02T04:34:51.794756+00:00"
+  "published_at": "2026-07-02T04:44:36.137970+00:00"
 }
