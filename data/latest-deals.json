@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-02T01:14:51.555217+00:00",
+      "id": 50,
+      "post_title": "【闲置】出百利高蛋白鸡猫粮、Macs迈格仕鸡肉+牛肉罐头（有防...",
+      "post_url": "https://m.douban.com/group/topic/492594765/",
+      "price": 160.0,
+      "product_name": "【闲置】出百利高蛋白鸡猫粮、Macs迈格仕鸡肉+牛肉罐头（有防..."
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492450636/",
       "price": 12.0,
       "product_name": "【闲置】Jarrow牛初乳，now辅酶Q10"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-06-30T13:05:38.985478+00:00",
-      "id": 30,
-      "post_title": "【闲置】（已出）皇家英短成猫粮6.5公斤以上",
-      "post_url": "https://m.douban.com/group/topic/492446206/",
-      "price": 12.17,
-      "product_name": "【闲置】皇家英短成猫粮6.5公斤以上"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-02T01:05:23.624233+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-02T01:14:53.135694+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-02T01:05:23.741041+00:00"
+  "published_at": "2026-07-02T01:14:53.253454+00:00"
 }
