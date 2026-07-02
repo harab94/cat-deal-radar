@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "小李子",
+      "cat_score": 4,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-02T09:34:55.650738+00:00",
+      "id": 54,
+      "post_title": "【闲置】小李子地雷罐800克",
+      "post_url": "https://m.douban.com/group/topic/492636651/",
+      "price": 12.0,
+      "product_name": "【闲置】小李子地雷罐800克"
+    },
+    {
       "brand": "Royal Canin",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492501672/",
       "price": 280.0,
       "product_name": "【闲置】自然光环holo成猫鸡肉鸡肝10磅（实际4.5kg）"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-01T00:44:43.157120+00:00",
-      "id": 34,
-      "post_title": "【闲置】重庆出渴望六种鱼，本地自提。",
-      "post_url": "https://m.douban.com/group/topic/492485608/",
-      "price": 36.0,
-      "product_name": "【闲置】重庆出渴望六种鱼"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-02T09:25:49.366043+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-02T09:34:57.818900+00:00",
+    "notifications_sent": 1,
     "posts_seen": 50
   },
-  "published_at": "2026-07-02T09:25:49.473711+00:00"
+  "published_at": "2026-07-02T09:34:57.926745+00:00"
 }
