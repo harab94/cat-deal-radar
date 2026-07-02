@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Royal Canin",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-02T07:35:29.703620+00:00",
+      "id": 53,
+      "post_title": "【闲置】皇家k36",
+      "post_url": "https://m.douban.com/group/topic/492624965/",
+      "price": 55.0,
+      "product_name": "【闲置】皇家k36"
+    },
+    {
       "brand": "法米娜",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492485608/",
       "price": 36.0,
       "product_name": "【闲置】重庆出渴望六种鱼"
-    },
-    {
-      "brand": "Hill's Science Diet",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-06-30T23:13:39.524368+00:00",
-      "id": 33,
-      "post_title": "【闲置】出费力威补充液2瓶、希尔斯id/ad罐、空气净化器",
-      "post_url": "https://m.douban.com/group/topic/489897509/",
-      "price": 0.0,
-      "product_name": "【闲置】出费力威补充液2瓶、希尔斯id/ad罐、空气净化器"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-02T07:26:08.760764+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-02T07:35:31.461714+00:00",
+    "notifications_sent": 1,
     "posts_seen": 50
   },
-  "published_at": "2026-07-02T07:26:08.870935+00:00"
+  "published_at": "2026-07-02T07:35:31.571644+00:00"
 }
