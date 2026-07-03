@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Venandi",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-03T10:23:04.561597+00:00",
+      "id": 60,
+      "post_title": "【闲置】出venandi鸡兔双拼800g 苏州自提送刚开半盒的小包装",
+      "post_url": "https://m.douban.com/group/topic/492754018/",
+      "price": 61.0,
+      "product_name": "【闲置】出venandi鸡兔双拼800g 苏州自提送刚开半盒的小包装"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492524811/",
       "price": 18.0,
       "product_name": "ziwi普口185g 18块算不算好价啊"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-01T08:34:54.201423+00:00",
-      "id": 40,
-      "post_title": "【闲置】halo全能鸡肉猫粮",
-      "post_url": "https://m.douban.com/group/topic/492521717/",
-      "price": 0.0,
-      "product_name": "【闲置】halo全能鸡肉猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-03T10:14:47.858959+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-03T10:23:05.649092+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-03T10:14:47.977920+00:00"
+  "published_at": "2026-07-03T10:23:05.752957+00:00"
 }
