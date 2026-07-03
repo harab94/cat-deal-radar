@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-03T23:49:01.818774+00:00",
+      "id": 64,
+      "post_title": "【闲置】出法米娜肠道处方粮",
+      "post_url": "https://m.douban.com/group/topic/492812468/",
+      "price": 150.0,
+      "product_name": "【闲置】出法米娜肠道处方粮"
+    },
+    {
       "brand": "渴望",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492554915/",
       "price": 80.0,
       "product_name": "【闲置】猫罐头k9盖浇饭/陶瓷饮水机/普乐高宁"
-    },
-    {
-      "brand": "NOW Fresh",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-01T12:54:47.015529+00:00",
-      "id": 44,
-      "post_title": "【闲置】now foods 深海鱼油",
-      "post_url": "https://m.douban.com/group/topic/492547098/",
-      "price": 42.0,
-      "product_name": "【闲置】now foods 深海鱼油"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-03T23:43:32.171916+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-03T23:49:03.657143+00:00",
+    "notifications_sent": 1,
     "posts_seen": 51
   },
-  "published_at": "2026-07-03T23:43:32.283089+00:00"
+  "published_at": "2026-07-03T23:49:03.767832+00:00"
 }
