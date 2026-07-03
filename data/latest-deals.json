@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-03T09:14:11.101657+00:00",
+      "id": 59,
+      "post_title": "【闲置】丹诺马琳 维艾宁 希尔斯KD罐头",
+      "post_url": "https://m.douban.com/group/topic/492747844/",
+      "price": 0.0,
+      "product_name": "【闲置】丹诺马琳 维艾宁 希尔斯KD罐头"
+    },
+    {
       "brand": "Royal Canin",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492521717/",
       "price": 0.0,
       "product_name": "【闲置】halo全能鸡肉猫粮"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-01T07:14:57.636500+00:00",
-      "id": 39,
-      "post_title": "【已出】halo海鲜味美毛猫粮10磅改地址，249一包",
-      "post_url": "https://m.douban.com/group/topic/492514818/",
-      "price": 0.0,
-      "product_name": "【闲置】halo海鲜味美毛猫粮10磅改地址，249一包"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-03T09:04:49.993206+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-03T09:14:13.064772+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-03T09:04:50.105745+00:00"
+  "published_at": "2026-07-03T09:14:13.171419+00:00"
 }
