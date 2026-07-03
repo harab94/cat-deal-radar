@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Royal Canin",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-03T07:34:52.595863+00:00",
+      "id": 58,
+      "post_title": "【闲置】 SCrc10磅猫粮177.5元+u",
+      "post_url": "https://m.douban.com/group/topic/492738109/",
+      "price": 177.5,
+      "product_name": "【闲置】 SCrc10磅猫粮177.5元+u"
+    },
+    {
       "brand": "K9 Natural",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492514818/",
       "price": 0.0,
       "product_name": "【闲置】halo海鲜味美毛猫粮10磅改地址，249一包"
-    },
-    {
-      "brand": "K9 Natural",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-01T06:45:22.860378+00:00",
-      "id": 38,
-      "post_title": "【已出】K9 85g牛肉鳕鱼11罐",
-      "post_url": "https://m.douban.com/group/topic/492512265/",
-      "price": 6.0,
-      "product_name": "【出闲置】K9 85g牛肉鳕鱼11罐"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-03T07:25:43.451095+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 53
+    "deals_created": 1,
+    "finished_at": "2026-07-03T07:34:54.234305+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 54
   },
-  "published_at": "2026-07-03T07:25:43.560272+00:00"
+  "published_at": "2026-07-03T07:34:54.331700+00:00"
 }
