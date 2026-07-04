@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "爱肯拿",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-04T06:04:29.034017+00:00",
+      "id": 68,
+      "post_title": "【闲置】爱肯拿牧场盛宴4.5kg",
+      "post_url": "https://m.douban.com/group/topic/492838094/",
+      "price": 0.0,
+      "product_name": "【闲置】爱肯拿牧场盛宴4.5kg"
+    },
+    {
       "brand": "Stella & Chewy's",
       "cat_score": 3,
       "category": "freeze_dried",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491347487/",
       "price": 0.0,
       "product_name": "【闲置】now 鱼油 榆树皮 碳酸钙"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-01T16:35:08.049854+00:00",
-      "id": 48,
-      "post_title": "【暂出】330出百利高蛋白 日期到26.11",
-      "post_url": "https://m.douban.com/group/topic/492579386/",
-      "price": 330.0,
-      "product_name": "【闲置】330出百利高蛋白 日期到26.11"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T05:54:10.216686+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T06:04:31.812250+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-04T05:54:10.322866+00:00"
+  "published_at": "2026-07-04T06:04:31.927783+00:00"
 }
