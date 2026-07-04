@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Lucky Lou",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T02:54:14.069606+00:00",
+      "id": 66,
+      "post_title": "【闲置】牛磺酸、费利威、luckylou零食餐包、除臭伴侣",
+      "post_url": "https://m.douban.com/group/topic/487388117/",
+      "price": 10.0,
+      "product_name": "【闲置】牛磺酸、费利威、luckylou零食餐包、除臭伴侣"
+    },
+    {
       "brand": "Halo",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/490807933/",
       "price": 295.0,
       "product_name": "【闲置】295出舀一勺的希尔斯台版zd猫粮"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-01T14:55:29.329788+00:00",
-      "id": 46,
-      "post_title": "【已出】猫超渴望六种鱼360出不包邮 已拆封",
-      "post_url": "https://m.douban.com/group/topic/492565653/",
-      "price": 360.0,
-      "product_name": "【闲置】猫超渴望六种鱼360出不包邮 已拆封"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T02:44:13.016972+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T02:54:16.442120+00:00",
+    "notifications_sent": 1,
     "posts_seen": 51
   },
-  "published_at": "2026-07-04T02:44:13.126998+00:00"
+  "published_at": "2026-07-04T02:54:16.555765+00:00"
 }
