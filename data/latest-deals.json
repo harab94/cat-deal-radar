@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-04T11:33:58.276805+00:00",
+      "id": 70,
+      "post_title": "【闲置】百利高蛋白罐头",
+      "post_url": "https://m.douban.com/group/topic/492869640/",
+      "price": 0.0,
+      "product_name": "【闲置】百利高蛋白罐头"
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492610764/",
       "price": 5.0,
       "product_name": "【闲置】朗诺鸡脖冻干75g"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-02T01:14:51.555217+00:00",
-      "id": 50,
-      "post_title": "【已出】闲置Macs迈格仕鸡肉+牛肉罐头（有防伪）",
-      "post_url": "https://m.douban.com/group/topic/492594765/",
-      "price": 160.0,
-      "product_name": "【闲置】出百利高蛋白鸡猫粮、Macs迈格仕鸡肉+牛肉罐头（有防..."
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T11:29:28.613547+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 54
+    "deals_created": 1,
+    "finished_at": "2026-07-04T11:34:00.245981+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 55
   },
-  "published_at": "2026-07-04T11:29:28.714877+00:00"
+  "published_at": "2026-07-04T11:34:00.361792+00:00"
 }
