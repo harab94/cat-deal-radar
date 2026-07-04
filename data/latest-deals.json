@@ -5,6 +5,18 @@
       "cat_score": 3,
       "category": "cat_food",
       "confidence_score": 95,
+      "created_at": "2026-07-04T13:15:13.411786+00:00",
+      "id": 77,
+      "post_title": "【闲置】喜崽肉肉泥/朗诺冻干等很多小猫罐头零食",
+      "post_url": "https://m.douban.com/group/topic/492784823/",
+      "price": 1.0,
+      "product_name": "【闲置】喜崽肉肉泥/朗诺冻干等很多小猫罐头零食"
+    },
+    {
+      "brand": "朗诺",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
       "created_at": "2026-07-04T13:04:47.142738+00:00",
       "id": 76,
       "post_title": "【闲置】朗诺冻干、巅峰冻干",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492738109/",
       "price": 177.5,
       "product_name": "【闲置】 SCrc10磅猫粮177.5元+u"
-    },
-    {
-      "brand": "K9 Natural",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-02T13:55:15.479790+00:00",
-      "id": 57,
-      "post_title": "【闲置】出K9罐头",
-      "post_url": "https://m.douban.com/group/topic/492669466/",
-      "price": 0.0,
-      "product_name": "【闲置】出K9罐头"
     }
   ],
   "latest_run": {
-    "deals_created": 2,
-    "finished_at": "2026-07-04T13:04:49.024782+00:00",
-    "notifications_sent": 2,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T13:15:15.496749+00:00",
+    "notifications_sent": 1,
     "posts_seen": 55
   },
-  "published_at": "2026-07-04T13:04:49.142960+00:00"
+  "published_at": "2026-07-04T13:15:15.603722+00:00"
 }
