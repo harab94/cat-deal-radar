@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Halo",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T19:03:28.925634+00:00",
+      "id": 83,
+      "post_title": "【闲置】halo自然光环2.5kg未拆封",
+      "post_url": "https://m.douban.com/group/topic/492093629/",
+      "price": 190.0,
+      "product_name": "【闲置】halo自然光环2.5kg未拆封"
+    },
+    {
       "brand": "法米娜",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492812468/",
       "price": 150.0,
       "product_name": "【闲置】出法米娜肠道处方粮"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-03T14:54:44.647182+00:00",
-      "id": 63,
-      "post_title": "【闲置】渴望甜虾渴望鸡冻干零食",
-      "post_url": "https://m.douban.com/group/topic/492786516/",
-      "price": 20.0,
-      "product_name": "【闲置】渴望甜虾渴望鸡冻干零食"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T18:53:24.484042+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T19:03:30.779718+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-04T18:53:24.594322+00:00"
+  "published_at": "2026-07-04T19:03:30.884796+00:00"
 }
