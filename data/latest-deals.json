@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "朗诺",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T13:04:47.142738+00:00",
+      "id": 76,
+      "post_title": "【闲置】朗诺冻干、巅峰冻干",
+      "post_url": "https://m.douban.com/group/topic/492880025/",
+      "price": 10.0,
+      "product_name": "【闲置】朗诺冻干、巅峰冻干"
+    },
+    {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-04T13:04:47.140370+00:00",
+      "id": 75,
+      "post_title": "【闲置】Halo野生三文鱼4.54kg 252改地址",
+      "post_url": "https://m.douban.com/group/topic/492880464/",
+      "price": 0.0,
+      "product_name": "【闲置】Halo野生三文鱼4.54kg 252改地址"
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492669466/",
       "price": 0.0,
       "product_name": "【闲置】出K9罐头"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-02T12:25:59.797463+00:00",
-      "id": 56,
-      "post_title": "【已出】百利高分装3.28斤",
-      "post_url": "https://m.douban.com/group/topic/492657137/",
-      "price": 120.0,
-      "product_name": "【闲置】百利高分装3.28斤"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-02T10:34:39.405296+00:00",
-      "id": 55,
-      "post_title": "【已出】出闲置百利猫罐头",
-      "post_url": "https://m.douban.com/group/topic/492643127/",
-      "price": 9.0,
-      "product_name": "出闲置百利猫罐头"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T12:54:04.703126+00:00",
-    "notifications_sent": 0,
+    "deals_created": 2,
+    "finished_at": "2026-07-04T13:04:49.024782+00:00",
+    "notifications_sent": 2,
     "posts_seen": 55
   },
-  "published_at": "2026-07-04T12:54:04.815919+00:00"
+  "published_at": "2026-07-04T13:04:49.142960+00:00"
 }
