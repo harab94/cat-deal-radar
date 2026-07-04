@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Stella & Chewy's",
+      "cat_score": 3,
+      "category": "freeze_dried",
+      "confidence_score": 90,
+      "created_at": "2026-07-04T04:46:25.380944+00:00",
+      "id": 67,
+      "post_title": "【闲置】SC无谷鸡10磅170重庆自提",
+      "post_url": "https://m.douban.com/group/topic/491160229/",
+      "price": 0.0,
+      "product_name": "【闲置】SC无谷鸡10磅170重庆自提"
+    },
+    {
       "brand": "Lucky Lou",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492579386/",
       "price": 330.0,
       "product_name": "【闲置】330出百利高蛋白 日期到26.11"
-    },
-    {
-      "brand": "Hill's Science Diet",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-01T15:05:40.118836+00:00",
-      "id": 47,
-      "post_title": "【闲置】295出舀一勺的希尔斯台版zd猫粮",
-      "post_url": "https://m.douban.com/group/topic/490807933/",
-      "price": 295.0,
-      "product_name": "【闲置】295出舀一勺的希尔斯台版zd猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T04:34:04.807697+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T04:46:27.879588+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-04T04:34:04.922635+00:00"
+  "published_at": "2026-07-04T04:46:27.994614+00:00"
 }
