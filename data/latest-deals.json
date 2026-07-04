@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "小李子",
+      "cat_score": 4,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-04T15:44:40.337065+00:00",
+      "id": 81,
+      "post_title": "【闲置】小李子幼猫餐包 72不包",
+      "post_url": "https://m.douban.com/group/topic/489957772/",
+      "price": 0.0,
+      "product_name": "【闲置】小李子幼猫餐包 72不包"
+    },
+    {
       "brand": "爱肯拿",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492780818/",
       "price": 33.5,
       "product_name": "【闲置】法米娜鲱鱼甜橙绝育成猫粮，可出分装试吃"
-    },
-    {
-      "brand": "MJamJam",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-03T11:54:42.769213+00:00",
-      "id": 61,
-      "post_title": "【闲置】临期mj昆虫牛300g餐包",
-      "post_url": "https://m.douban.com/group/topic/492762679/",
-      "price": 0.0,
-      "product_name": "【闲置】临期mj昆虫牛300g餐包"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T15:38:45.322448+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T15:44:42.684611+00:00",
+    "notifications_sent": 1,
     "posts_seen": 55
   },
-  "published_at": "2026-07-04T15:38:45.448284+00:00"
+  "published_at": "2026-07-04T15:44:42.802328+00:00"
 }
