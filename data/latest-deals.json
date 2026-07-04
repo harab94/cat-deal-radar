@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-04T14:04:30.411605+00:00",
+      "id": 79,
+      "post_title": "【闲置】法米娜水解蛋白粮超低敏处方粮",
+      "post_url": "https://m.douban.com/group/topic/492888148/",
+      "price": 0.0,
+      "product_name": "【闲置】法米娜水解蛋白粮超低敏处方粮"
+    },
+    {
+      "brand": "爱肯拿",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T14:04:30.409353+00:00",
+      "id": 78,
+      "post_title": "【闲置】爱肯拿农场盛宴已开封剩4.8kg，180r柳州可自提",
+      "post_url": "https://m.douban.com/group/topic/492888276/",
+      "price": 180.0,
+      "product_name": "【闲置】爱肯拿农场盛宴已开封剩4.8kg，180r柳州可自提"
+    },
+    {
       "brand": "朗诺",
       "cat_score": 3,
       "category": "cat_food",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492754018/",
       "price": 61.0,
       "product_name": "【闲置】出venandi鸡兔双拼800g 苏州自提送刚开半盒的小包装"
-    },
-    {
-      "brand": "Hill's Science Diet",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-03T09:14:11.101657+00:00",
-      "id": 59,
-      "post_title": "【闲置】丹诺马琳 维艾宁 希尔斯KD罐头",
-      "post_url": "https://m.douban.com/group/topic/492747844/",
-      "price": 0.0,
-      "product_name": "【闲置】丹诺马琳 维艾宁 希尔斯KD罐头"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-03T07:34:52.595863+00:00",
-      "id": 58,
-      "post_title": "【暂出】 SCrc10磅猫粮177.5元+u",
-      "post_url": "https://m.douban.com/group/topic/492738109/",
-      "price": 177.5,
-      "product_name": "【闲置】 SCrc10磅猫粮177.5元+u"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T13:54:17.354110+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 54
+    "deals_created": 2,
+    "finished_at": "2026-07-04T14:04:32.155894+00:00",
+    "notifications_sent": 2,
+    "posts_seen": 55
   },
-  "published_at": "2026-07-04T13:54:17.471540+00:00"
+  "published_at": "2026-07-04T14:04:32.270837+00:00"
 }
