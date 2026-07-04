@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T18:13:47.913905+00:00",
+      "id": 82,
+      "post_title": "【闲置】法米娜南瓜鸭",
+      "post_url": "https://m.douban.com/group/topic/491918346/",
+      "price": 230.0,
+      "product_name": "【闲置】法米娜南瓜鸭"
+    },
+    {
       "brand": "小李子",
       "cat_score": 4,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492786516/",
       "price": 20.0,
       "product_name": "【闲置】渴望甜虾渴望鸡冻干零食"
-    },
-    {
-      "brand": "法米娜",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-03T14:24:52.772441+00:00",
-      "id": 62,
-      "post_title": "【闲置】法米娜鲱鱼甜橙绝育成猫粮，可出分装试吃",
-      "post_url": "https://m.douban.com/group/topic/492780818/",
-      "price": 33.5,
-      "product_name": "【闲置】法米娜鲱鱼甜橙绝育成猫粮，可出分装试吃"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T18:04:01.989300+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-04T18:13:50.362719+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-04T18:04:02.101158+00:00"
+  "published_at": "2026-07-04T18:13:50.477213+00:00"
 }
