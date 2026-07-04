@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T12:04:40.642235+00:00",
+      "id": 72,
+      "post_title": "【闲置】希尔斯泌尿去毛球猫粮2.2kg",
+      "post_url": "https://m.douban.com/group/topic/492871697/",
+      "price": 170.0,
+      "product_name": "【闲置】希尔斯泌尿去毛球猫粮2.2kg"
+    },
+    {
+      "brand": "Royal Canin",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-04T12:04:40.639512+00:00",
+      "id": 71,
+      "post_title": "【闲置】出利筋诺，皇家猫粮Fr31易消化处方粮",
+      "post_url": "https://m.douban.com/group/topic/492872441/",
+      "price": 200.0,
+      "product_name": "【闲置】出利筋诺，皇家猫粮Fr31易消化处方粮"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492624965/",
       "price": 55.0,
       "product_name": "【闲置】皇家k36"
-    },
-    {
-      "brand": "法米娜",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-02T06:30:43.189693+00:00",
-      "id": 52,
-      "post_title": "【闲置】法米娜水解蛋白低敏粮2kg 330包u",
-      "post_url": "https://m.douban.com/group/topic/492619756/",
-      "price": 0.0,
-      "product_name": "【闲置】法米娜水解蛋白低敏粮2kg 340包u"
-    },
-    {
-      "brand": "朗诺",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-02T04:44:34.187994+00:00",
-      "id": 51,
-      "post_title": "【已出】朗诺鸡脖冻干75g/14.12",
-      "post_url": "https://m.douban.com/group/topic/492610764/",
-      "price": 5.0,
-      "product_name": "【闲置】朗诺鸡脖冻干75g"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-04T11:54:18.782727+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 54
+    "deals_created": 2,
+    "finished_at": "2026-07-04T12:04:43.728285+00:00",
+    "notifications_sent": 2,
+    "posts_seen": 55
   },
-  "published_at": "2026-07-04T11:54:18.889674+00:00"
+  "published_at": "2026-07-04T12:04:43.834932+00:00"
 }
