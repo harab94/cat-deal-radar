@@ -2,6 +2,18 @@
   "deals": [
     {
       "brand": "渴望",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-05T04:34:13.017246+00:00",
+      "id": 88,
+      "post_title": "【闲置】渴望室内伴侣",
+      "post_url": "https://m.douban.com/group/topic/492935952/",
+      "price": 325.0,
+      "product_name": "【闲置】渴望室内伴侣"
+    },
+    {
+      "brand": "渴望",
       "cat_score": 5,
       "category": "cat_food",
       "confidence_score": 95,
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492852179/",
       "price": 10.0,
       "product_name": "【闲置】now鱼油 临期10r"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-04T06:04:29.034017+00:00",
-      "id": 68,
-      "post_title": "【闲置】爱肯拿牧场盛宴4.5kg",
-      "post_url": "https://m.douban.com/group/topic/492838094/",
-      "price": 0.0,
-      "product_name": "【闲置】爱肯拿牧场盛宴4.5kg"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T04:24:10.641820+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-05T04:34:14.043127+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-05T04:24:10.758560+00:00"
+  "published_at": "2026-07-05T04:34:14.150670+00:00"
 }
