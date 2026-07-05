@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "渴望",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-05T03:04:04.971633+00:00",
+      "id": 87,
+      "post_title": "闲置渴望六种鱼",
+      "post_url": "https://m.douban.com/group/topic/492929427/",
+      "price": 350.0,
+      "product_name": "闲置渴望六种鱼"
+    },
+    {
       "brand": "爱肯拿",
       "cat_score": 4,
       "category": "cat_food",
@@ -127,7 +139,7 @@
       "confidence_score": 95,
       "created_at": "2026-07-04T13:04:47.142738+00:00",
       "id": 76,
-      "post_title": "【闲置】朗诺冻干",
+      "post_title": "【闲置】朗诺冻干（无）",
       "post_url": "https://m.douban.com/group/topic/492880025/",
       "price": 10.0,
       "product_name": "【闲置】朗诺冻干、巅峰冻干"
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492838094/",
       "price": 0.0,
       "product_name": "【闲置】爱肯拿牧场盛宴4.5kg"
-    },
-    {
-      "brand": "Stella & Chewy's",
-      "cat_score": 3,
-      "category": "freeze_dried",
-      "confidence_score": 90,
-      "created_at": "2026-07-04T04:46:25.380944+00:00",
-      "id": 67,
-      "post_title": "【闲置】SC无谷鸡10磅170重庆自提",
-      "post_url": "https://m.douban.com/group/topic/491160229/",
-      "price": 0.0,
-      "product_name": "【闲置】SC无谷鸡10磅170重庆自提"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T02:53:54.746469+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-05T03:04:06.045036+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-05T02:53:54.850253+00:00"
+  "published_at": "2026-07-05T03:04:06.156283+00:00"
 }
