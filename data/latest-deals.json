@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Royal Canin",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-05T12:14:44.599515+00:00",
+      "id": 92,
+      "post_title": "【闲置】皇家肠道处方粮2kg",
+      "post_url": "https://m.douban.com/group/topic/492982091/",
+      "price": 180.0,
+      "product_name": "【闲置】皇家肠道处方粮2kg"
+    },
+    {
       "brand": "VE",
       "cat_score": 3,
       "category": "freeze_dried",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492877660/",
       "price": 260.0,
       "product_name": "【闲置】罗斯rawz兔肉猫粮"
-    },
-    {
-      "brand": "Hill's Science Diet",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-04T12:04:40.642235+00:00",
-      "id": 72,
-      "post_title": "【闲置】希尔斯泌尿去毛球猫粮2.2kg",
-      "post_url": "https://m.douban.com/group/topic/492871697/",
-      "price": 170.0,
-      "product_name": "【闲置】希尔斯泌尿去毛球猫粮2.2kg"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T12:09:12.353050+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-05T12:14:46.385685+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-05T12:09:12.458726+00:00"
+  "published_at": "2026-07-05T12:14:46.497362+00:00"
 }
