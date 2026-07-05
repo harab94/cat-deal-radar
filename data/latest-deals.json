@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-05T12:54:28.489743+00:00",
+      "id": 93,
+      "post_title": "【闲置】百利无谷鸡5kg",
+      "post_url": "https://m.douban.com/group/topic/492987341/",
+      "price": 260.0,
+      "product_name": "【闲置】百利无谷鸡5kg"
+    },
+    {
       "brand": "Royal Canin",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492879077/",
       "price": 29.0,
       "product_name": "【闲置】now牛磺酸、啤酒酵母粉、jarrow益生菌、solaray维B"
-    },
-    {
-      "brand": "RAWZ",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-04T12:44:22.864134+00:00",
-      "id": 73,
-      "post_title": "【闲置】罗斯rawz兔肉猫粮",
-      "post_url": "https://m.douban.com/group/topic/492877660/",
-      "price": 260.0,
-      "product_name": "【闲置】罗斯rawz兔肉猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T12:44:39.709064+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 52
+    "deals_created": 1,
+    "finished_at": "2026-07-05T12:54:29.951602+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 53
   },
-  "published_at": "2026-07-05T12:44:39.820547+00:00"
+  "published_at": "2026-07-05T12:54:30.058520+00:00"
 }
