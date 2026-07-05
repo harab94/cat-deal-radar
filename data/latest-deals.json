@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "VE",
+      "cat_score": 3,
+      "category": "freeze_dried",
+      "confidence_score": 90,
+      "created_at": "2026-07-05T11:44:07.644907+00:00",
+      "id": 91,
+      "post_title": "闲置 ve猪肉粒",
+      "post_url": "https://m.douban.com/group/topic/492113028/",
+      "price": 0.0,
+      "product_name": "闲置 ve猪肉粒"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492871697/",
       "price": 170.0,
       "product_name": "【闲置】希尔斯泌尿去毛球猫粮2.2kg"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-04T12:04:40.639512+00:00",
-      "id": 71,
-      "post_title": "【闲置】出利筋诺，皇家猫粮Fr31易消化处方粮",
-      "post_url": "https://m.douban.com/group/topic/492872441/",
-      "price": 200.0,
-      "product_name": "【闲置】出利筋诺，皇家猫粮Fr31易消化处方粮"
     }
   ],
   "latest_run": {
     "deals_created": 1,
-    "finished_at": "2026-07-05T11:34:41.751802+00:00",
+    "finished_at": "2026-07-05T11:44:09.265550+00:00",
     "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-05T11:34:41.858508+00:00"
+  "published_at": "2026-07-05T11:44:09.363429+00:00"
 }
