@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-05T01:29:34.363541+00:00",
+      "id": 84,
+      "post_title": "280r出闲置官旗全新未拆法米娜石榴鸡",
+      "post_url": "https://m.douban.com/group/topic/492923381/",
+      "price": 280.0,
+      "product_name": "280r出闲置官旗全新未拆法米娜石榴鸡"
+    },
+    {
       "brand": "Halo",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492817885/",
       "price": 0.0,
       "product_name": "【闲置】Halo野生三文鱼10lb改地址"
-    },
-    {
-      "brand": "法米娜",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-03T23:49:01.818774+00:00",
-      "id": 64,
-      "post_title": "【闲置】出法米娜肠道处方粮",
-      "post_url": "https://m.douban.com/group/topic/492812468/",
-      "price": 150.0,
-      "product_name": "【闲置】出法米娜肠道处方粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T01:23:53.761809+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-05T01:29:36.152568+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-05T01:23:53.869387+00:00"
+  "published_at": "2026-07-05T01:29:36.256044+00:00"
 }
