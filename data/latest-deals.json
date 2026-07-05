@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-05T11:34:38.375538+00:00",
+      "id": 90,
+      "post_title": "闲置猫粮｜百利无谷鸡肉250 约4.7kg",
+      "post_url": "https://m.douban.com/group/topic/492975532/",
+      "price": 250.0,
+      "product_name": "闲置猫粮｜百利无谷鸡肉250 约4.7kg"
+    },
+    {
       "brand": "Royal Canin",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492872441/",
       "price": 200.0,
       "product_name": "【闲置】出利筋诺，皇家猫粮Fr31易消化处方粮"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-04T11:33:58.276805+00:00",
-      "id": 70,
-      "post_title": "【闲置】百利高蛋白罐头",
-      "post_url": "https://m.douban.com/group/topic/492869640/",
-      "price": 0.0,
-      "product_name": "【闲置】百利高蛋白罐头"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T11:24:03.828495+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-05T11:34:41.751802+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-05T11:24:03.932726+00:00"
+  "published_at": "2026-07-05T11:34:41.858508+00:00"
 }
