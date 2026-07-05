@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "MJamJam",
+      "cat_score": 4,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-05T02:33:38.728110+00:00",
+      "id": 85,
+      "post_title": "【闲置】出满满鲱鱼螃蟹鸡和mj袋鼠餐包",
+      "post_url": "https://m.douban.com/group/topic/492927379/",
+      "price": 0.0,
+      "product_name": "【闲置】出满满鲱鱼螃蟹鸡和mj袋鼠餐包"
+    },
+    {
       "brand": "法米娜",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/487388117/",
       "price": 10.0,
       "product_name": "【闲置】牛磺酸、费利威、luckylou零食餐包、除臭伴侣"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-04T01:53:46.370994+00:00",
-      "id": 65,
-      "post_title": "【闲置】Halo野生三文鱼10lb改地址",
-      "post_url": "https://m.douban.com/group/topic/492817885/",
-      "price": 0.0,
-      "product_name": "【闲置】Halo野生三文鱼10lb改地址"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-05T02:24:26.505425+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-05T02:33:40.666197+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-05T02:24:26.613755+00:00"
+  "published_at": "2026-07-05T02:33:40.776965+00:00"
 }
