@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-06T14:25:42.752328+00:00",
+      "id": 107,
+      "post_title": "【闲置】百利，最好重庆渝北自提，或者可以送",
+      "post_url": "https://m.douban.com/group/topic/493101145/",
+      "price": 0.0,
+      "product_name": "【闲置】百利，最好重庆渝北自提，或者可以送"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492935952/",
       "price": 325.0,
       "product_name": "【闲置】渴望室内伴侣"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T03:04:04.971633+00:00",
-      "id": 87,
-      "post_title": "闲置渴望六种鱼",
-      "post_url": "https://m.douban.com/group/topic/492929427/",
-      "price": 350.0,
-      "product_name": "闲置渴望六种鱼"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T14:15:37.343884+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-06T14:25:44.556954+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-06T14:15:37.457780+00:00"
+  "published_at": "2026-07-06T14:25:44.661279+00:00"
 }
