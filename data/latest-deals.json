@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "巅峰",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-06T06:05:15.950571+00:00",
+      "id": 100,
+      "post_title": "【闲置】巅峰ziwi罐头鸡肉185g*10罐",
+      "post_url": "https://m.douban.com/group/topic/493052865/",
+      "price": 200.0,
+      "product_name": "【闲置】巅峰ziwi罐头鸡肉185g*10罐"
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/489957772/",
       "price": 0.0,
       "product_name": "【闲置】小李子幼猫餐包 72不包"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-04T15:24:30.282371+00:00",
-      "id": 80,
-      "post_title": "【闲置】爱肯拿300➕u",
-      "post_url": "https://m.douban.com/group/topic/492899204/",
-      "price": 0.0,
-      "product_name": "【闲置】爱肯拿300➕u"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T05:54:42.420195+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-06T06:05:17.600272+00:00",
+    "notifications_sent": 1,
     "posts_seen": 55
   },
-  "published_at": "2026-07-06T05:54:42.534593+00:00"
+  "published_at": "2026-07-06T06:05:17.712143+00:00"
 }
