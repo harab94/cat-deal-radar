@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-06T11:54:41.819950+00:00",
+      "id": 103,
+      "post_title": "【闲置】付邮送4磅百利美毛猫粮",
+      "post_url": "https://m.douban.com/group/topic/493084792/",
+      "price": 0.0,
+      "product_name": "【闲置】付邮送4磅百利美毛猫粮"
+    },
+    {
       "brand": "Halo",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492923381/",
       "price": 280.0,
       "product_name": "280r出闲置官旗全新未拆法米娜石榴鸡"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-04T19:03:28.925634+00:00",
-      "id": 83,
-      "post_title": "【闲置】halo自然光环2.5kg未拆封",
-      "post_url": "https://m.douban.com/group/topic/492093629/",
-      "price": 190.0,
-      "product_name": "【闲置】halo自然光环2.5kg未拆封"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T11:44:38.115904+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-06T11:54:43.712732+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-06T11:44:38.223932+00:00"
+  "published_at": "2026-07-06T11:54:43.925660+00:00"
 }
