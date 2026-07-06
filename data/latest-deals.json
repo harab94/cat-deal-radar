@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "VE",
+      "cat_score": 3,
+      "category": "freeze_dried",
+      "confidence_score": 95,
+      "created_at": "2026-07-06T12:06:00.410121+00:00",
+      "id": 104,
+      "post_title": "【闲置】ng猪 辅酶q10 VetriScience",
+      "post_url": "https://m.douban.com/group/topic/493085788/",
+      "price": 70.0,
+      "product_name": "【闲置】ng猪 辅酶q10 VetriScience"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492927379/",
       "price": 0.0,
       "product_name": "【闲置】出满满鲱鱼螃蟹鸡和mj袋鼠餐包"
-    },
-    {
-      "brand": "法米娜",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T01:29:34.363541+00:00",
-      "id": 84,
-      "post_title": "280r出闲置官旗全新未拆法米娜石榴鸡",
-      "post_url": "https://m.douban.com/group/topic/492923381/",
-      "price": 280.0,
-      "product_name": "280r出闲置官旗全新未拆法米娜石榴鸡"
     }
   ],
   "latest_run": {
     "deals_created": 1,
-    "finished_at": "2026-07-06T11:54:43.712732+00:00",
+    "finished_at": "2026-07-06T12:06:01.719432+00:00",
     "notifications_sent": 1,
-    "posts_seen": 53
+    "posts_seen": 52
   },
-  "published_at": "2026-07-06T11:54:43.925660+00:00"
+  "published_at": "2026-07-06T12:06:01.828997+00:00"
 }
