@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-06T11:14:33.175135+00:00",
+      "id": 102,
+      "post_title": "【闲置】临期halo成猫鸡180包邮",
+      "post_url": "https://m.douban.com/group/topic/493079995/",
+      "price": 180.0,
+      "product_name": "【闲置】临期halo成猫鸡180包邮"
+    },
+    {
       "brand": "Almo Nature",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492093629/",
       "price": 190.0,
       "product_name": "【闲置】halo自然光环2.5kg未拆封"
-    },
-    {
-      "brand": "法米娜",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-04T18:13:47.913905+00:00",
-      "id": 82,
-      "post_title": "【闲置】法米娜南瓜鸭",
-      "post_url": "https://m.douban.com/group/topic/491918346/",
-      "price": 230.0,
-      "product_name": "【闲置】法米娜南瓜鸭"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T11:05:16.853133+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 52
+    "deals_created": 1,
+    "finished_at": "2026-07-06T11:14:35.455145+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 53
   },
-  "published_at": "2026-07-06T11:05:16.962153+00:00"
+  "published_at": "2026-07-06T11:14:35.562725+00:00"
 }
