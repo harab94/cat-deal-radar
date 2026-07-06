@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Almo Nature",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-06T08:05:33.226622+00:00",
+      "id": 101,
+      "post_title": "【闲置】国healthspan软骨素",
+      "post_url": "https://m.douban.com/group/topic/493062961/",
+      "price": 92.4,
+      "product_name": "【闲置】国healthspan软骨素"
+    },
+    {
       "brand": "巅峰",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491918346/",
       "price": 230.0,
       "product_name": "【闲置】法米娜南瓜鸭"
-    },
-    {
-      "brand": "小李子",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-04T15:44:40.337065+00:00",
-      "id": 81,
-      "post_title": "【闲置】小李子幼猫餐包 72不包",
-      "post_url": "https://m.douban.com/group/topic/489957772/",
-      "price": 0.0,
-      "product_name": "【闲置】小李子幼猫餐包 72不包"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T07:55:19.180045+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-06T08:05:34.335890+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-06T07:55:19.288986+00:00"
+  "published_at": "2026-07-06T08:05:34.446096+00:00"
 }
