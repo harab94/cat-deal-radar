@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Royal Canin",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-06T15:26:53.298283+00:00",
+      "id": 109,
+      "post_title": "【闲置】皇家肾脏猫粮1.5千克",
+      "post_url": "https://m.douban.com/group/topic/493108319/",
+      "price": 170.0,
+      "product_name": "【闲置】皇家肾脏猫粮1.5千克"
+    },
+    {
       "brand": "K9 Natural",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492975532/",
       "price": 250.0,
       "product_name": "闲置猫粮｜百利无谷鸡肉250 约4.7kg"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T09:54:16.266294+00:00",
-      "id": 89,
-      "post_title": "【闲置】佳乐滋消臭珠10元包邮",
-      "post_url": "https://m.douban.com/group/topic/492964499/",
-      "price": 3.0,
-      "product_name": "【闲置】地狱厨房咕噜酱，皇家奶罐（临期），佳乐滋消臭珠"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T15:15:48.896101+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-06T15:26:54.800115+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-06T15:15:49.012609+00:00"
+  "published_at": "2026-07-06T15:26:54.915298+00:00"
 }
