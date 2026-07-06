@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "VE",
+      "cat_score": 3,
+      "category": "freeze_dried",
+      "confidence_score": 90,
+      "created_at": "2026-07-06T01:34:36.395018+00:00",
+      "id": 97,
+      "post_title": "【闲置】南昌送vetwish乳铁蛋白(仅限南昌自提，救助！)",
+      "post_url": "https://m.douban.com/group/topic/491249965/",
+      "price": 0.0,
+      "product_name": "【闲置】南昌送vetwish乳铁蛋白(仅限南昌自提，救助！)"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492888276/",
       "price": 180.0,
       "product_name": "【闲置】爱肯拿农场盛宴已开封剩4.8kg，180r柳州可自提"
-    },
-    {
-      "brand": "朗诺",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-04T13:15:13.411786+00:00",
-      "id": 77,
-      "post_title": "【闲置】伊纳宝鸡胸肉朗诺冻干等很多小猫罐头零食",
-      "post_url": "https://m.douban.com/group/topic/492784823/",
-      "price": 1.0,
-      "product_name": "【闲置】喜崽肉肉泥/朗诺冻干等很多小猫罐头零食"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T01:27:07.108552+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-06T01:34:37.678106+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-06T01:27:07.223152+00:00"
+  "published_at": "2026-07-06T01:34:37.798223+00:00"
 }
