@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-06T12:55:08.309334+00:00",
+      "id": 106,
+      "post_title": "【闲置】出希尔斯ad罐 猫咪贫血用药dpo 莫利司它",
+      "post_url": "https://m.douban.com/group/topic/491497759/",
+      "price": 0.0,
+      "product_name": "【闲置】出希尔斯ad罐 猫咪贫血用药dpo 莫利司它"
+    },
+    {
+      "brand": "K9 Natural",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-06T12:55:08.306880+00:00",
+      "id": 105,
+      "post_title": "【闲置】临期k9冻干",
+      "post_url": "https://m.douban.com/group/topic/493091131/",
+      "price": 0.0,
+      "product_name": "【闲置】临期k9冻干"
+    },
+    {
       "brand": "VE",
       "cat_score": 3,
       "category": "freeze_dried",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492929427/",
       "price": 350.0,
       "product_name": "闲置渴望六种鱼"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-05T02:43:54.501441+00:00",
-      "id": 86,
-      "post_title": "闲置6.18猫粮买多了有渴望爱肯拿",
-      "post_url": "https://m.douban.com/group/topic/492927638/",
-      "price": 0.0,
-      "product_name": "闲置6.18猫粮买多了有渴望爱肯拿"
-    },
-    {
-      "brand": "MJamJam",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-05T02:33:38.728110+00:00",
-      "id": 85,
-      "post_title": "【闲置】出满满鲱鱼螃蟹鸡和mj袋鼠餐包",
-      "post_url": "https://m.douban.com/group/topic/492927379/",
-      "price": 0.0,
-      "product_name": "【闲置】出满满鲱鱼螃蟹鸡和mj袋鼠餐包"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T12:45:41.998107+00:00",
-    "notifications_sent": 0,
+    "deals_created": 2,
+    "finished_at": "2026-07-06T12:55:10.316224+00:00",
+    "notifications_sent": 2,
     "posts_seen": 53
   },
-  "published_at": "2026-07-06T12:45:42.109999+00:00"
+  "published_at": "2026-07-06T12:55:10.431757+00:00"
 }
