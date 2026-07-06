@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "K9 Natural",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-06T14:55:11.211044+00:00",
+      "id": 108,
+      "post_title": "【闲置】车价小众德罐Natural trail 400g & K9鸡肉大罐",
+      "post_url": "https://m.douban.com/group/topic/493105185/",
+      "price": 10.0,
+      "product_name": "【闲置】车价小众德罐Natural trail 400g & K9鸡肉大罐"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492964499/",
       "price": 3.0,
       "product_name": "【闲置】地狱厨房咕噜酱，皇家奶罐（临期），佳乐滋消臭珠"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T04:34:13.017246+00:00",
-      "id": 88,
-      "post_title": "【闲置】渴望室内伴侣",
-      "post_url": "https://m.douban.com/group/topic/492935952/",
-      "price": 325.0,
-      "product_name": "【闲置】渴望室内伴侣"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-06T14:45:20.457374+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 53
+    "deals_created": 1,
+    "finished_at": "2026-07-06T14:55:13.078844+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 54
   },
-  "published_at": "2026-07-06T14:45:20.571346+00:00"
+  "published_at": "2026-07-06T14:55:13.184013+00:00"
 }
