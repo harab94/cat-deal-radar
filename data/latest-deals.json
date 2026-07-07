@@ -5,6 +5,18 @@
       "cat_score": 4,
       "category": "cat_food",
       "confidence_score": 95,
+      "created_at": "2026-07-07T12:44:59.168575+00:00",
+      "id": 115,
+      "post_title": "【闲置】halo 健美鸡 未拆封 peny商城购入 320包邮",
+      "post_url": "https://m.douban.com/group/topic/493183576/",
+      "price": 320.0,
+      "product_name": "【闲置】halo 健美鸡 未拆封 peny商城购入 320包邮"
+    },
+    {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
       "created_at": "2026-07-07T08:35:13.955588+00:00",
       "id": 114,
       "post_title": "【闲置】坐标上海240出halo三文鱼&白鱼猫粮",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/484890856/",
       "price": 82.0,
       "product_name": "【闲置】希尔斯zd猫粮 台版"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T14:15:10.604769+00:00",
-      "id": 95,
-      "post_title": "【闲置】halo健美🐔本土版5kg，250包邮非偏远",
-      "post_url": "https://m.douban.com/group/topic/492996608/",
-      "price": 250.0,
-      "product_name": "【闲置】halo健美🐔5kg，250包邮非偏远"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-07T12:35:01.998087+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-07T12:45:01.078745+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-07T12:35:02.111823+00:00"
+  "published_at": "2026-07-07T12:45:01.186269+00:00"
 }
