@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "渴望",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-07T01:04:29.587084+00:00",
+      "id": 110,
+      "post_title": "闲置200出渴望甜虾猫粮",
+      "post_url": "https://m.douban.com/group/topic/493129819/",
+      "price": 200.0,
+      "product_name": "闲置200出渴望甜虾猫粮"
+    },
+    {
       "brand": "Royal Canin",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492113028/",
       "price": 0.0,
       "product_name": "闲置 ve猪肉粒"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T11:34:38.375538+00:00",
-      "id": 90,
-      "post_title": "删",
-      "post_url": "https://m.douban.com/group/topic/492975532/",
-      "price": 250.0,
-      "product_name": "闲置猫粮｜百利无谷鸡肉250 约4.7kg"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-07T00:54:29.812141+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-07T01:04:30.885104+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-07T00:54:29.922996+00:00"
+  "published_at": "2026-07-07T01:04:30.995810+00:00"
 }
