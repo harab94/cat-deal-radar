@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "MJamJam",
+      "cat_score": 4,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-07T13:54:45.502918+00:00",
+      "id": 116,
+      "post_title": "闲置 mjam纯鸭400g 35/个",
+      "post_url": "https://m.douban.com/group/topic/493192159/",
+      "price": 0.0,
+      "product_name": "闲置 mjam纯鸭400g 35/个"
+    },
+    {
       "brand": "Halo",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491249965/",
       "price": 0.0,
       "product_name": "【闲置】南昌送vetwish乳铁蛋白(仅限南昌自提，救助！)"
-    },
-    {
-      "brand": "Hill's Science Diet",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T14:54:46.713870+00:00",
-      "id": 96,
-      "post_title": "【闲置】希尔斯zd猫粮 台版",
-      "post_url": "https://m.douban.com/group/topic/484890856/",
-      "price": 82.0,
-      "product_name": "【闲置】希尔斯zd猫粮 台版"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-07T13:46:52.960556+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-07T13:54:47.261302+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-07T13:46:53.076861+00:00"
+  "published_at": "2026-07-07T13:54:47.340307+00:00"
 }
