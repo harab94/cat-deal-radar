@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "NOW Fresh",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-07T07:45:29.011183+00:00",
+      "id": 113,
+      "post_title": "【闲置】出2份nowfood 洋车子壳",
+      "post_url": "https://m.douban.com/group/topic/493157878/",
+      "price": 0.0,
+      "product_name": "【闲置】出2份nowfood 洋车子壳"
+    },
+    {
       "brand": "Zeal",
       "cat_score": 3,
       "category": "freeze_dried",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/492996810/",
       "price": 120.0,
       "product_name": "闲置，爱肯拿2.8kg+，120包邮"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-05T12:54:28.489743+00:00",
-      "id": 93,
-      "post_title": "【闲置】百利无谷鸡5kg",
-      "post_url": "https://m.douban.com/group/topic/492987341/",
-      "price": 260.0,
-      "product_name": "【闲置】百利无谷鸡5kg"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-07T07:36:15.246150+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 54
+    "deals_created": 1,
+    "finished_at": "2026-07-07T07:45:30.805989+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 53
   },
-  "published_at": "2026-07-07T07:36:15.400283+00:00"
+  "published_at": "2026-07-07T07:45:30.940129+00:00"
 }
