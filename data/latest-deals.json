@@ -242,10 +242,10 @@
     }
   ],
   "latest_run": {
-    "deals_created": 1,
-    "finished_at": "2026-07-07T07:45:30.805989+00:00",
-    "notifications_sent": 1,
+    "deals_created": 0,
+    "finished_at": "2026-07-07T07:55:44.966923+00:00",
+    "notifications_sent": 0,
     "posts_seen": 53
   },
-  "published_at": "2026-07-07T07:45:30.940129+00:00"
+  "published_at": "2026-07-07T07:55:45.078704+00:00"
 }
