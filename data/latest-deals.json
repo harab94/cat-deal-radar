@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "爱肯拿",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-08T07:44:21.437577+00:00",
+      "id": 117,
+      "post_title": "【闲置】爱肯拿、皇家肠道处方粮、乳铁蛋白、滑榆皮粉、洋车...",
+      "post_url": "https://m.douban.com/group/topic/493259867/",
+      "price": 50.0,
+      "product_name": "【闲置】爱肯拿、皇家肠道处方粮、乳铁蛋白、滑榆皮粉、洋车..."
+    },
+    {
       "brand": "MJamJam",
       "cat_score": 4,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493036431/",
       "price": 270.0,
       "product_name": "【闲置】270出爱肯拿5.4kg，一共两袋，去年618囤的，26年11月..."
-    },
-    {
-      "brand": "VE",
-      "cat_score": 3,
-      "category": "freeze_dried",
-      "confidence_score": 90,
-      "created_at": "2026-07-06T01:34:36.395018+00:00",
-      "id": 97,
-      "post_title": "【闲置】南昌送vetwish乳铁蛋白(仅限南昌自提，救助！)",
-      "post_url": "https://m.douban.com/group/topic/491249965/",
-      "price": 0.0,
-      "product_name": "【闲置】南昌送vetwish乳铁蛋白(仅限南昌自提，救助！)"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-08T07:35:05.451955+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 51
+    "deals_created": 1,
+    "finished_at": "2026-07-08T07:44:23.381271+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 52
   },
-  "published_at": "2026-07-08T07:35:05.557159+00:00"
+  "published_at": "2026-07-08T07:44:23.505192+00:00"
 }
