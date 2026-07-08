@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "金色交响乐",
+      "cat_score": 4,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-08T12:24:22.531338+00:00",
+      "id": 120,
+      "post_title": "【闲置】金交8号",
+      "post_url": "https://m.douban.com/group/topic/493286036/",
+      "price": 0.0,
+      "product_name": "【闲置】金交8号"
+    },
+    {
       "brand": "catz",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493062961/",
       "price": 92.4,
       "product_name": "【闲置】国healthspan软骨素"
-    },
-    {
-      "brand": "巅峰",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-06T06:05:15.950571+00:00",
-      "id": 100,
-      "post_title": "【闲置】巅峰ziwi罐头鸡肉185g*10罐",
-      "post_url": "https://m.douban.com/group/topic/493052865/",
-      "price": 200.0,
-      "product_name": "【闲置】巅峰ziwi罐头鸡肉185g*10罐"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-08T12:14:50.676281+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-08T12:24:23.857159+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-08T12:14:50.791061+00:00"
+  "published_at": "2026-07-08T12:24:23.970920+00:00"
 }
