@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-08T09:43:34.517041+00:00",
+      "id": 118,
+      "post_title": "【闲置】百利低脂低卡生鲜鸡冻干双拼分装送百利大罐3个 坐标...",
+      "post_url": "https://m.douban.com/group/topic/493270100/",
+      "price": 0.0,
+      "product_name": "【闲置】百利低脂低卡生鲜鸡冻干双拼分装送百利大罐3个 坐标..."
+    },
+    {
       "brand": "爱肯拿",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491173837/",
       "price": 14.0,
       "product_name": "【闲置】now3号胶囊洋车前子壳谷氨酰胺"
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-06T02:54:31.663014+00:00",
-      "id": 98,
-      "post_title": "【闲置】不出了，求删",
-      "post_url": "https://m.douban.com/group/topic/493036431/",
-      "price": 270.0,
-      "product_name": "【闲置】270出爱肯拿5.4kg，一共两袋，去年618囤的，26年11月..."
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-08T09:35:07.312810+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 52
+    "deals_created": 1,
+    "finished_at": "2026-07-08T09:43:35.729813+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 53
   },
-  "published_at": "2026-07-08T09:35:07.411785+00:00"
+  "published_at": "2026-07-08T09:43:35.840404+00:00"
 }
