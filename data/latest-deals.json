@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-08T20:34:03.927894+00:00",
+      "id": 123,
+      "post_title": "【闲置】超级便宜出希尔斯gb肠道处方猫粮",
+      "post_url": "https://m.douban.com/group/topic/489782470/",
+      "price": 180.0,
+      "product_name": "【闲置】超级便宜出希尔斯gb肠道处方猫粮"
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493085788/",
       "price": 70.0,
       "product_name": "【闲置】ng猪 辅酶q10 VetriScience"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-06T11:54:41.819950+00:00",
-      "id": 103,
-      "post_title": "【闲置】付邮送4磅百利美毛猫粮",
-      "post_url": "https://m.douban.com/group/topic/493084792/",
-      "price": 0.0,
-      "product_name": "【闲置】付邮送4磅百利美毛猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-08T20:24:15.828732+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-08T20:34:05.541961+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-08T20:24:15.945038+00:00"
+  "published_at": "2026-07-08T20:34:05.635907+00:00"
 }
