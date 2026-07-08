@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "catz",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-08T10:34:20.584649+00:00",
+      "id": 119,
+      "post_title": "【闲置】出catz罐头",
+      "post_url": "https://m.douban.com/group/topic/493275583/",
+      "price": 0.0,
+      "product_name": "【闲置】出catz罐头"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493052865/",
       "price": 200.0,
       "product_name": "【闲置】巅峰ziwi罐头鸡肉185g*10罐"
-    },
-    {
-      "brand": "NOW Fresh",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 85,
-      "created_at": "2026-07-06T05:04:30.075464+00:00",
-      "id": 99,
-      "post_title": "【闲置】now3号胶囊洋车前子壳谷氨酰胺",
-      "post_url": "https://m.douban.com/group/topic/491173837/",
-      "price": 14.0,
-      "product_name": "【闲置】now3号胶囊洋车前子壳谷氨酰胺"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-08T10:24:40.188011+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-08T10:34:22.348356+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-08T10:24:40.304100+00:00"
+  "published_at": "2026-07-08T10:34:22.457523+00:00"
 }
