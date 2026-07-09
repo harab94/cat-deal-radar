@@ -1,13 +1,25 @@
 {
   "deals": [
     {
+      "brand": "Hill's Science Diet",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-09T16:45:02.816609+00:00",
+      "id": 135,
+      "post_title": "【闲置】希尔斯AD罐头6罐150r",
+      "post_url": "https://m.douban.com/group/topic/489282526/",
+      "price": 150.0,
+      "product_name": "【闲置】希尔斯AD罐头6罐150r"
+    },
+    {
       "brand": "MJamJam",
       "cat_score": 4,
       "category": "wet_food",
       "confidence_score": 90,
       "created_at": "2026-07-09T16:34:37.916866+00:00",
       "id": 134,
-      "post_title": "【闲置】出mjam400g旧德",
+      "post_title": "【闲置】出mjam400g大罐旧德",
       "post_url": "https://m.douban.com/group/topic/493412580/",
       "price": 0.0,
       "product_name": "【闲置】出mjam400g旧德"
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493192159/",
       "price": 0.0,
       "product_name": "闲置 mjam纯鸭400g 35/个"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-07T12:44:59.168575+00:00",
-      "id": 115,
-      "post_title": "【闲置】halo 健美鸡 未拆封 peny商城购入 320包邮",
-      "post_url": "https://m.douban.com/group/topic/493183576/",
-      "price": 320.0,
-      "product_name": "【闲置】halo 健美鸡 未拆封 peny商城购入 320包邮"
     }
   ],
   "latest_run": {
     "deals_created": 1,
-    "finished_at": "2026-07-09T16:34:39.819545+00:00",
+    "finished_at": "2026-07-09T16:45:05.238451+00:00",
     "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-09T16:34:39.928522+00:00"
+  "published_at": "2026-07-09T16:45:05.329933+00:00"
 }
