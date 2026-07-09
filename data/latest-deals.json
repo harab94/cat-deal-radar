@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-09T13:06:50.279112+00:00",
+      "id": 131,
+      "post_title": "【闲置】法米娜超低敏鱼蛋白水解猫粮",
+      "post_url": "https://m.douban.com/group/topic/483074007/",
+      "price": 135.0,
+      "product_name": "【闲置】法米娜超低敏鱼蛋白水解猫粮"
+    },
+    {
+      "brand": "朗诺",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-09T13:06:50.254902+00:00",
+      "id": 130,
+      "post_title": "【闲置】绿福摩鸭肉甜薯，大概4斤多一点，110包邮出，送朗诺...",
+      "post_url": "https://m.douban.com/group/topic/493389531/",
+      "price": 110.0,
+      "product_name": "【闲置】绿福摩鸭肉甜薯，大概4斤多一点，110包邮出，送朗诺..."
+    },
+    {
       "brand": "爱肯拿",
       "cat_score": 4,
       "category": "cat_food",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493155951/",
       "price": 0.0,
       "product_name": "【闲置】ZEAL鸡肉罐头"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-07T02:04:32.008892+00:00",
-      "id": 111,
-      "post_title": "【闲置】halo自然光环幼猫12磅（2027.8好日期）300出丨最好无...",
-      "post_url": "https://m.douban.com/group/topic/493133027/",
-      "price": 300.0,
-      "product_name": "【闲置】halo自然光环幼猫12磅（2027.8好日期）300出丨最好无..."
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-07T01:04:29.587084+00:00",
-      "id": 110,
-      "post_title": "【闲置】200出渴望甜虾猫粮",
-      "post_url": "https://m.douban.com/group/topic/493129819/",
-      "price": 200.0,
-      "product_name": "闲置200出渴望甜虾猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-09T12:39:58.121753+00:00",
-    "notifications_sent": 0,
+    "deals_created": 2,
+    "finished_at": "2026-07-09T13:06:52.732525+00:00",
+    "notifications_sent": 2,
     "posts_seen": 53
   },
-  "published_at": "2026-07-09T12:39:58.235384+00:00"
+  "published_at": "2026-07-09T13:06:52.826084+00:00"
 }
