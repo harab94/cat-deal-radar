@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "MJamJam",
+      "cat_score": 4,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-09T16:34:37.916866+00:00",
+      "id": 134,
+      "post_title": "【闲置】出mjam400g旧德",
+      "post_url": "https://m.douban.com/group/topic/493412580/",
+      "price": 0.0,
+      "product_name": "【闲置】出mjam400g旧德"
+    },
+    {
       "brand": "渴望",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493183576/",
       "price": 320.0,
       "product_name": "【闲置】halo 健美鸡 未拆封 peny商城购入 320包邮"
-    },
-    {
-      "brand": "Halo",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-07T08:35:13.955588+00:00",
-      "id": 114,
-      "post_title": "【暂出】坐标上海240出halo三文鱼&白鱼猫粮",
-      "post_url": "https://m.douban.com/group/topic/493162126/",
-      "price": 240.0,
-      "product_name": "【闲置】坐标上海240出halo三文鱼&白鱼猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-09T16:25:09.119417+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-09T16:34:39.819545+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-09T16:25:09.234422+00:00"
+  "published_at": "2026-07-09T16:34:39.928522+00:00"
 }
