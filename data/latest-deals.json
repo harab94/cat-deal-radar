@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "巅峰",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-09T01:14:12.219781+00:00",
+      "id": 125,
+      "post_title": "【闲置】Ziwi巅峰风干粮南太平洋野生鱼&鸡肉马鲛鱼 2.2kg",
+      "post_url": "https://m.douban.com/group/topic/491225291/",
+      "price": 429.0,
+      "product_name": "【闲置】Ziwi巅峰风干粮南太平洋野生鱼&鸡肉马鲛鱼 2.2kg"
+    },
+    {
       "brand": "Zeal",
       "cat_score": 4,
       "category": "freeze_dried",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491497759/",
       "price": 0.0,
       "product_name": "【闲置】出希尔斯ad罐 猫咪贫血用药dpo 莫利司它"
-    },
-    {
-      "brand": "K9 Natural",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-06T12:55:08.306880+00:00",
-      "id": 105,
-      "post_title": "【已出】临期k9冻干",
-      "post_url": "https://m.douban.com/group/topic/493091131/",
-      "price": 0.0,
-      "product_name": "【闲置】临期k9冻干"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-09T01:04:17.501884+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-09T01:14:13.429273+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-09T01:04:17.783263+00:00"
+  "published_at": "2026-07-09T01:14:13.537996+00:00"
 }
