@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "渴望",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-09T06:51:57.279239+00:00",
+      "id": 128,
+      "post_title": "【闲置】渴望鸡4.6kg 255r不包邮",
+      "post_url": "https://m.douban.com/group/topic/493352325/",
+      "price": 255.0,
+      "product_name": "【闲置】渴望鸡4.6kg 255r不包邮"
+    },
+    {
       "brand": "Royal Canin",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493108319/",
       "price": 170.0,
       "product_name": "【闲置】皇家肾脏猫粮1.5千克"
-    },
-    {
-      "brand": "K9 Natural",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-06T14:55:11.211044+00:00",
-      "id": 108,
-      "post_title": "【闲置】(暂无)车价小众德罐Natural trail 400g & K9鸡肉大罐",
-      "post_url": "https://m.douban.com/group/topic/493105185/",
-      "price": 10.0,
-      "product_name": "【闲置】车价小众德罐Natural trail 400g & K9鸡肉大罐"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-09T06:34:54.343200+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-09T06:51:58.517962+00:00",
+    "notifications_sent": 1,
     "posts_seen": 55
   },
-  "published_at": "2026-07-09T06:34:54.449996+00:00"
+  "published_at": "2026-07-09T06:51:58.626795+00:00"
 }
