@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "爱肯拿",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-09T09:03:55.464191+00:00",
+      "id": 129,
+      "post_title": "【闲置】爱肯拿农场盛宴已开封，真空打包4.032kg",
+      "post_url": "https://m.douban.com/group/topic/493365897/",
+      "price": 0.0,
+      "product_name": "【闲置】爱肯拿农场盛宴已开封，真空打包4.032kg"
+    },
+    {
       "brand": "渴望",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493129819/",
       "price": 200.0,
       "product_name": "闲置200出渴望甜虾猫粮"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-06T15:26:53.298283+00:00",
-      "id": 109,
-      "post_title": "【闲置】皇家肾脏猫粮1.5千克",
-      "post_url": "https://m.douban.com/group/topic/493108319/",
-      "price": 170.0,
-      "product_name": "【闲置】皇家肾脏猫粮1.5千克"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-09T08:57:30.089612+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-09T09:03:57.054356+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-09T08:57:30.196783+00:00"
+  "published_at": "2026-07-09T09:03:57.173452+00:00"
 }
