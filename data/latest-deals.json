@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-09T13:55:08.372998+00:00",
+      "id": 132,
+      "post_title": "出闲置猫粮，百利高和素力高，",
+      "post_url": "https://m.douban.com/group/topic/493394859/",
+      "price": 105.0,
+      "product_name": "出闲置猫粮，百利高和素力高，"
+    },
+    {
       "brand": "法米娜",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493157878/",
       "price": 0.0,
       "product_name": "【闲置】出2份nowfood 洋车子壳"
-    },
-    {
-      "brand": "Zeal",
-      "cat_score": 3,
-      "category": "freeze_dried",
-      "confidence_score": 90,
-      "created_at": "2026-07-07T07:15:18.849042+00:00",
-      "id": 112,
-      "post_title": "【闲置】ZEAL鸡肉罐头",
-      "post_url": "https://m.douban.com/group/topic/493155951/",
-      "price": 0.0,
-      "product_name": "【闲置】ZEAL鸡肉罐头"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-09T13:47:02.875246+00:00",
-    "notifications_sent": 0,
-    "posts_seen": 49
+    "deals_created": 1,
+    "finished_at": "2026-07-09T13:55:09.631439+00:00",
+    "notifications_sent": 1,
+    "posts_seen": 53
   },
-  "published_at": "2026-07-09T13:47:02.984906+00:00"
+  "published_at": "2026-07-09T13:55:09.739081+00:00"
 }
