@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-10T15:24:33.187686+00:00",
+      "id": 141,
+      "post_title": "【闲置】百利无谷鸡，猫咪不爱吃251包邮，本地自提可议价。",
+      "post_url": "https://m.douban.com/group/topic/491045129/",
+      "price": 251.0,
+      "product_name": "【闲置】百利无谷鸡，猫咪不爱吃251包邮，本地自提可议价。"
+    },
+    {
       "brand": "法米娜",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/487238245/",
       "price": 0.0,
       "product_name": "【闲置】nowfoods 钙粉 碘化钾 牛磺酸 镁片"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-08T13:54:53.856087+00:00",
-      "id": 121,
-      "post_title": "【闲置】皇家低敏水解处方粮 剩1.3kg",
-      "post_url": "https://m.douban.com/group/topic/493294287/",
-      "price": 0.0,
-      "product_name": "【闲置】皇家低敏水解处方粮 剩1.3kg"
     }
   ],
   "latest_run": {
     "deals_created": 1,
-    "finished_at": "2026-07-10T15:16:07.501797+00:00",
+    "finished_at": "2026-07-10T15:24:34.462536+00:00",
     "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-10T15:16:07.619680+00:00"
+  "published_at": "2026-07-10T15:24:34.573310+00:00"
 }
