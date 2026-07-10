@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "VE",
+      "cat_score": 3,
+      "category": "freeze_dried",
+      "confidence_score": 90,
+      "created_at": "2026-07-10T01:44:09.978428+00:00",
+      "id": 136,
+      "post_title": "【闲置】德国ven罐头 嫩鸡口味5罐75💼",
+      "post_url": "https://m.douban.com/group/topic/493428506/",
+      "price": 0.0,
+      "product_name": "【闲置】德国ven罐头 嫩鸡口味5罐75💼"
+    },
+    {
       "brand": "Hill's Science Diet",
       "cat_score": 3,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493259867/",
       "price": 50.0,
       "product_name": "【闲置】爱肯拿、皇家肠道处方粮、乳铁蛋白、滑榆皮粉、洋车..."
-    },
-    {
-      "brand": "MJamJam",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-07T13:54:45.502918+00:00",
-      "id": 116,
-      "post_title": "闲置 mjam纯鸭400g 35/个",
-      "post_url": "https://m.douban.com/group/topic/493192159/",
-      "price": 0.0,
-      "product_name": "闲置 mjam纯鸭400g 35/个"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-10T01:34:22.286632+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-10T01:44:11.847492+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-10T01:34:22.393027+00:00"
+  "published_at": "2026-07-10T01:44:11.954897+00:00"
 }
