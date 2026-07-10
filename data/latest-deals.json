@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-10T15:16:05.297820+00:00",
+      "id": 140,
+      "post_title": "【闲置】法米娜南瓜鸭分装37一斤➕u",
+      "post_url": "https://m.douban.com/group/topic/493504482/",
+      "price": 0.0,
+      "product_name": "【闲置】法米娜南瓜鸭分装37一斤➕u"
+    },
+    {
       "brand": "美士",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493294287/",
       "price": 0.0,
       "product_name": "【闲置】皇家低敏水解处方粮 剩1.3kg"
-    },
-    {
-      "brand": "金色交响乐",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-08T12:24:22.531338+00:00",
-      "id": 120,
-      "post_title": "【闲置】金交8号",
-      "post_url": "https://m.douban.com/group/topic/493286036/",
-      "price": 0.0,
-      "product_name": "【闲置】金交8号"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-10T15:06:10.482812+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-10T15:16:07.501797+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-10T15:06:10.576651+00:00"
+  "published_at": "2026-07-10T15:16:07.619680+00:00"
 }
