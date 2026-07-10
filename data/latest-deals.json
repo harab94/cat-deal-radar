@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "美士",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-10T09:46:07.522994+00:00",
+      "id": 139,
+      "post_title": "【闲置】美士爆珠一分为二6r/盒",
+      "post_url": "https://m.douban.com/group/topic/493467174/",
+      "price": 6.0,
+      "product_name": "【闲置】美士爆珠一分为二6r/盒"
+    },
+    {
       "brand": "爱肯拿",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493286036/",
       "price": 0.0,
       "product_name": "【闲置】金交8号"
-    },
-    {
-      "brand": "catz",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-08T10:34:20.584649+00:00",
-      "id": 119,
-      "post_title": "【闲置】出catz罐头",
-      "post_url": "https://m.douban.com/group/topic/493275583/",
-      "price": 0.0,
-      "product_name": "【闲置】出catz罐头"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-10T09:36:30.957624+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-10T09:46:09.207041+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-10T09:36:31.048327+00:00"
+  "published_at": "2026-07-10T09:46:09.332397+00:00"
 }
