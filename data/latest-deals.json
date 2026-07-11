@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "爱肯拿",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-11T06:35:00.475644+00:00",
+      "id": 142,
+      "post_title": "【闲置】西安/咸阳出爱肯拿鸡 4.5kg 牧场盛宴",
+      "post_url": "https://m.douban.com/group/topic/489071831/",
+      "price": 240.0,
+      "product_name": "【闲置】西安/咸阳出爱肯拿鸡 4.5kg 牧场盛宴"
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/489782470/",
       "price": 180.0,
       "product_name": "【闲置】超级便宜出希尔斯gb肠道处方猫粮"
-    },
-    {
-      "brand": "NOW Fresh",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-08T15:23:58.251376+00:00",
-      "id": 122,
-      "post_title": "【闲置】nowfoods 钙粉 碘化钾 牛磺酸 镁片",
-      "post_url": "https://m.douban.com/group/topic/487238245/",
-      "price": 0.0,
-      "product_name": "【闲置】nowfoods 钙粉 碘化钾 牛磺酸 镁片"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-11T06:24:36.535099+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-11T06:35:02.281130+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-11T06:24:36.656571+00:00"
+  "published_at": "2026-07-11T06:35:02.391770+00:00"
 }
