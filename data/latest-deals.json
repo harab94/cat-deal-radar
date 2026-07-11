@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "NOW Fresh",
+      "cat_score": 3,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-11T11:54:29.013207+00:00",
+      "id": 144,
+      "post_title": "【闲置】nowfoods益生菌66粒",
+      "post_url": "https://m.douban.com/group/topic/492153134/",
+      "price": 0.0,
+      "product_name": "【闲置】nowfoods益生菌66粒"
+    },
+    {
       "brand": "catz",
       "cat_score": 3,
       "category": "wet_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/491225291/",
       "price": 429.0,
       "product_name": "【闲置】Ziwi巅峰风干粮南太平洋野生鱼&鸡肉马鲛鱼 2.2kg"
-    },
-    {
-      "brand": "Zeal",
-      "cat_score": 4,
-      "category": "freeze_dried",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T00:23:51.218752+00:00",
-      "id": 124,
-      "post_title": "【闲置】zeal风干猫粮 鳕鱼皮",
-      "post_url": "https://m.douban.com/group/topic/493325523/",
-      "price": 74.0,
-      "product_name": "【闲置】zeal风干猫粮 鳕鱼皮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-11T11:44:49.517591+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-11T11:54:30.822664+00:00",
+    "notifications_sent": 1,
     "posts_seen": 54
   },
-  "published_at": "2026-07-11T11:44:49.634477+00:00"
+  "published_at": "2026-07-11T11:54:30.929435+00:00"
 }
