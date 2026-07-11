@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "法米娜",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-11T13:15:15.196417+00:00",
+      "id": 146,
+      "post_title": "【闲置】法米娜超低敏处方粮出北京自提",
+      "post_url": "https://m.douban.com/group/topic/493588100/",
+      "price": 200.0,
+      "product_name": "【闲置】法米娜超低敏处方粮出北京自提"
+    },
+    {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-11T13:15:15.193652+00:00",
+      "id": 145,
+      "post_title": "【闲置】已真空分装百利高蛋白猫粮9斤345，广东省内可包邮，...",
+      "post_url": "https://m.douban.com/group/topic/493588116/",
+      "price": 0.0,
+      "product_name": "【闲置】已真空分装百利高蛋白猫粮9斤345，广东省内可包邮，..."
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493351026/",
       "price": 145.0,
       "product_name": "【闲置】皇家肠道处方粮1370g"
-    },
-    {
-      "brand": "小李子",
-      "cat_score": 4,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T04:20:19.228484+00:00",
-      "id": 126,
-      "post_title": "【闲置】MACS迈格仕限定小李子罐头",
-      "post_url": "https://m.douban.com/group/topic/473081464/",
-      "price": 65.0,
-      "product_name": "【闲置】MACS迈格仕限定小李子罐头"
-    },
-    {
-      "brand": "巅峰",
-      "cat_score": 3,
-      "category": "wet_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T01:14:12.219781+00:00",
-      "id": 125,
-      "post_title": "【闲置】Ziwi巅峰风干粮南太平洋野生鱼&鸡肉马鲛鱼 2.2kg",
-      "post_url": "https://m.douban.com/group/topic/491225291/",
-      "price": 429.0,
-      "product_name": "【闲置】Ziwi巅峰风干粮南太平洋野生鱼&鸡肉马鲛鱼 2.2kg"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-11T13:05:44.410487+00:00",
-    "notifications_sent": 0,
+    "deals_created": 2,
+    "finished_at": "2026-07-11T13:15:17.763080+00:00",
+    "notifications_sent": 2,
     "posts_seen": 54
   },
-  "published_at": "2026-07-11T13:05:44.527083+00:00"
+  "published_at": "2026-07-11T13:15:17.881105+00:00"
 }
