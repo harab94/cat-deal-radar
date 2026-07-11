@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 95,
+      "created_at": "2026-07-11T23:34:18.714510+00:00",
+      "id": 147,
+      "post_title": "【闲置】百利高蛋白猫粮9.3斤340出，这个月拆封的已真空分装...",
+      "post_url": "https://m.douban.com/group/topic/493622685/",
+      "price": 340.0,
+      "product_name": "【闲置】百利高蛋白猫粮9.3斤340出，这个月拆封的已真空分装..."
+    },
+    {
       "brand": "法米娜",
       "cat_score": 4,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493352325/",
       "price": 255.0,
       "product_name": "【闲置】渴望鸡4.6kg 255r不包邮"
-    },
-    {
-      "brand": "Royal Canin",
-      "cat_score": 3,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T06:25:12.856810+00:00",
-      "id": 127,
-      "post_title": "【闲置】皇家肠道处方粮1.37千克",
-      "post_url": "https://m.douban.com/group/topic/493351026/",
-      "price": 145.0,
-      "product_name": "【闲置】皇家肠道处方粮1370g"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-11T23:29:09.574242+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-11T23:34:21.551156+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-11T23:29:09.687859+00:00"
+  "published_at": "2026-07-11T23:34:21.663347+00:00"
 }
