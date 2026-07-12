@@ -4,6 +4,18 @@
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-12T02:14:50.960704+00:00",
+      "id": 148,
+      "post_title": "【闲置】百利高蛋白340 常州自提",
+      "post_url": "https://m.douban.com/group/topic/493628988/",
+      "price": 0.0,
+      "product_name": "【闲置】百利高蛋白340 常州自提"
+    },
+    {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
       "confidence_score": 95,
       "created_at": "2026-07-11T23:34:18.714510+00:00",
       "id": 147,
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493365897/",
       "price": 0.0,
       "product_name": "【闲置】爱肯拿农场盛宴已开封，真空打包4.032kg"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T06:51:57.279239+00:00",
-      "id": 128,
-      "post_title": "【闲置】🈚渴望鸡4.6kg 255r不包邮",
-      "post_url": "https://m.douban.com/group/topic/493352325/",
-      "price": 255.0,
-      "product_name": "【闲置】渴望鸡4.6kg 255r不包邮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-12T02:05:30.076015+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-12T02:14:53.215404+00:00",
+    "notifications_sent": 1,
     "posts_seen": 52
   },
-  "published_at": "2026-07-12T02:05:30.193132+00:00"
+  "published_at": "2026-07-12T02:14:53.329936+00:00"
 }
