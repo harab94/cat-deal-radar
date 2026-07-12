@@ -31,6 +31,7 @@ jobs:
       FEISHU_CATEGORIES_TABLE_ID: ${{ secrets.FEISHU_CATEGORIES_TABLE_ID }}
       FEISHU_DETECTION_RULES_TABLE_ID: ${{ secrets.FEISHU_DETECTION_RULES_TABLE_ID }}
       FEISHU_SKUS_TABLE_ID: ${{ secrets.FEISHU_SKUS_TABLE_ID }}
+      FEISHU_FEEDBACK_TABLE_ID: ${{ secrets.FEISHU_FEEDBACK_TABLE_ID }}
       FEISHU_BRAND_CANDIDATES_TABLE_ID: ${{ secrets.FEISHU_BRAND_CANDIDATES_TABLE_ID }}
       FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
       FEISHU_BOT_SECRET: ${{ secrets.FEISHU_BOT_SECRET }}
@@ -84,6 +85,12 @@ jobs:
             git add -f data/latest-deals.json
           else
             echo "No web deals export to persist."
+          fi
+
+          if [ -f config/preferences.yaml ]; then
+            git add config/preferences.yaml
+          else
+            echo "No preferences file to persist."
           fi
 
           if git diff --cached --quiet; then

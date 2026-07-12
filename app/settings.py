@@ -13,6 +13,9 @@ class Settings:
     douban_group_url: str
     douban_tab_name: str
     douban_cookie_env: str = "DOUBAN_COOKIE"
+    smzdm_enabled: bool = False
+    smzdm_search_urls: tuple[str, ...] = ()
+    smzdm_include_keywords: tuple[str, ...] = ()
     brands_path: Path = Path("config/brands.yaml")
     categories_path: Path = Path("config/categories.yaml")
     skus_path: Path = Path("config/skus.yaml")
@@ -32,6 +35,7 @@ class Settings:
     feishu_categories_table_id_env: str = "FEISHU_CATEGORIES_TABLE_ID"
     feishu_detection_rules_table_id_env: str = "FEISHU_DETECTION_RULES_TABLE_ID"
     feishu_skus_table_id_env: str = "FEISHU_SKUS_TABLE_ID"
+    feishu_feedback_table_id_env: str = "FEISHU_FEEDBACK_TABLE_ID"
     feishu_brand_candidates_table_id_env: str = "FEISHU_BRAND_CANDIDATES_TABLE_ID"
     feishu_bot_webhook_env: str = "FEISHU_BOT_WEBHOOK"
     feishu_bot_secret_env: str = "FEISHU_BOT_SECRET"
@@ -54,6 +58,14 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
         douban_tab_name=str(_nested(raw_settings, "douban", "tab_name", default="")),
         douban_cookie_env=str(
             _nested(raw_settings, "douban", "cookie_env", default="DOUBAN_COOKIE")
+        ),
+        smzdm_enabled=_nested_bool(raw_settings, "smzdm", "enabled", default=False),
+        smzdm_search_urls=_nested_tuple(raw_settings, "smzdm", "search_urls", default=()),
+        smzdm_include_keywords=_nested_tuple(
+            raw_settings,
+            "smzdm",
+            "include_keywords",
+            default=("猫", "猫粮", "猫砂", "罐头", "餐包", "冻干", "驱虫"),
         ),
         brands_path=Path(
             _nested(raw_settings, "config", "brands_path", default="config/brands.yaml")
@@ -127,6 +139,14 @@ def load_settings(path: str | Path = "config/settings.yaml") -> Settings:
                 default="FEISHU_SKUS_TABLE_ID",
             )
         ),
+        feishu_feedback_table_id_env=str(
+            _nested(
+                raw_settings,
+                "feishu",
+                "feedback_table_id_env",
+                default="FEISHU_FEEDBACK_TABLE_ID",
+            )
+        ),
         feishu_brand_candidates_table_id_env=str(
             _nested(
                 raw_settings,
@@ -171,3 +191,23 @@ def _nested_bool(settings: dict[str, Any], section: str, key: str, *, default: b
     if isinstance(value, bool):
         return value
     return str(value).casefold() in {"1", "true", "yes", "on"}
+
+
+def _nested_tuple(
+    settings: dict[str, Any],
+    section: str,
+    key: str,
+    *,
+    default: tuple[str, ...],
+) -> tuple[str, ...]:
+    section_values = settings.get(section, {})
+    if not isinstance(section_values, dict):
+        return default
+    value = section_values.get(key, default)
+    if isinstance(value, str):
+        return (value,) if value else ()
+    if isinstance(value, list):
+        return tuple(str(item) for item in value if str(item).strip())
+    if isinstance(value, tuple):
+        return tuple(str(item) for item in value if str(item).strip())
+    return default

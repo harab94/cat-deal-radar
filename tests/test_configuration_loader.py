@@ -14,10 +14,11 @@ def test_load_rule_based_detector_uses_local_yaml_when_feishu_is_not_configured(
     _clear_feishu_env(monkeypatch)
 
     detector = load_rule_based_detector(_settings(tmp_path))
-    detected = detector.detect(title="闲车 百利原始鸡 335元")
+    detected = detector.detect(title="闲车 未维护品牌猫粮 335元")
 
     assert detected.is_deal is True
-    assert detected.brand == "百利"
+    assert detected.brand is None
+    assert detected.category == "cat_food"
 
 
 def test_load_rule_based_detector_can_read_feishu_base_config(
@@ -43,6 +44,31 @@ def test_load_rule_based_detector_can_read_feishu_base_config(
     assert detected.category == "cat_food"
     assert config.skus[0].sku_key == "测试品牌|cat_food|测试鸡肉"
     assert config.skus[0].reference_price == 100
+    assert expired.is_deal is False
+    assert "expired deal signal" in expired.reasons
+
+
+def test_feishu_config_uses_local_rules_when_rules_table_is_not_configured(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setenv("FEISHU_APP_ID", "cli_test")
+    monkeypatch.setenv("FEISHU_APP_SECRET", "secret")
+    monkeypatch.setenv("FEISHU_BASE_TOKEN", "base_token")
+    monkeypatch.setenv("FEISHU_BRANDS_TABLE_ID", "brands_table")
+    monkeypatch.setenv("FEISHU_CATEGORIES_TABLE_ID", "categories_table")
+    monkeypatch.delenv("FEISHU_DETECTION_RULES_TABLE_ID", raising=False)
+    monkeypatch.setattr("app.configuration.feishu_base.urlopen", _fake_urlopen)
+
+    detector = load_rule_based_detector(_settings(tmp_path))
+    detected = detector.detect(title="测试别名豪车88元")
+    expired = detector.detect(title="开车 测试别名猫粮 88元")
+    config = load_detection_config(_settings(tmp_path))
+
+    assert detected.is_deal is True
+    assert detected.brand == "测试品牌"
+    assert detected.category == "cat_food"
+    assert "豪车" in config.deal_signals
     assert expired.is_deal is False
     assert "expired deal signal" in expired.reasons
 

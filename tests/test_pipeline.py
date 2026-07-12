@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import UTC, datetime
 from pathlib import Path
 
 from app.database import Deal, Notification, Post, Repository
+from app.feedback_sync import ExternalFeedback
 from app.main import run
 from app.pipeline import run_pipeline
 from app.settings import Settings
@@ -12,7 +14,7 @@ HTML = """
 <html>
   <body>
     <a href="/group/topic/123456789/" data-created-at="2026-06-27T12:00:00+08:00">
-      闲车 百利原始鸡 335 元
+      闲车 百利原始鸡猫粮 335 元
     </a>
   </body>
 </html>
@@ -22,7 +24,7 @@ MULTI_DEAL_HTML = """
 <html>
   <body>
     <a href="/group/topic/123456789/" data-created-at="2026-06-27T12:00:00+08:00">
-      闲车 百利原始鸡 250 元
+      闲车 百利原始鸡猫粮 250 元
     </a>
     <a href="/group/topic/223456789/" data-created-at="2026-06-27T12:03:00+08:00">
       闲置 k9罐头鸡肉羊心*2
@@ -35,7 +37,7 @@ PRICELESS_HTML = """
 <html>
   <body>
     <a href="/group/topic/223456789/" data-created-at="2026-06-27T12:00:00+08:00">
-      闲置 ve猪肉粒
+      闲置 ve冻干猪肉粒
     </a>
   </body>
 </html>
@@ -55,7 +57,7 @@ REFERENCE_PRICE_HTML = """
 <html>
   <body>
     <a href="/group/topic/123456789/" data-created-at="2026-06-27T12:00:00+08:00">
-      闲车 百利原始鸡 335 元
+      闲车 百利原始鸡猫粮 335 元
     </a>
   </body>
 </html>
@@ -65,7 +67,17 @@ DISCOUNTED_HTML = """
 <html>
   <body>
     <a href="/group/topic/123456789/" data-created-at="2026-06-27T12:00:00+08:00">
-      闲车 百利原始鸡 250 元
+      闲车 百利原始鸡猫粮 250 元
+    </a>
+  </body>
+</html>
+"""
+
+SMZDM_HTML = """
+<html>
+  <body>
+    <a href="https://www.smzdm.com/p/12345678/" title="好价 猫粮 88元">
+      好价 猫粮 88元
     </a>
   </body>
 </html>
@@ -75,7 +87,7 @@ TOPIC_DETAIL_HTML = """
 <html>
   <body>
     <div class="topic-content">
-      闲车 百利原始鸡 250 元，还有货。
+      闲车 百利原始鸡猫粮 250 元，还有货。
     </div>
     <div class="reply-content">还能买。</div>
   </body>
@@ -103,6 +115,30 @@ def test_pipeline_creates_deal_without_email_when_email_config_is_missing(
     assert repository.list_notifications() == []
 
 
+def test_pipeline_can_include_smzdm_source(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr("app.crawler.douban.fetch_html", lambda *args, **kwargs: "")
+    monkeypatch.setattr("app.crawler.smzdm.fetch_html", lambda *args, **kwargs: SMZDM_HTML)
+    _clear_notification_env(monkeypatch)
+    settings = replace(
+        _settings(tmp_path),
+        smzdm_enabled=True,
+        smzdm_search_urls=("https://search.smzdm.com/?s=%E7%8C%AB%E7%B2%AE",),
+        smzdm_include_keywords=("猫", "猫粮"),
+    )
+    repository = Repository(settings.database_path)
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 1
+    assert result.deals_created == 1
+    post = repository.list_posts()[0]
+    assert post.douban_post_id == "smzdm:12345678"
+    assert post.url == "https://www.smzdm.com/p/12345678/"
+
+
 def test_pipeline_creates_deal_when_title_price_is_missing(
     monkeypatch,
     tmp_path: Path,
@@ -121,7 +157,7 @@ def test_pipeline_creates_deal_when_title_price_is_missing(
     assert result.deals_created == 1
     assert result.notifications_sent == 0
     deal = repository.list_deals()[0]
-    assert deal.product_name == "闲置 ve猪肉粒"
+    assert deal.product_name == "闲置 ve冻干猪肉粒"
     assert deal.price == 0
 
 
@@ -179,7 +215,7 @@ def test_pipeline_can_send_feishu_notification_without_email(
     assert result.posts_seen == 1
     assert result.deals_created == 1
     assert result.notifications_sent == 1
-    assert sent_subjects == ["🐱🐱🐱🐱🐱【必抢】闲车 百利原始鸡 250 元 250元"]
+    assert sent_subjects == ["🐱🐱🐱🐱【推荐】闲车 百利原始鸡猫粮 250 元 250元"]
     assert len(repository.list_notifications()) == 1
 
 
@@ -214,7 +250,7 @@ def test_pipeline_sends_email_and_feishu_when_both_are_configured(
     assert result.posts_seen == 1
     assert result.deals_created == 1
     assert result.notifications_sent == 1
-    assert email_subjects == ["🐱🐱🐱🐱🐱【必抢】闲车 百利原始鸡 250 元 250元"]
+    assert email_subjects == ["🐱🐱🐱🐱【推荐】闲车 百利原始鸡猫粮 250 元 250元"]
     assert feishu_subjects == email_subjects
 
 
@@ -270,9 +306,48 @@ def test_pipeline_reports_unknown_brand_candidate_once(
 
     assert first.posts_seen == 1
     assert second.posts_seen == 1
-    assert first.deals_created == 0
+    assert first.deals_created == 1
     assert second.deals_created == 0
+    assert repository.list_deals()[0].brand == "未知品牌"
     assert [candidate.candidate_brand for candidate in reporter.candidates] == ["德金"]
+
+
+def test_pipeline_syncs_feedback_before_scoring(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setattr("app.crawler.douban.fetch_html", _fake_fetch_discounted_html)
+    monkeypatch.setattr(
+        "app.pipeline._feedback_reader_from_env",
+        lambda settings: _FeedbackReader(
+            [ExternalFeedback(deal_id=1, action="bought", created_at=NOW)]
+        ),
+    )
+    _clear_notification_env(monkeypatch)
+    settings = replace(_settings(tmp_path), preferences_path=tmp_path / "preferences.yaml")
+    settings.preferences_path.parent.mkdir(parents=True, exist_ok=True)
+    settings.preferences_path.write_text(
+        "preferred_brands:\n  百利: 30\ncategory_priorities:\n  cat_food: 30\n",
+        encoding="utf-8",
+    )
+    settings.database_path.parent.mkdir(parents=True, exist_ok=True)
+    repository = Repository(settings.database_path)
+    repository.initialize()
+    post = repository.create_post(
+        _post_for_existing_notification("existing-feedback-deal", title="旧标题 百利鸡")
+    )
+    stored_deal = repository.create_deal(
+        _deal_for_existing_notification(post_id=post.id, product_name="旧识别 百利鸡")
+    )
+    assert stored_deal.id == 1
+
+    result = run_pipeline(settings, repository)
+
+    assert result.posts_seen == 1
+    assert repository.list_feedback_for_deal(1)[0].feedback_type.value == "BOUGHT_FROM_THIS"
+    saved_preferences = settings.preferences_path.read_text(encoding="utf-8")
+    assert "百利: 50" in saved_preferences
+    assert "cat_food: 40" in saved_preferences
 
 
 def test_pipeline_keeps_run_successful_when_notification_fails(
@@ -463,8 +538,9 @@ def test_pipeline_does_not_notify_same_product_same_price_twice_without_notifica
     repository.create_deal(
         _deal_for_existing_notification(
             post_id=post.id,
-            product_name="闲车 百利原始鸡 250 元",
+            product_name="闲车 百利原始鸡猫粮 250 元",
             price=250,
+            brand="未知品牌",
         )
     )
 
@@ -499,12 +575,12 @@ def test_pipeline_does_not_notify_same_title_with_new_post_id(
     repository = Repository(settings.database_path)
     repository.initialize()
     post = repository.create_post(
-        _post_for_existing_notification("old-post-id", title="闲车 百利原始鸡 250 元")
+        _post_for_existing_notification("old-post-id", title="闲车 百利原始鸡猫粮 250 元")
     )
     deal = repository.create_deal(
         _deal_for_existing_notification(
             post_id=post.id,
-            product_name="闲车 百利原始鸡 250 元",
+            product_name="闲车 百利原始鸡猫粮 250 元",
             price=250,
         )
     )
@@ -563,12 +639,13 @@ def _deal_for_existing_notification(
     post_id: int | None,
     product_name: str,
     price: float = 335,
+    brand: str = "百利",
 ) -> Deal:
     assert post_id is not None
     return Deal(
         post_id=post_id,
         category="cat_food",
-        brand="百利",
+        brand=brand,
         product_name=product_name,
         price=price,
         confidence_score=90,
@@ -593,6 +670,7 @@ def _clear_notification_env(monkeypatch) -> None:
         "CAT_DEAL_RADAR_SEND_TEST_EMAIL",
         "FEISHU_BOT_WEBHOOK",
         "FEISHU_BOT_SECRET",
+        "FEISHU_FEEDBACK_TABLE_ID",
         "FEISHU_BRAND_CANDIDATES_TABLE_ID",
         "WEWORK_CORP_ID",
         "WEWORK_AGENT_ID",
@@ -637,3 +715,11 @@ class _Reporter:
 
     def report(self, candidate) -> None:
         self.candidates.append(candidate)
+
+
+class _FeedbackReader:
+    def __init__(self, feedback: list[ExternalFeedback]) -> None:
+        self._feedback = feedback
+
+    def list_feedback(self) -> list[ExternalFeedback]:
+        return self._feedback

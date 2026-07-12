@@ -45,7 +45,7 @@ def test_rule_detector_uses_builtin_category_keywords_without_known_brand() -> N
 
     detected = detector.detect(title="【闲置】德金猫粮野猪45/斤，2斤包邮")
 
-    assert detected.is_deal is False
+    assert detected.is_deal is True
     assert detected.brand is None
     assert detected.category == "cat_food"
 
@@ -60,6 +60,29 @@ def test_rule_detector_treats_kaiche_as_expired_in_douban_group() -> None:
     assert detected.category == "cat_food"
     assert detected.price == 263
     assert "expired deal signal" in detected.reasons
+
+
+def test_rule_detector_treats_haoche_as_deal_signal() -> None:
+    detector = _detector()
+
+    detected = detector.detect(title="金素豪车350两袋")
+
+    assert detected.is_deal is True
+    assert detected.brand == "金素"
+    assert detected.category == "cat_food"
+    assert detected.price is None
+    assert "deal signal keyword" in detected.reasons
+
+
+def test_rule_detector_recognizes_daipai_with_category_keyword_without_known_brand() -> None:
+    detector = _detector()
+
+    detected = detector.detect(title="【代拍】美士罐头 6盒41")
+
+    assert detected.is_deal is True
+    assert detected.brand is None
+    assert detected.category == "wet_food"
+    assert "deal signal keyword" in detected.reasons
 
 
 def test_rule_detector_treats_yichu_as_expired_and_reads_money_bag_price() -> None:

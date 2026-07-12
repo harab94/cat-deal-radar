@@ -9,7 +9,7 @@ import yaml
 
 from app.brand_normalization import BrandNormalizer
 
-DEAL_SIGNALS = ("团购", "闲车", "闲置", "好价", "补货", "凑单")
+DEAL_SIGNALS = ("团购", "闲车", "闲置", "好价", "补货", "凑单", "豪车", "代拍", "拼团", "拼车")
 EXPIRED_SIGNALS = ("开车", "已开车", "车走了", "已出", "出掉", "已售", "售出", "卖掉")
 DEFAULT_CATEGORY_KEYWORDS = {
     "cat_food": ("猫粮", "主粮"),
@@ -70,7 +70,7 @@ class RuleBasedDealDetector:
         brand = self._brand_normalizer.find_in_text(title_text)
         category = self._category_for_text(title_text, brand)
         price = extract_lowest_price(title_text)
-        if price is None and brand and category:
+        if price is None and category:
             price = extract_lowest_price(content)
         reasons = _reasons(
             title_text,
@@ -81,8 +81,7 @@ class RuleBasedDealDetector:
             expired_signals=self._expired_signals,
         )
         is_deal = bool(
-            brand
-            and category
+            category
             and _has_any_signal(title_text, self._deal_signals)
             and not _has_any_signal(title_text, self._expired_signals)
         )

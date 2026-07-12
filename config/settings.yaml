@@ -19,6 +19,20 @@ douban:
   tab_name: 闲车禁拼多多
   cookie_env: DOUBAN_COOKIE
 
+smzdm:
+  enabled: true
+  search_urls:
+    # SMZDM's HTTPS feed currently returns 403; use the official HTTP RSS URL.
+    - http://feed.smzdm.com
+  include_keywords:
+    - 猫
+    - 猫粮
+    - 猫砂
+    - 罐头
+    - 餐包
+    - 冻干
+    - 驱虫
+
 email:
   smtp_host: smtp.gmail.com
   smtp_port: 587

@@ -171,12 +171,17 @@ Configure these repository secrets before enabling the full production run:
 - `FEISHU_BASE_TOKEN`
 - `FEISHU_BRANDS_TABLE_ID`
 - `FEISHU_CATEGORIES_TABLE_ID`
-- `FEISHU_DETECTION_RULES_TABLE_ID`
+- `FEISHU_DETECTION_RULES_TABLE_ID` (optional, overrides local deal/expired signals)
 - `FEISHU_BRAND_CANDIDATES_TABLE_ID` (optional, for unknown brand review)
 
-When Feishu secrets are present, detection config is loaded from Feishu Base.
-When they are missing or Feishu is unavailable, the app falls back to local YAML
-files in `config/`.
+When the required Feishu secrets are present, brand and category config is
+loaded from Feishu Base. If `FEISHU_DETECTION_RULES_TABLE_ID` is not configured,
+deal and expired signals use the local code defaults.
+
+When Feishu is unavailable, the app does not use the local fallback brand list
+for known-brand decisions. It still uses local deal/expired signals and category
+keywords, so new or unknown brands can be detected when the title contains a
+supported category keyword such as `猫粮`, `罐头`, `冻干`, or `猫砂`.
 
 Unknown brand candidates can be written to a separate Feishu Base table for
 manual review. Create a table with these fields:

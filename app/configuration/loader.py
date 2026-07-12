@@ -52,16 +52,29 @@ def load_detection_config(settings: Settings) -> DetectionConfig:
     if feishu_config is not None:
         try:
             config = FeishuBaseReader(feishu_config).load_detection_config()
-            logger.info("feishu_detection_config_loaded")
+            logger.info(
+                "feishu_detection_config_loaded",
+                brand_count=len(config.brand_aliases),
+                category_count=len(config.categories),
+                sku_count=len(config.skus),
+                deal_signal_count=len(config.deal_signals),
+                expired_signal_count=len(config.expired_signals),
+            )
             return config
         except Exception as error:
             logger.warning("feishu_detection_config_failed", error=str(error))
+    else:
+        logger.info(
+            "feishu_detection_config_not_configured",
+            missing_envs=_missing_required_feishu_env(settings),
+        )
 
-    logger.info("local_detection_config_loaded")
+    logger.info("local_detection_config_loaded_without_brand_aliases")
     return _load_local_detection_config(
         brands_path=settings.brands_path,
         categories_path=settings.categories_path,
         skus_path=settings.skus_path,
+        include_brand_aliases=False,
     )
 
 
@@ -70,10 +83,13 @@ def _load_local_detection_config(
     brands_path: Path,
     categories_path: Path,
     skus_path: Path,
+    include_brand_aliases: bool = True,
 ) -> DetectionConfig:
-    with brands_path.open(encoding="utf-8") as file:
-        brand_config = yaml.safe_load(file) or {}
-        brand_aliases = brand_config.get("brand_aliases", {})
+    brand_aliases = {}
+    if include_brand_aliases:
+        with brands_path.open(encoding="utf-8") as file:
+            brand_config = yaml.safe_load(file) or {}
+            brand_aliases = brand_config.get("brand_aliases", {})
     with categories_path.open(encoding="utf-8") as file:
         categories = yaml.safe_load(file) or {}
     skus = _load_local_skus(skus_path)
@@ -98,11 +114,26 @@ def _feishu_config_from_env(settings: Settings) -> FeishuBaseConfig | None:
         "skus_table_id": _env_value(settings.feishu_skus_table_id_env),
         "brand_candidates_table_id": _env_value(settings.feishu_brand_candidates_table_id_env),
     }
-    optional_keys = {"skus_table_id", "brand_candidates_table_id"}
+    optional_keys = {
+        "detection_rules_table_id",
+        "skus_table_id",
+        "brand_candidates_table_id",
+    }
     required_values = {key: value for key, value in values.items() if key not in optional_keys}
     if not all(required_values.values()):
         return None
     return FeishuBaseConfig(**values)  # type: ignore[arg-type]
+
+
+def _missing_required_feishu_env(settings: Settings) -> tuple[str, ...]:
+    required_envs = (
+        settings.feishu_app_id_env,
+        settings.feishu_app_secret_env,
+        settings.feishu_base_token_env,
+        settings.feishu_brands_table_id_env,
+        settings.feishu_categories_table_id_env,
+    )
+    return tuple(name for name in required_envs if not _env_value(name))
 
 
 def _env_value(name: str) -> str | None:

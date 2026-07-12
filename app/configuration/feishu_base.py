@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -17,8 +18,9 @@ class FeishuBaseConfig:
     base_token: str
     brands_table_id: str
     categories_table_id: str
-    detection_rules_table_id: str
+    detection_rules_table_id: str | None = None
     skus_table_id: str | None = None
+    feedback_table_id: str | None = None
     brand_candidates_table_id: str | None = None
 
 
@@ -28,18 +30,26 @@ class FeishuBaseReader:
 
     def load_detection_config(self):
         from app.configuration.loader import DetectionConfig
+        from app.deal_detector.keyword_rules import DEAL_SIGNALS, EXPIRED_SIGNALS
 
         token = self._tenant_access_token()
         brand_records = self._list_records(token, self._config.brands_table_id)
         category_records = self._list_records(token, self._config.categories_table_id)
-        rule_records = self._list_records(token, self._config.detection_rules_table_id)
+        rule_records = (
+            self._list_records(token, self._config.detection_rules_table_id)
+            if self._config.detection_rules_table_id
+            else []
+        )
         sku_records = (
             self._list_records(token, self._config.skus_table_id)
             if self._config.skus_table_id
             else []
         )
 
-        deal_signals, expired_signals = _rules_from_records(rule_records)
+        if rule_records:
+            deal_signals, expired_signals = _rules_from_records(rule_records)
+        else:
+            deal_signals, expired_signals = DEAL_SIGNALS, EXPIRED_SIGNALS
         return DetectionConfig(
             brand_aliases=_brand_aliases_from_records(brand_records),
             categories=_categories_from_records(category_records),
@@ -135,6 +145,66 @@ class FeishuBrandCandidateWriter:
         return str(token)
 
 
+@dataclass(frozen=True)
+class FeishuFeedbackRecord:
+    deal_id: int
+    action: str
+    created_at: datetime
+
+
+class FeishuFeedbackReader:
+    def __init__(self, config: FeishuBaseConfig) -> None:
+        if not config.feedback_table_id:
+            msg = "Feishu feedback table id is required."
+            raise ValueError(msg)
+        self._config = config
+
+    def list_feedback(self) -> list[FeishuFeedbackRecord]:
+        token = self._tenant_access_token()
+        return _feedback_from_records(self._list_records(token, self._config.feedback_table_id))
+
+    def _tenant_access_token(self) -> str:
+        response = _request_json(
+            "POST",
+            f"{FEISHU_API_BASE}/auth/v3/tenant_access_token/internal",
+            data={
+                "app_id": self._config.app_id,
+                "app_secret": self._config.app_secret,
+            },
+        )
+        token = response.get("tenant_access_token")
+        if not token:
+            msg = f"Failed to get Feishu tenant token: {response}"
+            raise RuntimeError(msg)
+        return str(token)
+
+    def _list_records(self, token: str, table_id: str) -> list[dict[str, Any]]:
+        records: list[dict[str, Any]] = []
+        page_token: str | None = None
+
+        while True:
+            params = {"page_size": "100"}
+            if page_token:
+                params["page_token"] = page_token
+            response = _request_json(
+                "GET",
+                (
+                    f"{FEISHU_API_BASE}/bitable/v1/apps/{self._config.base_token}"
+                    f"/tables/{table_id}/records?{urlencode(params)}"
+                ),
+                token=token,
+            )
+            data = response.get("data", {})
+            if not isinstance(data, dict):
+                msg = f"Unexpected Feishu feedback response: {response}"
+                raise RuntimeError(msg)
+
+            records.extend(data.get("items", []) or [])
+            if not data.get("has_more"):
+                return records
+            page_token = str(data.get("page_token", ""))
+
+
 def _brand_aliases_from_records(records: list[dict[str, Any]]) -> dict[str, list[str]]:
     aliases: dict[str, list[str]] = {}
     for record in records:
@@ -212,6 +282,19 @@ def _skus_from_records(records: list[dict[str, Any]]):
     return tuple(skus)
 
 
+def _feedback_from_records(records: list[dict[str, Any]]) -> list[FeishuFeedbackRecord]:
+    feedback: list[FeishuFeedbackRecord] = []
+    for record in records:
+        fields = _fields(record)
+        deal_id = _cell_int(fields.get("deal_id"))
+        action = _cell_text(fields.get("action"))
+        created_at = _cell_datetime(fields.get("created_at"))
+        if deal_id is None or not action or created_at is None:
+            continue
+        feedback.append(FeishuFeedbackRecord(deal_id=deal_id, action=action, created_at=created_at))
+    return feedback
+
+
 def _request_json(
     method: str,
     url: str,
@@ -286,6 +369,35 @@ def _cell_float(value: Any) -> float | None:
         return float(text)
     except ValueError:
         return None
+
+
+def _cell_int(value: Any) -> int | None:
+    text = _cell_text(value)
+    if not text:
+        return None
+    try:
+        return int(float(text))
+    except ValueError:
+        return None
+
+
+def _cell_datetime(value: Any) -> datetime | None:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return datetime.fromtimestamp(value / 1000, tz=UTC)
+    text = _cell_text(value)
+    if not text:
+        return None
+    try:
+        if text.isdigit():
+            return datetime.fromtimestamp(int(text) / 1000, tz=UTC)
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=UTC)
+    return parsed.astimezone(UTC)
 
 
 def _http_error_detail(error: HTTPError) -> str:
