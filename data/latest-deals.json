@@ -5,6 +5,18 @@
       "cat_score": 5,
       "category": "cat_food",
       "confidence_score": 90,
+      "created_at": "2026-07-12T03:55:57.495277+00:00",
+      "id": 149,
+      "post_title": "【闲置】百利高蛋白270代拍临期26年12月",
+      "post_url": "https://m.douban.com/group/topic/493635414/",
+      "price": 0.0,
+      "product_name": "【闲置】百利高蛋白270代拍临期26年12月"
+    },
+    {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
       "created_at": "2026-07-12T02:14:50.960704+00:00",
       "id": 148,
       "post_title": "【闲置】百利高蛋白340 常州自提",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493389531/",
       "price": 110.0,
       "product_name": "【闲置】绿福摩鸭肉甜薯，大概4斤多一点，110包邮出，送朗诺..."
-    },
-    {
-      "brand": "爱肯拿",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-09T09:03:55.464191+00:00",
-      "id": 129,
-      "post_title": "【闲置】已出 爱肯拿农场盛宴，真空打包4.032kg200包邮出",
-      "post_url": "https://m.douban.com/group/topic/493365897/",
-      "price": 0.0,
-      "product_name": "【闲置】爱肯拿农场盛宴已开封，真空打包4.032kg"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-12T03:45:09.745777+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-12T03:55:58.702629+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-12T03:45:09.860407+00:00"
+  "published_at": "2026-07-12T03:55:58.812732+00:00"
 }
