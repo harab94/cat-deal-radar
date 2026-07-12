@@ -1,6 +1,30 @@
 {
   "deals": [
     {
+      "brand": "百利",
+      "cat_score": 5,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-12T07:45:00.148093+00:00",
+      "id": 152,
+      "post_title": "【闲置】抖音代拍百利三文鱼241",
+      "post_url": "https://m.douban.com/group/topic/491178824/",
+      "price": 0.0,
+      "product_name": "【闲置】抖音代拍百利三文鱼241"
+    },
+    {
+      "brand": "Lucky Lou",
+      "cat_score": 3,
+      "category": "wet_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-12T07:45:00.145678+00:00",
+      "id": 151,
+      "post_title": "【闲置】luckylou餐包12包一盒",
+      "post_url": "https://m.douban.com/group/topic/493653526/",
+      "price": 0.0,
+      "product_name": "【闲置】luckylou餐包12包一盒"
+    },
+    {
       "brand": "NOW Fresh",
       "cat_score": 3,
       "category": "cat_food",
@@ -215,37 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493407191/",
       "price": 0.0,
       "product_name": "【闲置】渴望鸡5.4kg全新未拆"
-    },
-    {
-      "brand": "百利",
-      "cat_score": 5,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T13:55:08.372998+00:00",
-      "id": 132,
-      "post_title": "出闲置猫粮，百利高和素力高，",
-      "post_url": "https://m.douban.com/group/topic/493394859/",
-      "price": 105.0,
-      "product_name": "出闲置猫粮，百利高和素力高，"
-    },
-    {
-      "brand": "法米娜",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 95,
-      "created_at": "2026-07-09T13:06:50.279112+00:00",
-      "id": 131,
-      "post_title": "【闲置】法米娜超低敏鱼蛋白水解猫粮",
-      "post_url": "https://m.douban.com/group/topic/483074007/",
-      "price": 135.0,
-      "product_name": "【闲置】法米娜超低敏鱼蛋白水解猫粮"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-12T07:35:47.933937+00:00",
-    "notifications_sent": 0,
+    "deals_created": 2,
+    "finished_at": "2026-07-12T07:45:03.126453+00:00",
+    "notifications_sent": 2,
     "posts_seen": 54
   },
-  "published_at": "2026-07-12T07:35:48.044299+00:00"
+  "published_at": "2026-07-12T07:45:03.217885+00:00"
 }
