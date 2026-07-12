@@ -1,6 +1,18 @@
 {
   "deals": [
     {
+      "brand": "Halo",
+      "cat_score": 4,
+      "category": "cat_food",
+      "confidence_score": 90,
+      "created_at": "2026-07-12T13:05:57.249704+00:00",
+      "id": 153,
+      "post_title": "【闲置】小李子罐头菲力鸡 菲力鲱鱼火鸡 halo 猫粮分装成猫鸡...",
+      "post_url": "https://m.douban.com/group/topic/493686245/",
+      "price": 0.0,
+      "product_name": "【闲置】小李子罐头菲力鸡 菲力鲱鱼火鸡 halo 猫粮分装成猫鸡..."
+    },
+    {
       "brand": "百利",
       "cat_score": 5,
       "category": "cat_food",
@@ -227,25 +239,13 @@
       "post_url": "https://m.douban.com/group/topic/493412580/",
       "price": 0.0,
       "product_name": "【闲置】出mjam400g旧德"
-    },
-    {
-      "brand": "渴望",
-      "cat_score": 4,
-      "category": "cat_food",
-      "confidence_score": 90,
-      "created_at": "2026-07-09T15:45:27.148457+00:00",
-      "id": 133,
-      "post_title": "【已出申删】渴望鸡5.4kg全新未拆",
-      "post_url": "https://m.douban.com/group/topic/493407191/",
-      "price": 0.0,
-      "product_name": "【闲置】渴望鸡5.4kg全新未拆"
     }
   ],
   "latest_run": {
-    "deals_created": 0,
-    "finished_at": "2026-07-12T12:54:59.310402+00:00",
-    "notifications_sent": 0,
+    "deals_created": 1,
+    "finished_at": "2026-07-12T13:05:59.447376+00:00",
+    "notifications_sent": 1,
     "posts_seen": 53
   },
-  "published_at": "2026-07-12T12:54:59.461607+00:00"
+  "published_at": "2026-07-12T13:05:59.556205+00:00"
 }
